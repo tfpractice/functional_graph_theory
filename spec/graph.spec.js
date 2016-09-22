@@ -1,33 +1,4 @@
 fdescribe('Graph', function() {
-	let Node;
-	let n0, n1, n2, n3, n4, n5, n6;
-	let myNodes, xNodes;
-	let myGraph;
-	beforeAll(function() {
-		({ Graph } = this.App);
-		({ makeEdges, makeGraph, nodes, edges } = Graph);
-		({ neighbors, contains, isAdjacent } = Graph);
-		({ clearNodes, clearEdges } = Graph);
-
-		Node = (label = '', data = {}) => ({
-			label,
-			data,
-			toString: () =>
-				label,
-		});
-	});
-
-	beforeEach(function() {
-		myNodes = Array(7).fill('node').map((el, id) =>
-			Node(`${el}::${id}`, { position: id })
-		);
-		altNodes = Array(7).fill('altnode').map((el, id) =>
-			Node(`${el}::${id}`, { position: id })
-		);
-		[n0, n1, n2, n3, n4, n5, n6] = myNodes;
-		myGraph = Graph(...myNodes);
-	});
-
 	it('is a function', function() {
 		expect(Graph).toBeFunction();
 	});

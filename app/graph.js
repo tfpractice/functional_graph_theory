@@ -15,10 +15,20 @@ let clearNodes = ({ nodes }) => nodes.clear;
 let clearEdges = ({ edges }) => edges.clear;
 let isAdjacent = ({ edges }) => (n0) => (n1) =>
 	edges.get(n0).has(n1);
-// let spreadKeys = (map) => [...map.keys()];
-// let spreadValues = (map) => [...map.values()];
-// let spreadEntries = (map) => [...map.entries()];
-// let lastKey = (map) => spreadKeys(map).pop();
+
+// let pathString = (path) =>
+// 	spreadKeys(path).reduce((str, next, id, coll) =>
+// 		id === (coll.length - 1) ?
+// 		(str + next + ' }') :
+// 		(str + next + ' => '), '{ ');
+
+// let edgeString = ([source, nabes]) =>
+// 	'{ Edge ' + source + ' } >> [ ' + spreadKeys(nabes) + ' ]\n';
+
+// let showGraph = ({ edges }) =>
+// 	spreadEntries(edges).reduce((str, [node, nabes], id) =>
+// 		str + edgeString([node, nabes]),
+// 		'Showing Graph\n');
 
 let Graph = (...elements) => {
 	let gState = makeGraph(...elements);
@@ -31,6 +41,7 @@ let Graph = (...elements) => {
 		// addEdge: addEdge(gState),
 		// removeEdge: removeEdge(gState),
 		isAdjacent: isAdjacent(gState),
+		// showGraph: showGraph(gState),
 	};
 	// return { nodes: new Set(elements) };
 };
@@ -39,6 +50,7 @@ let Graph = (...elements) => {
 module.exports = Graph;
 module.exports.makeEdges = makeEdges;
 module.exports.makeGraph = makeGraph;
+// module.exports.showGraph = showGraph;
 module.exports.nodes = nodes;
 module.exports.edges = edges;
 module.exports.neighbors = neighbors;
