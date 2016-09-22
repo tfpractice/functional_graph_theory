@@ -45,9 +45,28 @@ fdescribe('Utils', function() {
 		});
 	});
 
-	describe('pathHasNode', () => {});
-	describe('x_pathHasNode', () => {});
-	describe('pathHasEntry', () => {});
-	describe('x_pathHasEntry', () => {});
+	describe('pathHasNode', () => {
+		it('checks a path for a node', function() {
+			expect(utils.pathHasNode(myEdges)(n0)).toBeTrue();
+		});
+	});
+	describe('x_pathHasNode', () => {
+		it('checks a path for a node', function() {
+			expect(utils.x_pathHasNode(myEdges)(n0)).toBeFalse();
+		});
+	});
+
+	describe('pathHasEntry', () => {
+		it('checks a path for an entry', function() {
+			let first = [...myEdges][0];
+			expect(utils.pathHasEntry(myEdges)(first)).toBeTrue();
+		});
+	});
+	describe('x_pathHasEntry', () => {
+		it('checks a path for an entry', function() {
+			let first = [...myEdges][0];
+			expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
+		});
+	});
 
 });
