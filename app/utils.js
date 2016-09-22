@@ -15,6 +15,23 @@ let x_pathHasNode = (path) => (node) => !pathHasNode(path)(node);
 let pathHasEntry = (path) => ([key, val]) => path.has(key);
 let x_pathHasEntry = (path) => ([key, val]) => !pathHasEntry(path)([key, val]);
 
+let pathString = (path) =>
+	spreadKeys(path).reduce((str, next, id, coll) =>
+		id === (coll.length - 1) ?
+		(str + next + ' }') :
+		(str + next + ' => '), '{ ');
+
+let edgeString = ([source, nabes]) =>
+	'{ Edge ' + source + ' } >> [ ' + spreadKeys(nabes) + ' ]\n';
+
+let componentString = ([node, set]) =>
+	' ' + node + ' { Component ' + firstKey(set) + '... ' + lastKey(set) + '}';
+
+let showGraph = ({ edges }) =>
+	spreadEntries(edges).reduce((str, [node, nabes], id) =>
+		str + edgeString([node, nabes]),
+		'Showing Graph\n');
+
 module.exports.spreadKeys = spreadKeys;
 module.exports.spreadValues = spreadValues;
 module.exports.spreadEntries = spreadEntries;
@@ -25,3 +42,4 @@ module.exports.pathHasNode = pathHasNode;
 module.exports.x_pathHasNode = x_pathHasNode;
 module.exports.pathHasEntry = pathHasEntry;
 module.exports.x_pathHasEntry = x_pathHasEntry;
+module.exports.componentString = componentString;

@@ -32,7 +32,7 @@ fdescribe('Graph', function() {
 		});
 		describe('neighbors(edge)(node)', () => {
 			it('returns a map entry of that nodes neighbors ', () => {
-				expect(neighbors(myGraph)(n0) instanceof Map).toBeTrue();
+				expect(neighbors(myGraph)(n0) instanceof Array).toBeTrue();
 
 			});
 		});
@@ -51,19 +51,26 @@ fdescribe('Graph', function() {
 				expect(showGraph(myGraph)).toBeString();
 			});
 		});
+		describe('addNodes', () => {
+			it('adds a node and edges entry for each additional node', () => {
+				addNodes(myGraph)(n7, n9);
+				expect(contains(myGraph)(n9)).toBeTrue();
+				expect(edges(myGraph).has(n9)).toBeTrue();
+			});
+		});
 		describe('addEdge(n0)(n1,weight)', () => {
 			it('updates each nodes edge entry', () => {
 				addEdge(myGraph)(n0)(n1, 2);
-				expect(neighbors(myGraph)(n0).has(n1)).toBeTrue();
-				expect(neighbors(myGraph)(n0).get(n1)).toBe(2);
+				expect(neighbors(myGraph)(n0)).toContain(n1);
+				expect(edges(myGraph).get(n0).get(n1)).toBe(2);
 			});
 		});
 		describe('removeEdge', () => {
 			it('removes an entry from the edgs map', () => {
 				addEdge(myGraph)(n0)(n1, 2);
 				removeEdge(myGraph)(n0)(n1);
-				expect(neighbors(myGraph)(n0).has(n1)).toBeFalse();
-				expect(neighbors(myGraph)(n0).get(n1)).toBeUndefined();
+				expect(neighbors(myGraph)(n0)).not.toContain(n1);
+				expect(edges(myGraph).get(n0).get(n1)).toBeUndefined();
 			});
 		});
 	});

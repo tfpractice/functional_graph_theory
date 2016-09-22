@@ -6,6 +6,7 @@ beforeAll(function() {
 	({ makeEdges, makeGraph, nodes, edges } = Graph);
 	({ neighbors, contains, isAdjacent } = Graph);
 	({ addEdge, removeEdge } = Graph);
+	({ addNodes, removeNode } = Graph);
 	({ clearNodes, clearEdges, showGraph } = Graph);
 	Node = (label = '', data = {}) => ({
 		label,
@@ -17,13 +18,13 @@ beforeAll(function() {
 });
 
 beforeEach(function() {
-	myNodes = Array(7).fill('node').map((el, id) =>
+	myNodes = Array(10).fill('node').map((el, id) =>
 		Node(`${el}::${id}`, { position: id })
 	);
-	altNodes = Array(7).fill('altnode').map((el, id) =>
+	altNodes = Array(10).fill('altnode').map((el, id) =>
 		Node(`${el}::${id}`, { position: id })
 	);
-	[n0, n1, n2, n3, n4, n5, n6] = myNodes;
-	myGraph = Graph(...myNodes);
+	[n0, n1, n2, n3, n4, n5, n6, n7, n8, n9] = myNodes;
+	myGraph = Graph(n0, n1, n2, n3, n4, n5, n6);
 	altGraph = Graph(...altNodes);
 });

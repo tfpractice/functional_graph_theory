@@ -51,15 +51,14 @@ fdescribe('traversal functions', () => {
 	describe('dijkstra', () => {
 		it('retuns the shortest path from a node to its neighbors', () => {
 			expect((trav.dijkstra(myGraph)(n0) instanceof Map)).toBeTrue();
+		});
+	});
+	describe('components', () => {
+		it('retuns a map of nodes and paths', () => {
+			expect((trav.components(myGraph) instanceof Map)).toBeTrue();
 
 		});
 	});
-	// describe('components', () => {
-	// 	it('retuns a map of nodes and paths', () => {
-	// 		expect((components(myGraph) instanceof Map)).toBeTrue();
-
-	// 	});
-	// });
 	// describe('pathString', () => {
 	// 	it('shows the insertion order of each node in a path', () => {
 	// 		console.log(pathString(trav.dfs(myGraph)(n0)));
