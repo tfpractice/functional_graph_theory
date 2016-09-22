@@ -1,4 +1,8 @@
 fdescribe('Graph', function() {
+	beforeAll(function() {
+		console.log('\n.........Graph Spec.........');
+	});
+
 	it('is a function', () => {
 		expect(Graph).toBeFunction();
 	});
@@ -44,8 +48,22 @@ fdescribe('Graph', function() {
 		});
 		describe('showGraph(graph)', () => {
 			it('returns a string representation the graph', () => {
-				console.log(showGraph(myGraph));
 				expect(showGraph(myGraph)).toBeString();
+			});
+		});
+		describe('addEdge(n0)(n1,weight)', () => {
+			it('updates each nodes edge entry', () => {
+				addEdge(myGraph)(n0)(n1, 2);
+				expect(neighbors(myGraph)(n0).has(n1)).toBeTrue();
+				expect(neighbors(myGraph)(n0).get(n1)).toBe(2);
+			});
+		});
+		describe('removeEdge', () => {
+			it('removes an entry from the edgs map', () => {
+				addEdge(myGraph)(n0)(n1, 2);
+				removeEdge(myGraph)(n0)(n1);
+				expect(neighbors(myGraph)(n0).has(n1)).toBeFalse();
+				expect(neighbors(myGraph)(n0).get(n1)).toBeUndefined();
 			});
 		});
 	});

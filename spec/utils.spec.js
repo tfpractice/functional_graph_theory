@@ -1,12 +1,14 @@
 fdescribe('Utils', function() {
 	let nabes0;
+	beforeAll(function() {
+		console.log('\n.........Utils Spec.........');
+	});
 
 	beforeEach(function() {
 		nabes0 = neighbors(myGraph)(n0);
 		myEdges = edges(myGraph);
 	});
-	// beforeAll(function() {
-	//     });
+
 	describe('spreadKeys', () => {
 		it('returns an array of Map keys', () => {
 			expect(utils.spreadKeys(myEdges)).toBeArray();

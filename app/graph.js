@@ -14,6 +14,13 @@ let nodes = ({ nodes = new Set() }) => nodes;
 let edges = ({ edges = new Map() }) => edges;
 let neighbors = ({ edges }) => (node) => edges.get(node);
 let contains = ({ nodes }) => (node) => nodes.has(node);
+
+let addEdge = (graph) => (n0) => (n1, weight = 0) =>
+	neighbors(graph)(n0).set(n1, weight) && neighbors(graph)(n1).set(n0, weight);
+
+let removeEdge = (graph) => (n0) => (n1) =>
+	neighbors(graph)(n0).delete(n1) && neighbors(graph)(n1).delete(n0);
+
 let clearNodes = ({ nodes }) => nodes.clear;
 let clearEdges = ({ edges }) => edges.clear;
 let isAdjacent = ({ edges }) => (n0) => (n1) =>
@@ -35,8 +42,8 @@ let Graph = (...elements) => {
 		neighbors: neighbors(gState),
 		contains: contains(gState),
 		clearEdges: clearEdges(gState),
-		// addEdge: addEdge(gState),
-		// removeEdge: removeEdge(gState),
+		addEdge: addEdge(gState),
+		removeEdge: removeEdge(gState),
 		isAdjacent: isAdjacent(gState),
 		toString: showGraph(gState),
 	};
@@ -48,6 +55,8 @@ module.exports.makeGraph = makeGraph;
 module.exports.showGraph = showGraph;
 module.exports.nodes = nodes;
 module.exports.edges = edges;
+module.exports.addEdge = addEdge;
+module.exports.removeEdge = removeEdge;
 module.exports.neighbors = neighbors;
 module.exports.contains = contains;
 module.exports.clearNodes = clearNodes;

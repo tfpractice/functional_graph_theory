@@ -1,9 +1,11 @@
 beforeAll(function() {
 	require('jasmine-expect');
 	this.App = require('../../index');
-	({ Graph, utils } = this.App);
+	({ Graph, utils, traversals } = this.App);
+	trav = traversals;
 	({ makeEdges, makeGraph, nodes, edges } = Graph);
 	({ neighbors, contains, isAdjacent } = Graph);
+	({ addEdge, removeEdge } = Graph);
 	({ clearNodes, clearEdges, showGraph } = Graph);
 	Node = (label = '', data = {}) => ({
 		label,
