@@ -1,5 +1,5 @@
 fdescribe('Graph', function() {
-	it('is a function', function() {
+	it('is a function', () => {
 		expect(Graph).toBeFunction();
 	});
 
@@ -27,19 +27,25 @@ fdescribe('Graph', function() {
 			});
 		});
 		describe('neighbors(edge)(node)', () => {
-			it('returns a map entry of that nodes neighbors ', function() {
+			it('returns a map entry of that nodes neighbors ', () => {
 				expect(neighbors(myGraph)(n0) instanceof Map).toBeTrue();
 
 			});
 		});
 		describe('contains(graph)(node)', () => {
-			it('checks for the presence of a node in the graph', function() {
+			it('checks for the presence of a node in the graph', () => {
 				expect(contains(myGraph)(n0)).toBeTrue();
 			});
 		});
 		describe('isAdjacent(graph)(n0)(n1)', () => {
-			it('checks for the presence of a node in the graph', function() {
+			it('checks for the presence of a node in the graph', () => {
 				expect(isAdjacent(myGraph)(n0)(n1)).toBeFalse();
+			});
+		});
+		describe('showGraph(graph)', () => {
+			it('returns a string representation the graph', () => {
+				console.log(showGraph(myGraph));
+				expect(showGraph(myGraph)).toBeString();
 			});
 		});
 	});

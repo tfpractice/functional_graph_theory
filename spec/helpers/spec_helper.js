@@ -4,7 +4,7 @@ beforeAll(function() {
 	({ Graph, utils } = this.App);
 	({ makeEdges, makeGraph, nodes, edges } = Graph);
 	({ neighbors, contains, isAdjacent } = Graph);
-	({ clearNodes, clearEdges } = Graph);
+	({ clearNodes, clearEdges, showGraph } = Graph);
 	Node = (label = '', data = {}) => ({
 		label,
 		data,
