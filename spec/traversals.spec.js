@@ -5,6 +5,12 @@ fdescribe('traversal functions', () => {
 	});
 
 	beforeEach(function() {
+		n10 = Node('node10', { position: 10 });
+		n11 = Node('node11', { position: 11 });
+		n12 = Node('node12', { position: 12 });
+		n13 = Node('node13', { position: 13 });
+		evenGraph = Graph(...myNodes, n10, n12);
+		oddGraph = Graph(...myNodes, n11, n13);
 		addEdge(myGraph)(n0)(n1, 1);
 		addEdge(myGraph)(n0)(n2, 2);
 		addEdge(myGraph)(n1)(n4, 4);
@@ -14,6 +20,30 @@ fdescribe('traversal functions', () => {
 		addEdge(myGraph)(n1)(n2, 4);
 		addEdge(myGraph)(n3)(n4, 8);
 		addEdge(myGraph)(n5)(n6, 7);
+		//
+		//
+		addEdge(evenGraph)(n0)(n1, 11);
+		addEdge(evenGraph)(n0)(n9, 22);
+		addEdge(evenGraph)(n0)(n2, 1);
+		addEdge(evenGraph)(n2)(n4, 2);
+		addEdge(evenGraph)(n4)(n6, 4);
+		addEdge(evenGraph)(n6)(n8, 6);
+		addEdge(evenGraph)(n8)(n0, 3);
+		addEdge(evenGraph)(n10)(n12, 3);
+		addEdge(evenGraph)(n12)(n6, 3);
+
+		addEdge(oddGraph)(n0)(n1, 11);
+		addEdge(oddGraph)(n0)(n9, 22);
+		addEdge(oddGraph)(n1)(n3, 2);
+		addEdge(oddGraph)(n3)(n5, 4);
+		addEdge(oddGraph)(n5)(n7, 6);
+		addEdge(oddGraph)(n7)(n9, 3);
+		addEdge(oddGraph)(n9)(n1, 3);
+		addEdge(oddGraph)(n11)(n13, 3);
+		addEdge(oddGraph)(n13)(n7, 3);
+		myEdges = edges(myGraph);
+		oddEdges = edges(oddGraph);
+		evenEdges = edges(evenGraph);
 		myDepth = trav.dfs(myGraph)(n0);
 		myBreadth = trav.bfs(myGraph)(n5);
 	});
@@ -57,6 +87,34 @@ fdescribe('traversal functions', () => {
 		it('retuns a map of nodes and paths', () => {
 			expect((trav.components(myGraph) instanceof Map)).toBeTrue();
 
+		});
+	});
+	describe('intersection', () => {
+		it('returns an array of [k,v] pairs which share keys', function() {
+			let nInter = utils.intersection(myEdges.get(n0))(myEdges.get(n1));
+			// console.log('nInter', new Map(nInter));
+			expect(nInter).toBeArray();
+		});
+	});
+	describe('difference', () => {
+		it('returns an array of [k,v] pairs which share keys', function() {
+			let nDiff = utils.difference(myEdges.get(n0))(myEdges.get(n1));
+			// console.log('nDiff', new Map(nDiff));
+			expect(nDiff).toBeArray();
+		});
+	});
+	describe('union', () => {
+		it('returns an array of [k,v] pairs which share keys', function() {
+			let nUnion = utils.union(myEdges.get(n0))(myEdges.get(n1));
+			// console.log('nUnion', new Map(nUnion));
+			expect(nUnion).toBeArray();
+		});
+	});
+	describe('mergeEdges', () => {
+		it('returns an array of [k,v] pairs which share keys', function() {
+			let gMerge = utils.mergeEdges(oddGraph)(evenGraph);
+			// console.log('nUnion',(gMerge));
+			// expect(nUnion).toBeArray();
 		});
 	});
 	// describe('pathString', () => {

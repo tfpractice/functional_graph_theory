@@ -32,6 +32,23 @@ let showGraph = ({ edges }) =>
 		str + edgeString([node, nabes]),
 		'Showing Graph\n');
 
+let intersection = (m0) => (m1) =>
+	spreadEntries(m0).filter(([k, v]) => m1.has(k));
+let difference = (m0) => (m1) =>
+	spreadEntries(m0).filter(([k, v]) => !m1.has(k));
+let union = (m0) => (m1) =>
+	spreadEntries(m0).concat(difference(m1)(m0));
+let mergeEdges = ({ edges: e0 }) => ({ edges: e1 }) => {
+	let newEdges = difference(e1)(e0);
+	// console.log(newEdges);
+	let united = union(e0)(e1);
+	let uMap = new Map(united);
+	united.forEach(edge => console.log(edgeString(edge)));
+
+	// console.log('united', united);
+
+};
+
 module.exports.spreadKeys = spreadKeys;
 module.exports.spreadValues = spreadValues;
 module.exports.spreadEntries = spreadEntries;
@@ -43,3 +60,7 @@ module.exports.x_pathHasNode = x_pathHasNode;
 module.exports.pathHasEntry = pathHasEntry;
 module.exports.x_pathHasEntry = x_pathHasEntry;
 module.exports.componentString = componentString;
+module.exports.mergeEdges = mergeEdges;
+module.exports.intersection = intersection;
+module.exports.difference = difference;
+module.exports.union = union;

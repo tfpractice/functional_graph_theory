@@ -26,5 +26,5 @@ beforeEach(function() {
 	);
 	[n0, n1, n2, n3, n4, n5, n6, n7, n8, n9] = myNodes;
 	myGraph = Graph(n0, n1, n2, n3, n4, n5, n6);
-	altGraph = Graph(...altNodes);
+	altGraph = Graph(n4, n5, n6, n7, n8, n9);
 });
