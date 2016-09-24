@@ -7,7 +7,7 @@ beforeAll(function() {
 	({ neighbors, contains, isAdjacent } = Graph);
 	({ addEdge, removeEdge } = Graph);
 	({ addNodes, removeNode } = Graph);
-	({ importEdge } = Graph);
+	({ importEdge, mergeGraphs } = Graph);
 	({ clearNodes, clearEdges, showGraph } = Graph);
 	Node = (label = '', data = {}) => ({
 		label,
@@ -20,10 +20,12 @@ beforeAll(function() {
 	nEdges = ({ nodes, edges }) => eFilter(Array.from(nodes))
 		.reduce((prev, next, id) => {
 			addEdge({ nodes, edges })(prev)(next, id * 2);
+			return next;
 		});
 	oEdges = ({ nodes, edges }) => oFilter(Array.from(nodes))
 		.reduce((prev, next, id) => {
 			addEdge({ nodes, edges })(prev)(next, (id * 2) + 1);
+			return next;
 		});
 
 });

@@ -79,6 +79,15 @@ describe('Graph', function() {
 				expect(edges(myGraph).get(n0).get(n1)).toBeUndefined();
 			});
 		});
+		fdescribe('mergeGraphs(n0)(n1,weight)', () => {
+			it('merges nodes and edges of two graphs', () => {
+				mergeGraphs(evenGraph)(oddGraph);
+				console.log(showGraph(evenGraph));
+				expect(nodes(evenGraph).has(n15)).toBeTrue();
+				// expect().toContain(n1);
+				// expect(edges(myGraph).get(n0).get(n1)).toBe(2);
+			});
+		});
 	});
 
 });
