@@ -29,7 +29,7 @@ let addEdge = ({ edges, nodes }) => (n0) => (n1, weight = 0) => {
 	addNodes({ edges, nodes })(n0, n1);
 	if (!isAdjacent({ edges })(n0)(n1)) {
 		edges.get(n0).set(n1, weight);
-		edges.get(n1).set(n0, weight);
+		// edges.get(n1).set(n0, weight);
 	}
 };
 
@@ -52,7 +52,11 @@ let removeNode = ({ nodes, edges }) => (exNode) => {
 let clearNodes = ({ nodes }) => nodes.clear;
 let clearEdges = ({ edges }) => edges.clear;
 
-// let mergeGraphs = ({ edges:e0, nodes:n0 }) => ({ edges:e1, nodes:n1 }) =>
+let mergeGraphs = ({ edges: e0, nodes: n0 }) => ({ edges: e1, nodes: n1 }) => {
+	for (let [source, nabes] of e1) {
+		importEdge({ edges: e0 })([source, nabes]);
+	}
+};
 
 let edgeString = ([source, nabes]) =>
 	'{ Edge ' + source + ' } >> [ ' + spreadKeys(nabes) + ' ]\n';
