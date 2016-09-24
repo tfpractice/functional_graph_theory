@@ -1,4 +1,4 @@
-fdescribe('Utils', function() {
+describe('Utils', function() {
 	let nabes0;
 	beforeAll(function() {
 		console.log('\n.........Utils Spec.........');
@@ -28,7 +28,7 @@ fdescribe('Utils', function() {
 	});
 	describe('lastKey', () => {
 		it('retrievs the last key in a map', () => {
-			expect(utils.lastKey(myEdges)).toBe(n6);
+			expect(utils.lastKey(myEdges)).toBe(n9);
 
 		});
 	});

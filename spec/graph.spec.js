@@ -1,4 +1,4 @@
-fdescribe('Graph', function() {
+describe('Graph', function() {
 	beforeAll(function() {
 		console.log('\n.........Graph Spec.........');
 	});
@@ -36,6 +36,8 @@ fdescribe('Graph', function() {
 
 			});
 		});
+	});
+	describe('operators', () => {
 		describe('contains(graph)(node)', () => {
 			it('checks for the presence of a node in the graph', () => {
 				expect(contains(myGraph)(n0)).toBeTrue();
@@ -43,7 +45,7 @@ fdescribe('Graph', function() {
 		});
 		describe('isAdjacent(graph)(n0)(n1)', () => {
 			it('checks for the presence of a node in the graph', () => {
-				expect(isAdjacent(myGraph)(n0)(n1)).toBeFalse();
+				expect(isAdjacent(myGraph)(n0)(n6)).toBeFalse();
 			});
 		});
 		describe('showGraph(graph)', () => {
@@ -59,6 +61,13 @@ fdescribe('Graph', function() {
 			});
 		});
 		describe('addEdge(n0)(n1,weight)', () => {
+			it('updates each nodes edge entry', () => {
+				addEdge(myGraph)(n0)(n1, 2);
+				expect(neighbors(myGraph)(n0)).toContain(n1);
+				expect(edges(myGraph).get(n0).get(n1)).toBe(2);
+			});
+		});
+		describe('importEdge(n0)(n1,weight)', () => {
 			it('updates each nodes edge entry', () => {
 				addEdge(myGraph)(n0)(n1, 2);
 				expect(neighbors(myGraph)(n0)).toContain(n1);
