@@ -67,11 +67,5 @@ describe('traversal functions', () => {
 			expect(nUnion).toBeArray();
 		});
 	});
-	describe('mergeEdges', () => {
-		it('returns an array of [k,v] pairs which share keys', function() {
-			let gMerge = utils.mergeEdges(evenGraph)(oddGraph);
-
-		});
-	});
 
 });

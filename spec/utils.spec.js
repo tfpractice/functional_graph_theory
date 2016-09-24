@@ -69,25 +69,25 @@ describe('Utils', function() {
 			let first = [...myEdges][0];
 			expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
 		});
+		// });
+		// describe('intersection', () => {
+		// 	it('returns an array of [k,v] pairs which share keys', function() {
+		// 		console.log(myEdges);
+		// 		let nInter = utils.intersection(myEdges.get(n0)(myEdges.get(n1)));
+		// 		expect(nInter).toBeArray();
+		// 	});
+		// });
+		// describe('x_pathHasEntry', () => {
+		// it('checks a path for an entry', function() {
+		// let first = [...myEdges][0];
+		// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
+		// });
+		// });
+		// describe('x_pathHasEntry', () => {
+		// it('checks a path for an entry', function() {
+		// let first = [...myEdges][0];
+		// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
+		// });
 	});
-	// describe('intersection', () => {
-	// 	it('returns an array of [k,v] pairs which share keys', function() {
-	// 		console.log(myEdges);
-	// 		let nInter = utils.intersection(myEdges.get(n0)(myEdges.get(n1)));
-	// 		expect(nInter).toBeArray();
-	// 	});
-	// });
-	// describe('x_pathHasEntry', () => {
-	// it('checks a path for an entry', function() {
-	// let first = [...myEdges][0];
-	// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
-	// });
-	// });
-	// describe('x_pathHasEntry', () => {
-	// it('checks a path for an entry', function() {
-	// let first = [...myEdges][0];
-	// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
-	// });
-	// });
 
 });
