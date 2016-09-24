@@ -62,21 +62,18 @@ describe('Graph', function() {
 		});
 		describe('addEdge(n0)(n1,weight)', () => {
 			it('updates each nodes edge entry', () => {
-				addEdge(myGraph)(n0)(n1, 2);
 				expect(neighbors(myGraph)(n0)).toContain(n1);
 				expect(edges(myGraph).get(n0).get(n1)).toBe(2);
 			});
 		});
 		describe('importEdge(n0)(n1,weight)', () => {
 			it('updates each nodes edge entry', () => {
-				addEdge(myGraph)(n0)(n1, 2);
 				expect(neighbors(myGraph)(n0)).toContain(n1);
 				expect(edges(myGraph).get(n0).get(n1)).toBe(2);
 			});
 		});
 		describe('removeEdge', () => {
 			it('removes an entry from the edgs map', () => {
-				addEdge(myGraph)(n0)(n1, 2);
 				removeEdge(myGraph)(n0)(n1);
 				expect(neighbors(myGraph)(n0)).not.toContain(n1);
 				expect(edges(myGraph).get(n0).get(n1)).toBeUndefined();

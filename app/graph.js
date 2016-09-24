@@ -13,8 +13,9 @@ let makeGraph = (...elements) => ({
 let nodes = ({ nodes = new Set }) => nodes;
 let edges = ({ edges = new Map }) => edges;
 
-let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
 let contains = ({ nodes }) => (node) => nodes.has(node);
+let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
+let isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
 
 let addNodes = ({ nodes, edges }) => (...additional) =>
 	additional
@@ -26,7 +27,10 @@ let addNodes = ({ nodes, edges }) => (...additional) =>
 
 let addEdge = ({ edges, nodes }) => (n0) => (n1, weight = 0) => {
 	addNodes({ edges, nodes })(n0, n1);
-	edges.get(n0).set(n1, weight) && edges.get(n1).set(n0, weight);
+	if (!isAdjacent({ edges })(n0)(n1)) {
+		edges.get(n0).set(n1, weight);
+		edges.get(n1).set(n0, weight);
+	}
 };
 
 let importEdge = ({ edges }) => ([source, nabes]) => {
@@ -39,11 +43,16 @@ let importEdge = ({ edges }) => ([source, nabes]) => {
 let removeEdge = ({ edges }) => (n0) => (n1) =>
 	edges.get(n0).delete(n1) && edges.get(n1).delete(n0);
 
+let removeNode = ({ nodes, edges }) => (exNode) => {
+	neighbors({ edges })(exNode).forEach(nabe =>
+		removeEdge({ edges })(nabe)(exNode));
+	nodes.delete(exNode);
+};
+
 let clearNodes = ({ nodes }) => nodes.clear;
 let clearEdges = ({ edges }) => edges.clear;
 
-let isAdjacent = ({ edges }) => (n0) => (n1) =>
-	edges.get(n0).has(n1);
+// let mergeGraphs = ({ edges:e0, nodes:n0 }) => ({ edges:e1, nodes:n1 }) =>
 
 let edgeString = ([source, nabes]) =>
 	'{ Edge ' + source + ' } >> [ ' + spreadKeys(nabes) + ' ]\n';
@@ -52,12 +61,6 @@ let showGraph = ({ edges }) =>
 	spreadEntries(edges).reduce((str, [node, nabes], id) =>
 		str + edgeString([node, nabes]),
 		'Showing Graph\n');
-
-let removeNode = ({ nodes, edges }) => (exNode) => {
-	neighbors({ edges })(exNode).forEach(nabe =>
-		removeEdge({ edges })(nabe)(exNode));
-	nodes.delete(exNode);
-};
 
 let Graph = (...elements) => {
 	let gState = makeGraph(...elements);

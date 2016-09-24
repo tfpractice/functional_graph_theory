@@ -48,7 +48,7 @@ beforeEach(function() {
 	evenGraph = Graph(...firstTen, ...eNodes);
 	oddGraph = Graph(...firstTen, ...oNodes);
 
-	addEdge(myGraph)(n0)(n1, 1);
+	addEdge(myGraph)(n0)(n1, 2);
 	addEdge(myGraph)(n0)(n2, 2);
 	addEdge(myGraph)(n1)(n4, 4);
 	addEdge(myGraph)(n1)(n6, 6);
