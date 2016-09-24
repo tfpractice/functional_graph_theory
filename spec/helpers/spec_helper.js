@@ -37,15 +37,17 @@ beforeEach(function() {
 	);
 	firstTen = myNodes.slice(0, 10);
 	lastTen = myNodes.slice(-10);
+	[n0, n1, n2, n3, n4, n5, n6, n7, n8, n9] = firstTen;
+	[n10, n11, n12, n13, n14, n15, n16, n17, n18, n19] = lastTen;
 
-	eNodes = eFilter(myNodes);
-	oNodes = oFilter(myNodes);
+	eNodes = eFilter(lastTen);
+	oNodes = oFilter(lastTen);
 
-	[n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13] = myNodes;
 	myGraph = Graph(...firstTen);
 	altGraph = Graph(n4, n5, n6, n7, n8, n9);
 	evenGraph = Graph(...firstTen, ...eNodes);
 	oddGraph = Graph(...firstTen, ...oNodes);
+
 	addEdge(myGraph)(n0)(n1, 1);
 	addEdge(myGraph)(n0)(n2, 2);
 	addEdge(myGraph)(n1)(n4, 4);
@@ -55,8 +57,7 @@ beforeEach(function() {
 	addEdge(myGraph)(n1)(n2, 4);
 	addEdge(myGraph)(n3)(n4, 8);
 	addEdge(myGraph)(n5)(n6, 7);
-	//
-	//
+
 	addEdge(evenGraph)(n0)(n1, 11);
 	addEdge(evenGraph)(n0)(n9, 22);
 	nEdges(evenGraph);
@@ -68,5 +69,4 @@ beforeEach(function() {
 	myEdges = edges(myGraph);
 	oddEdges = edges(oddGraph);
 	evenEdges = edges(evenGraph);
-	myDepth = trav.dfs(myGraph)(n0);
 });
