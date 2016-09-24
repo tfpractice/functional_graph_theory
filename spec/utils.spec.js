@@ -23,22 +23,18 @@ describe('Utils', function() {
 	describe('spreadEntries', () => {
 		it('returns an array of key values pairs', () => {
 			expect(utils.spreadEntries(myEdges)[0]).toBeArray();
-
 		});
 	});
 	describe('lastKey', () => {
 		it('retrievs the last key in a map', () => {
 			expect(utils.lastKey(myEdges)).toBe(n9);
-
 		});
 	});
 	describe('firstKey', () => {
 		it('retrieves the last key in a map', () => {
 			expect(utils.firstKey(myEdges)).toBe(n0);
-
 		});
 	});
-
 	describe('rmFirst', () => {
 		it('deletes the last key in a map', () => {
 			let first = utils.rmFirst((myGraph.nodes));
@@ -46,7 +42,6 @@ describe('Utils', function() {
 			expect(contains(myGraph)(n0)).toBeFalse();
 		});
 	});
-
 	describe('pathHasNode', () => {
 		it('checks a path for a node', function() {
 			expect(utils.pathHasNode(myEdges)(n0)).toBeTrue();
@@ -57,7 +52,6 @@ describe('Utils', function() {
 			expect(utils.x_pathHasNode(myEdges)(n0)).toBeFalse();
 		});
 	});
-
 	describe('pathHasEntry', () => {
 		it('checks a path for an entry', function() {
 			let first = [...myEdges][0];
@@ -69,25 +63,6 @@ describe('Utils', function() {
 			let first = [...myEdges][0];
 			expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
 		});
-		// });
-		// describe('intersection', () => {
-		// 	it('returns an array of [k,v] pairs which share keys', function() {
-		// 		console.log(myEdges);
-		// 		let nInter = utils.intersection(myEdges.get(n0)(myEdges.get(n1)));
-		// 		expect(nInter).toBeArray();
-		// 	});
-		// });
-		// describe('x_pathHasEntry', () => {
-		// it('checks a path for an entry', function() {
-		// let first = [...myEdges][0];
-		// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
-		// });
-		// });
-		// describe('x_pathHasEntry', () => {
-		// it('checks a path for an entry', function() {
-		// let first = [...myEdges][0];
-		// expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
-		// });
-	});
 
+	});
 });
