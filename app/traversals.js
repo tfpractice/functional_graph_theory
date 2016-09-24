@@ -5,17 +5,6 @@ const { pathHasNode, x_pathHasNode } = UTILS;
 const { pathHasEntry, x_pathHasEntry } = UTILS;
 const { componentString } = UTILS;
 
-// let augmentPath = ({ edges }) => (path) => (node) => {
-//  path = path || initPath({ edges })(node);
-//  let pred = lastKey(path);
-//  let pWeight = path.get(pred).weight;
-//  let currWeight = edges.get(pred).get(node);
-//  let weight = pWeight + currWeight;
-//  let length = path.size;
-//  console.log('pred, weight, length', pred, weight, length);
-//  return path.set(node, { pred, weight, length });
-// };
-
 let initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
@@ -103,9 +92,6 @@ let components = ({ edges }) => {
 		if (!cMap.has(node)) { visitComponent(new Set)(node); }
 	}
 
-	// let show = (cMap) => spreadEntries(cMap).reduce((str, [edge, comp]) =>
-	//  str + componentString(comp) + '\n', 'showing components\n');
-	// console.log(cMap);
 	return cMap;
 
 };
@@ -118,13 +104,3 @@ module.exports = {
 	unvisitedMap,
 	unvisitedNeighbors,
 };
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//

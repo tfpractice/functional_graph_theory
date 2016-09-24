@@ -1,4 +1,6 @@
 const utils = require('./utils');
+const traversals = require('./traversals');
+const { dfs, bfs, components, dijkstra } = traversals;
 const { spreadKeys, spreadEntries } = utils;
 const { edgeString, pathString, graphString, showGraph } = utils;
 
@@ -68,26 +70,27 @@ let mergeGraphs = ({ edges: e0, nodes: n0 }) => ({ edges: e1, nodes: n1 }) => {
 
 };
 
-// let edgeString = ([source, nabes]) =>
-// 	'{ Edge ' + source + ' } >> [ ' + spreadKeys(nabes) + ' ]\n';
-
-// let showGraph = ({ edges }) =>
-// 	spreadEntries(edges).reduce((str, [node, nabes], id) =>
-// 		str + edgeString([node, nabes]),
-// 		'Showing Graph\n');
-
 let Graph = (...elements) => {
 	let gState = makeGraph(...elements);
 	return {
-		nodes: nodes(gState),
-		edges: edges(gState),
-		neighbors: neighbors(gState),
-		contains: contains(gState),
-		clearEdges: clearEdges(gState),
 		addEdge: addEdge(gState),
-		removeEdge: removeEdge(gState),
+		addNodes: addNodes(gState),
+		clearEdges: clearEdges(gState),
+		clearNodes: clearNodes(gState),
+		contains: contains(gState),
+		edges: edges(gState),
+		importEdge: importEdge(gState),
 		isAdjacent: isAdjacent(gState),
-		toString: showGraph(gState),
+		mergeGraphs: mergeGraphs(gState),
+		neighbors: neighbors(gState),
+		nodes: nodes(gState),
+		removeEdge: removeEdge(gState),
+		removeNode: removeNode(gState),
+		showGraph: showGraph(gState),
+		dfs: dfs(gState),
+		bfs: bfs(gState),
+		components: components(gState),
+		dijkstra: dijkstra(gState),
 	};
 };
 
