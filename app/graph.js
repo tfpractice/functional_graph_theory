@@ -16,13 +16,13 @@ let makeGraph = (...elements) => ({
 let nodes = ({ nodes = new Set }) => nodes;
 let edges = ({ edges = new Map }) => edges;
 
-let contains = ({ nodes }) => (node) => nodes.has(node);
+let contains = ({ nodes, edges }) => (node) => edges.has(node);
 let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
 let isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
 
 let addNodes = ({ nodes, edges }) => (...additional) =>
 	additional
-	.filter(n => !nodes.has(n))
+	.filter(n => !edges.has(n))
 	.forEach(n => {
 		nodes.add(n);
 		edges.set(n, new Map);

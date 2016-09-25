@@ -36,10 +36,11 @@ describe('Utils', function() {
 		});
 	});
 	describe('rmFirst', () => {
-		it('deletes the last key in a map', () => {
-			let first = utils.rmFirst((myGraph.nodes));
+		it('deletes the last key in a map/set', () => {
+			let copied = new Set(myGraph.nodes);
+			let first = utils.rmFirst((copied));
 			expect(first).toBe(n0);
-			expect(contains(myGraph)(n0)).toBeFalse();
+			expect(copied.has(n0)).toBeFalse();
 		});
 	});
 	describe('pathHasNode', () => {
