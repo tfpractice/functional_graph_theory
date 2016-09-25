@@ -1,60 +1,64 @@
 const utils = require('./utils');
 const traversals = require('./traversals');
 const { dfs, bfs, components, dijkstra } = traversals;
-const { spreadKeys, spreadEntries } = utils;
+const { spreadKeys, spreadValues, spreadEntries } = utils;
+const { hasKey, x_hasKey } = utils;
 const { edgeString, pathString, graphString, showGraph } = utils;
 
+let initEdge = ({ edges }) => (src, nabes = new Map) =>
+	edges.set(src, nabes);
+
 let makeEdges = (...elements) =>
-	elements.reduce((eMap, next) =>
-		eMap.set(next, new Map()), new Map());
+	spreadValues(new Set(elements)).reduce((eMap, next) =>
+		eMap.set(next, new Map), new Map);
 
 let makeGraph = (...elements) => ({
 	nodes: new Set(elements),
 	edges: makeEdges(...elements),
 });
 
-let nodes = ({ nodes = new Set }) => nodes;
+let nodes = ({ edges = new Map }) => new Set(spreadKeys(edges));
 let edges = ({ edges = new Map }) => edges;
 
-let contains = ({ nodes, edges }) => (node) => edges.has(node);
+let contains = ({ edges }) => (node) => edges.has(node);
+let x_contains = ({ edges }) => (node) => !edges.has(node);
 let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
 let isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
 
-let addNodes = ({ nodes, edges }) => (...additional) =>
+let addNodes = ({ edges }) => (...additional) =>
 	additional
-	.filter(n => !edges.has(n))
+	.filter(x_hasKey(edges))
 	.forEach(n => {
-		nodes.add(n);
 		edges.set(n, new Map);
 	});
 
-let addEdge = ({ edges, nodes }) => (n0) => (n1, weight = 0) => {
-	addNodes({ edges, nodes })(n0, n1);
+let addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
+	addNodes({ edges })(n0, n1);
 	if (!isAdjacent({ edges })(n0)(n1)) {
 		edges.get(n0).set(n1, weight);
 		edges.get(n1).set(n0, weight);
 	}
 
-	return { edges, nodes };
+	return { edges };
 };
 
-let importEdge = ({ edges, nodes }) => ([source, nabes]) => {
-	addNodes({ edges, nodes })(source);
+let importEdge = ({ edges }) => ([source, nabes]) => {
+	addNodes({ edges })(source);
 	for (let [nabe, weight] of nabes) {
 		addEdge({ edges, nodes })(source)(nabe, weight);
 	}
 
-	return { edges, nodes };
+	return { edges };
 };
 
 let removeEdge = ({ edges }) => (n0) => (n1) =>
 	edges.get(n0).delete(n1) && edges.get(n1).delete(n0);
 
-let removeNode = ({ nodes, edges }) => (exNode) => {
+let removeNode = ({ edges }) => (exNode) => {
 	neighbors({ edges })(exNode).forEach(nabe =>
 		removeEdge({ edges })(nabe)(exNode));
-	nodes.delete(exNode);
-	return { edges, nodes };
+	edges.delete(exNode);
+	return { edges };
 
 };
 

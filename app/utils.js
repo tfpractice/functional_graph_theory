@@ -1,19 +1,21 @@
-let spreadKeys = (coll) => [ ...coll.keys() ];
-let spreadValues = (coll) => [ ...coll.values() ];
-let spreadEntries = (coll) => [ ...coll.entries() ];
+let spreadKeys = (coll) => [...coll.keys()];
+let spreadValues = (coll) => [...coll.values()];
+let spreadEntries = (coll) => [...coll.entries()];
 let lastKey = (coll) => spreadKeys(coll).pop();
 let firstKey = (coll) => spreadKeys(coll).shift();
 
 let rmFirst = (set) => {
-    let elem = [ ...set ].shift();
-    set.delete(elem);
-    return elem;
+	let elem = [...set].shift();
+	set.delete(elem);
+	return elem;
 };
 
+let hasKey = (coll) => (key) => coll.has(key);
+let x_hasKey = (coll) => (key) => !coll.has(key);
 let pathHasNode = (path) => (node) => path.has(node);
 let x_pathHasNode = (path) => (node) => !pathHasNode(path)(node);
 let pathHasEntry = (path) => ([key, val]) => path.has(key);
-let x_pathHasEntry = (path) => ([key, val]) => !pathHasEntry(path)([ key, val ]);
+let x_pathHasEntry = (path) => ([key, val]) => !pathHasEntry(path)([key, val]);
 
 let pathString = (path) =>
 	spreadKeys(path).reduce((str, next, id, coll) =>
@@ -29,7 +31,7 @@ let componentString = ([node, set]) =>
 
 let graphString = (edges) =>
 	spreadEntries(edges).reduce((str, [node, nabes], id) =>
-		str + edgeString([ node, nabes ]),
+		str + edgeString([node, nabes]),
 		'Showing Edges\n');
 
 let showGraph = ({ edges }) =>
@@ -45,6 +47,8 @@ let union = (m0) => (m1) =>
 module.exports.spreadKeys = spreadKeys;
 module.exports.spreadValues = spreadValues;
 module.exports.spreadEntries = spreadEntries;
+module.exports.hasKey = hasKey;
+module.exports.x_hasKey = x_hasKey;
 module.exports.lastKey = lastKey;
 module.exports.firstKey = firstKey;
 module.exports.rmFirst = rmFirst;
