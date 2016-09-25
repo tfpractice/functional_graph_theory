@@ -5,12 +5,12 @@ const { spreadKeys, spreadValues, spreadEntries } = utils;
 const { hasKey, x_hasKey } = utils;
 const { edgeString, pathString, graphString, showGraph } = utils;
 
-let initEdge = ({ edges }) => (src, nabes = new Map) =>
+let initEdge = (edges) => (src, nabes = new Map) =>
 	edges.set(src, nabes);
 
 let makeEdges = (...elements) =>
-	spreadValues(new Set(elements)).reduce((eMap, next) =>
-		eMap.set(next, new Map), new Map);
+	spreadValues(new Set(elements))
+	.reduce((eMap, next) => initEdge(eMap)(next), new Map);
 
 let makeGraph = (...elements) => ({
 	nodes: new Set(elements),
@@ -20,17 +20,13 @@ let makeGraph = (...elements) => ({
 let nodes = ({ edges = new Map }) => new Set(spreadKeys(edges));
 let edges = ({ edges = new Map }) => edges;
 
-let contains = ({ edges }) => (node) => edges.has(node);
-let x_contains = ({ edges }) => (node) => !edges.has(node);
+let contains = ({ edges }) => (node) => hasKey(edges)(node);
+let x_contains = ({ edges }) => (node) => x_hasKey(edges)(node);
 let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
 let isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
 
 let addNodes = ({ edges }) => (...additional) =>
-	additional
-	.filter(x_hasKey(edges))
-	.forEach(n => {
-		edges.set(n, new Map);
-	});
+	additional.filter(x_hasKey(edges)).forEach(n => initEdge(edges)(n));
 
 let addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 	addNodes({ edges })(n0, n1);
@@ -43,36 +39,33 @@ let addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 };
 
 let importEdge = ({ edges }) => ([source, nabes]) => {
-	addNodes({ edges })(source);
-	for (let [nabe, weight] of nabes) {
-		addEdge({ edges, nodes })(source)(nabe, weight);
-	}
+	nabes.forEach((weight, nabe) =>
+		addEdge({ edges })(source)(nabe, weight));
 
 	return { edges };
 };
 
-let removeEdge = ({ edges }) => (n0) => (n1) =>
-	edges.get(n0).delete(n1) && edges.get(n1).delete(n0);
+let mergeGraphs = ({ edges: e0 }) => ({ edges: e1 }) => {
+	e1.forEach((nabes, source) =>
+		importEdge({ edges: e0 })([source, nabes]));
+
+	return { edges: e0, nodes: n0 };
+
+};
+
+let removeEdge = ({ edges }) => (src) => (nabe) =>
+	edges.get(src).delete(nabe) && edges.get(nabe).delete(src);
 
 let removeNode = ({ edges }) => (exNode) => {
-	neighbors({ edges })(exNode).forEach(nabe =>
-		removeEdge({ edges })(nabe)(exNode));
+	neighbors({ edges })(exNode).forEach(removeEdge({ edges })(exNode));
 	edges.delete(exNode);
+
 	return { edges };
 
 };
 
 let clearNodes = ({ nodes }) => nodes.clear;
 let clearEdges = ({ edges }) => edges.clear;
-
-let mergeGraphs = ({ edges: e0, nodes: n0 }) => ({ edges: e1, nodes: n1 }) => {
-	for (let [source, nabes] of e1) {
-		importEdge({ edges: e0, nodes: n0 })([source, nabes]);
-	}
-
-	return { edges: e0, nodes: n0 };
-
-};
 
 let Graph = (...elements) => {
 	let gState = makeGraph(...elements);
