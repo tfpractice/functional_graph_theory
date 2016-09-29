@@ -49,6 +49,7 @@ describe('Graph', function() {
 		describe('addNodes', () => {
 			it('adds a node and edges entry for each additional node', () => {
 				addNodes(myGraph)(n7, n9);
+				console.log(addNodes(myGraph)(n7, n9));
 				expect(contains(myGraph)(n9)).toBeTrue();
 				expect(edges(myGraph).has(n9)).toBeTrue();
 			});

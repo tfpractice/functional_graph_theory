@@ -50,7 +50,6 @@ let mergeGraphs = ({ edges: e0 }) => ({ edges: e1 }) => {
 		importEdge({ edges: e0 })([source, nabes]));
 
 	return { edges: e0, nodes: n0 };
-
 };
 
 let removeEdge = ({ edges }) => (src) => (nabe) =>
@@ -61,7 +60,6 @@ let removeNode = ({ edges }) => (exNode) => {
 	edges.delete(exNode);
 
 	return { edges };
-
 };
 
 let clearNodes = ({ nodes }) => nodes.clear;
@@ -69,18 +67,16 @@ let clearEdges = ({ edges }) => edges.clear;
 
 let Graph = (...elements) => {
 	let gState = makeGraph(...elements);
-	return {
+	return Object.assign(gState, {
 		addEdge: addEdge(gState),
 		addNodes: addNodes(gState),
 		clearEdges: clearEdges(gState),
 		clearNodes: clearNodes(gState),
 		contains: contains(gState),
-		edges: edges(gState),
 		importEdge: importEdge(gState),
 		isAdjacent: isAdjacent(gState),
 		mergeGraphs: mergeGraphs(gState),
 		neighbors: neighbors(gState),
-		nodes: nodes(gState),
 		removeEdge: removeEdge(gState),
 		removeNode: removeNode(gState),
 		showGraph: showGraph(gState),
@@ -88,7 +84,7 @@ let Graph = (...elements) => {
 		bfs: bfs(gState),
 		components: components(gState),
 		dijkstra: dijkstra(gState),
-	};
+	});
 };
 
 module.exports = Graph;
