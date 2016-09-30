@@ -1,28 +1,28 @@
 describe('Graph', function() {
-	beforeAll(function() { console.log('\n.........Graph Spec.........'); });
+	beforeAll(function() {
+		console.log('\n.........Graph Spec.........');
+	});
 
-	it('is a function', () => { expect(Graph).toBeFunction(); });
-	describe('when given a collection of elements', () => {
-		describe('makeEdges(...elements)', () => {
-			it('returns a new Map of those elements', () => {
-				expect(makeEdges(...myNodes) instanceof Map)
-					.toBeTrue();
-			});
+	describe('makeEdges(...elements)', () => {
+		it('returns a new Map of those elements', () => {
+			expect(makeEdges(...myNodes) instanceof Map).toBeTrue();
 		});
-		describe('makeGraph(...elements)', () => {
-			it('returns a new object with nodes and edges', () => {
-				expect(makeGraph(...myNodes)).toBeObject();
-			});
+	});
+	describe('fromElements(...elements)', () => {
+		it('returns a new object with nodes and edges', () => {
+			expect(fromElements(...myNodes)).toBeObject();
 		});
 	});
 	describe('accessors', () => {
 		describe('nodes', () => {
-			it('returns a set of the nodes from that graph',
-				() => { expect(nodes(myGraph) instanceof Set).toBeTrue(); });
+			it('returns a set of the nodes from that graph', () => {
+				expect(nodes(myGraph) instanceof Set).toBeTrue();
+			});
 		});
 		describe('edges', () => {
-			it('returns a Map of nodes and neighbor',
-				() => { expect(edges(myGraph) instanceof Map).toBeTrue(); });
+			it('returns a Map of nodes and neighbor', () => {
+				expect(edges(myGraph) instanceof Map).toBeTrue();
+			});
 		});
 		describe('neighbors(edge)(node)', () => {
 			it('returns a map entry of that nodes neighbors ', () => {
@@ -41,13 +41,13 @@ describe('Graph', function() {
 				expect(isAdjacent(myGraph)(n0)(n6)).toBeFalse();
 			});
 		});
-		describe('showGraph(graph)', () => {
-			it('returns a string representation the graph', () => {
-				expect(showGraph(myGraph)).toBeString();
-			});
-		});
+		// 	describe('showGraph(graph)', () => {
+		// 		it('returns a string representation the graph', () => {
+		// 			expect(showGraph(myGraph)).toBeString();
+		// 		});
+		// 	});
 		describe('addNodes', () => {
-			it('adds a node and edges entry for each additional node', () => {
+			it('adds an edges entry for each additional node', () => {
 				addNodes(myGraph)(n7, n9);
 				expect(contains(myGraph)(n9)).toBeTrue();
 				expect(edges(myGraph).has(n9)).toBeTrue();

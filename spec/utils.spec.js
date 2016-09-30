@@ -37,33 +37,32 @@ describe('Utils', function() {
 	});
 	describe('rmFirst', () => {
 		it('deletes the last key in a map/set', () => {
-			let copied = new Set(myGraph.nodes);
+			let copied = new Set(nodes(myGraph));
 			let first = utils.rmFirst((copied));
 			expect(first).toBe(n0);
 			expect(copied.has(n0)).toBeFalse();
 		});
 	});
 	describe('pathHasNode', () => {
-		it('checks a path for a node', function() {
+		it('checks a path for a node', () => {
 			expect(utils.pathHasNode(myEdges)(n0)).toBeTrue();
 		});
 	});
 	describe('x_pathHasNode', () => {
-		it('checks a path for a node', function() {
+		it('checks a path for a node', () => {
 			expect(utils.x_pathHasNode(myEdges)(n0)).toBeFalse();
 		});
 	});
 	describe('pathHasEntry', () => {
-		it('checks a path for an entry', function() {
+		it('checks a path for an entry', () => {
 			let first = [...myEdges][0];
 			expect(utils.pathHasEntry(myEdges)(first)).toBeTrue();
 		});
 	});
 	describe('x_pathHasEntry', () => {
-		it('checks a path for an entry', function() {
+		it('checks a path for an entry', () => {
 			let first = [...myEdges][0];
 			expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
 		});
-
 	});
 });
