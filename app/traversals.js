@@ -5,16 +5,16 @@ const { pathHasNode, x_pathHasNode } = UTILS;
 const { pathHasEntry, x_pathHasEntry } = UTILS;
 const { componentString } = UTILS;
 
-let initPath = (node) =>
+const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
-let unvisitedNeighbors = ({ edges }) => (path) => (node) =>
+const unvisitedNeighbors = ({ edges }) => (path) => (node) =>
 	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
 
-let unvisitedMap = ({ edges }) => (path) => (node) =>
+const unvisitedMap = ({ edges }) => (path) => (node) =>
 	new Map(spreadEntries(edges.get(node)).filter(x_pathHasEntry(path)));
 
-let dfs = ({ edges }) => (iNode) => {
+const dfs = ({ edges }) => (iNode) => {
 	let dPath = initPath(iNode);
 	let dVisit = (path) => {
 		let pred = lastKey(path);
@@ -34,7 +34,7 @@ let dfs = ({ edges }) => (iNode) => {
 	return dPath;
 };
 
-let bfs = ({ edges }) => (iNode) => {
+const bfs = ({ edges }) => (iNode) => {
 	var bPath = initPath(iNode);
 	var bQueue = new Set([iNode]);
 	while (bQueue.size > 0) {
@@ -54,7 +54,7 @@ let bfs = ({ edges }) => (iNode) => {
 	return bPath;
 };
 
-let dijkstra = ({ edges }) => (iNode) => {
+const dijkstra = ({ edges }) => (iNode) => {
 	let reachables = bfs({ edges })(iNode);
 	let inspectQueue = new Set().add(iNode);
 	let solutionSet = initPath(iNode);
@@ -77,7 +77,7 @@ let dijkstra = ({ edges }) => (iNode) => {
 	return solutionSet;
 };
 
-let components = ({ edges }) => {
+const components = ({ edges }) => {
 	let cMap = new Map();
 
 	let visitComponent = (comp = new Set) => (node) => {
@@ -93,7 +93,6 @@ let components = ({ edges }) => {
 	}
 
 	return cMap;
-
 };
 
 module.exports = {
