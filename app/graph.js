@@ -25,7 +25,7 @@ const hasEdge = (graph) => (n0, n1) =>
 	isAdjacent(graph)(n0)(n1) && isAdjacent(graph)(n1)(n0);
 
 const addNodes = ({ edges }) => (...additional) =>
-	additional.filter(x_hasKey(edges)).forEach(initEdge(edges));
+	additional.filter(x_hasKey(edges)).map(initEdge(edges));
 
 const addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 	addNodes({ edges })(n0, n1);
