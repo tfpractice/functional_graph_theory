@@ -43,7 +43,7 @@ const removeNode = ({ edges }) => (exNode) => {
 	edges.delete(exNode);
 };
 
-const addNeighbor = (graph) => (src) => ([nabe, wt]) =>
+const addNeighbor = (graph) => (src) => ([nabe, wt = 0]) =>
 	addEdge(graph)(src)(nabe, wt);
 
 const importEdge = (graph) => ([src, nabes]) =>
@@ -52,18 +52,20 @@ const importEdge = (graph) => ([src, nabes]) =>
 const mergeGraphs = (graph) => ({ edges: altEdges }) =>
 	spreadEntries(altEdges).forEach(importEdge(graph));
 
-module.exports = { addEdge,
-    addNodes,
-    clearEdges,
-    contains,
-    edges,
-    fromElements,
-    importEdge,
-    isAdjacent,
-    makeEdges,
-    mergeGraphs,
-    neighbors,
-    nodes,
-    removeEdge,
-    removeNode,
-    showGraph, };
+module.exports = {
+	addEdge,
+	addNodes,
+	clearEdges,
+	contains,
+	edges,
+	fromElements,
+	importEdge,
+	isAdjacent,
+	makeEdges,
+	mergeGraphs,
+	neighbors,
+	nodes,
+	removeEdge,
+	removeNode,
+	showGraph,
+};
