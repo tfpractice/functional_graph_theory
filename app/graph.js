@@ -50,10 +50,10 @@ const removeNode = ({ edges }) => (exNode) => {
 const addNeighbor = (graph) => (src) => ([nabe, wt = 0]) =>
 	addEdge(graph)(src)(nabe, wt);
 
-const importEdge = (graph) => ([src, nabes]) =>
+const importEdge = (graph) => ([src, nabes = new Map]) =>
 	spreadEntries(nabes).forEach(addNeighbor(graph)(src));
 
-const mergeGraphs = (graph) => ({ edges: altEdges }) =>
+const mergeGraphs = (graph) => ({ edges: altEdges = new Map }) =>
 	spreadEntries(altEdges).forEach(importEdge(graph));
 
 module.exports = {
