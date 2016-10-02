@@ -1,109 +1,76 @@
 const utils = require('./utils');
-const traversals = require('./traversals');
-const { dfs, bfs, components, dijkstra } = traversals;
 const { spreadKeys, spreadValues, spreadEntries } = utils;
-const { hasKey, x_hasKey } = utils;
-const { edgeString, pathString, graphString, showGraph } = utils;
+const { hasKey, x_hasKey, showGraph } = utils;
 
-let initEdge = (edges) => (src, nabes = new Map) =>
-	edges.set(src, nabes);
+const initEdge = (edges) => (src) => edges.set(src, new Map);
 
-let makeEdges = (...elements) =>
+const makeEdges = (...elements) =>
 	spreadValues(new Set(elements))
 	.reduce((eMap, next) => initEdge(eMap)(next), new Map);
 
-let makeGraph = (...elements) => ({
-	nodes: new Set(elements),
-	edges: makeEdges(...elements),
-});
+const fromElements = (...elements) =>
+	({ edges: makeEdges(...elements) });
 
-let nodes = ({ edges = new Map }) => new Set(spreadKeys(edges));
-let edges = ({ edges = new Map }) => edges;
+const edges = ({ edges = new Map }) => edges;
+const nodes = ({ edges = new Map }) => new Set(spreadKeys(edges));
+const copy = ({ edges }) => ({ edges: new Map(edges) });
+const neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
 
-let contains = ({ edges }) => (node) => hasKey(edges)(node);
-let x_contains = ({ edges }) => (node) => x_hasKey(edges)(node);
-let neighbors = ({ edges }) => (node) => spreadKeys(edges.get(node));
-let isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
+const contains = ({ edges }) => (node) => edges.has(node);
+const x_contains = ({ edges }) => (node) => !edges.has(node);
+const isAdjacent = ({ edges }) => (n0) => (n1) => edges.get(n0).has(n1);
+const clearEdges = ({ edges }) => edges.clear;
 
-let addNodes = ({ edges }) => (...additional) =>
-	additional.filter(x_hasKey(edges)).forEach(n => initEdge(edges)(n));
+const hasEdge = (graph) => (n0, n1) =>
+	isAdjacent(graph)(n0)(n1) && isAdjacent(graph)(n1)(n0);
 
-let addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
+const addNodes = ({ edges }) => (...additional) =>
+	additional.filter(x_hasKey(edges)).map(initEdge(edges));
+
+const addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 	addNodes({ edges })(n0, n1);
-	if (!isAdjacent({ edges })(n0)(n1)) {
+	if (!hasEdge(({ edges }))(n0, n1)) {
 		edges.get(n0).set(n1, weight);
 		edges.get(n1).set(n0, weight);
 	}
 
-	return { edges };
 };
 
-let importEdge = ({ edges }) => ([source, nabes]) => {
-	nabes.forEach((weight, nabe) =>
-		addEdge({ edges })(source)(nabe, weight));
+const removeEdge = ({ edges }) => (src) => (nabe) =>
+	hasEdge({ edges })(src, nabe) ?
+	(edges.get(src).delete(nabe) && edges.get(nabe).delete(src)) :
+	({ edges });
 
-	return { edges };
+const removeNode = ({ edges }) => (exNode) => {
+	if (contains({ edges })(exNode)) {
+		neighbors({ edges })(exNode).forEach(removeEdge({ edges })(exNode));
+		edges.delete(exNode);
+	}
 };
 
-let mergeGraphs = ({ edges: e0 }) => ({ edges: e1 }) => {
-	e1.forEach((nabes, source) =>
-		importEdge({ edges: e0 })([source, nabes]));
+const addNeighbor = (graph) => (src) => ([nabe, wt = 0]) =>
+	addEdge(graph)(src)(nabe, wt);
 
-	return { edges: e0, nodes: n0 };
+const importEdge = (graph) => ([src, nabes = new Map]) =>
+	spreadEntries(nabes).forEach(addNeighbor(graph)(src));
+
+const mergeGraphs = (graph) => ({ edges: altEdges = new Map }) =>
+	spreadEntries(altEdges).forEach(importEdge(graph));
+
+module.exports = {
+	addEdge,
+	addNodes,
+	clearEdges,
+	contains,
+	edges,
+	fromElements,
+	importEdge,
+	isAdjacent,
+	makeEdges,
+	mergeGraphs,
+	neighbors,
+	nodes,
+	removeEdge,
+	removeNode,
+	showGraph,
 };
-
-let removeEdge = ({ edges }) => (src) => (nabe) =>
-	edges.get(src).delete(nabe) && edges.get(nabe).delete(src);
-
-let removeNode = ({ edges }) => (exNode) => {
-	neighbors({ edges })(exNode).forEach(removeEdge({ edges })(exNode));
-	edges.delete(exNode);
-
-	return { edges };
-};
-
-let clearNodes = ({ nodes }) => nodes.clear;
-let clearEdges = ({ edges }) => edges.clear;
-
-let Graph = (...elements) => {
-	let gState = makeGraph(...elements);
-	return Object.assign(gState, {
-		addEdge: addEdge(gState),
-		addNodes: addNodes(gState),
-		clearEdges: clearEdges(gState),
-		clearNodes: clearNodes(gState),
-		contains: contains(gState),
-		importEdge: importEdge(gState),
-		isAdjacent: isAdjacent(gState),
-		mergeGraphs: mergeGraphs(gState),
-		neighbors: neighbors(gState),
-		removeEdge: removeEdge(gState),
-		removeNode: removeNode(gState),
-		showGraph: showGraph(gState),
-		dfs: dfs(gState),
-		bfs: bfs(gState),
-		components: components(gState),
-		dijkstra: dijkstra(gState),
-	});
-};
-
-module.exports = Graph;
-module.exports.makeEdges = makeEdges;
-module.exports.makeGraph = makeGraph;
-module.exports.showGraph = showGraph;
-module.exports.nodes = nodes;
-module.exports.edges = edges;
-module.exports.addNodes = addNodes;
-module.exports.removeNode = removeNode;
-module.exports.addEdge = addEdge;
-module.exports.importEdge = importEdge;
-module.exports.mergeGraphs = mergeGraphs;
-module.exports.removeEdge = removeEdge;
-module.exports.neighbors = neighbors;
-module.exports.contains = contains;
-module.exports.clearNodes = clearNodes;
-module.exports.clearEdges = clearEdges;
-module.exports.isAdjacent = isAdjacent;
-
-
-//

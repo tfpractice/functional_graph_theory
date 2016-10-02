@@ -10,6 +10,8 @@ let rmFirst = (set) => {
 	return elem;
 };
 
+let getFirst = (set) => [...set].shift();
+
 let hasKey = (coll) => (key) => coll.has(key);
 let x_hasKey = (coll) => (key) => !coll.has(key);
 let pathHasNode = (path) => (node) => path.has(node);

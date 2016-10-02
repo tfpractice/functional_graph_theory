@@ -1,33 +1,34 @@
 beforeAll(function() {
 	require('jasmine-expect');
-	this.App = require('../../index');
-	({ Graph, utils, traversals } = this.App);
-	trav = traversals;
-	({ makeEdges, makeGraph, nodes, edges } = Graph);
+	App = require('../../index');
+	({ Graph, utils, traversals, AsyncOps } = App);
+	({ makeEdges, fromElements, nodes, edges } = Graph);
 	({ neighbors, contains, isAdjacent } = Graph);
 	({ addEdge, removeEdge } = Graph);
 	({ addNodes, removeNode } = Graph);
 	({ importEdge, mergeGraphs } = Graph);
-	({ clearNodes, clearEdges, showGraph } = Graph);
+	({ clearEdges, showGraph } = Graph);
+	trav = traversals;
 	Node = (label = '', data = {}) => ({
 		label,
 		data,
 		toString: () =>
 			label,
 	});
-	eFilter = (coll) => coll.filter(({ data }) => data.position % 2 === 0);
-	oFilter = (coll) => coll.filter(({ data }) => data.position % 2 === 1);
-	nEdges = ({ nodes, edges }) => eFilter(Array.from(nodes))
+	eFilter = (coll) => coll.filter(({ data }) => data.position % 2 ===
+		0);
+	oFilter = (coll) => coll.filter(({ data }) => data.position % 2 ===
+		1);
+	nEdges = ({ edges }) => eFilter(Array.from(nodes({ edges })))
 		.reduce((prev, next, id) => {
-			addEdge({ nodes, edges })(prev)(next, id * 2);
+			addEdge({ edges })(prev)(next, id * 2);
 			return next;
 		});
-	oEdges = ({ nodes, edges }) => oFilter(Array.from(nodes))
+	oEdges = ({ edges }) => oFilter(Array.from(nodes({ edges })))
 		.reduce((prev, next, id) => {
-			addEdge({ nodes, edges })(prev)(next, (id * 2) + 1);
+			addEdge({ edges })(prev)(next, (id * 2) + 1);
 			return next;
 		});
-
 });
 
 beforeEach(function() {
@@ -45,10 +46,10 @@ beforeEach(function() {
 	eNodes = eFilter(lastTen);
 	oNodes = oFilter(lastTen);
 
-	myGraph = Graph(...firstTen);
-	altGraph = Graph(n4, n5, n6, n7, n8, n9);
-	evenGraph = Graph(...firstTen, ...eNodes);
-	oddGraph = Graph(...firstTen, ...oNodes);
+	myGraph = fromElements(...firstTen);
+	altGraph = fromElements(n4, n5, n6, n7, n8, n9);
+	evenGraph = fromElements(...firstTen, ...eNodes);
+	oddGraph = fromElements(...firstTen, ...oNodes);
 
 	addEdge(myGraph)(n0)(n1, 2);
 	addEdge(myGraph)(n0)(n2, 2);
