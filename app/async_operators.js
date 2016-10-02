@@ -15,9 +15,13 @@ const addEdgeAsync = (graph) => (n0) => (n1, weight = 0) =>
 	});
 
 const removeEdgeAsync = (graph) => (src) => (nabe) =>
-	new Promise((resolve) => {
-		removeEdge(graph)(src)(dest);
-		resolve(graph);
+	new Promise((resolve, reject) => {
+		if (Graph.isAdjacent(graph)(src)(nabe)) {
+			removeEdge(graph)(src)(nabe);
+			resolve(graph);
+		} else {
+			reject('no edge to delete');
+		}
 	});
 
 const removeNodeAsync = (graph) => (exNode) =>

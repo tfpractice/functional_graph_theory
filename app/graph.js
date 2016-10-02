@@ -36,11 +36,15 @@ const addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 };
 
 const removeEdge = ({ edges }) => (src) => (nabe) =>
-	edges.get(src).delete(nabe) && edges.get(nabe).delete(src);
+	hasEdge({ edges })(src, nabe) ?
+	(edges.get(src).delete(nabe) && edges.get(nabe).delete(src)) :
+	({ edges });
 
 const removeNode = ({ edges }) => (exNode) => {
-	neighbors({ edges })(exNode).forEach(removeEdge({ edges })(exNode));
-	edges.delete(exNode);
+	if (contains({ edges })(exNode)) {
+		neighbors({ edges })(exNode).forEach(removeEdge({ edges })(exNode));
+		edges.delete(exNode);
+	}
 };
 
 const addNeighbor = (graph) => (src) => ([nabe, wt = 0]) =>
