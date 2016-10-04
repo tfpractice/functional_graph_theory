@@ -1,7 +1,7 @@
 beforeAll(function() {
 	require('jasmine-expect');
 	App = require('../../index');
-	({ Graph, utils, traversals, AsyncOps } = App);
+	({ Graph, utils, traversals, AsyncOps, Edge } = App);
 	({ makeEdges, fromElements, nodes, edges } = Graph);
 	({ neighbors, contains, isAdjacent } = Graph);
 	({ addEdge, removeEdge } = Graph);

@@ -1,8 +1,9 @@
-const utils = require('./utils');
+const utils = require('../utils');
 const { spreadKeys, spreadValues, spreadEntries } = utils;
 const { hasKey, x_hasKey, showGraph } = utils;
 
 const initEdge = (edges) => (src) => edges.set(src, new Map);
+// const initR = (edges = new Map, next) => edges.set(next, new Map);
 
 const makeEdges = (...elements) =>
 	spreadValues(new Set(elements))
@@ -23,6 +24,8 @@ const clearEdges = ({ edges }) => edges.clear;
 
 const hasEdge = (graph) => (n0, n1) =>
 	isAdjacent(graph)(n0)(n1) && isAdjacent(graph)(n1)(n0);
+
+// const addNodesR = ({ edges }, newNode) => edges.set(newNode, new Map);
 
 const addNodes = ({ edges }) => (...additional) =>
 	additional.filter(x_hasKey(edges)).map(initEdge(edges));
