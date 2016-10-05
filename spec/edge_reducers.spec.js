@@ -1,6 +1,6 @@
-fdescribe('Edge', function() {
+fdescribe('Edge Reducers', function() {
 	beforeAll(function() {
-		console.log('\n.........Edge Spec.........');
+		console.log('\n.........Edge Reducers Spec.........');
 	});
 
 	beforeEach(function() {
@@ -18,12 +18,12 @@ fdescribe('Edge', function() {
 	});
 	describe('addEdge(nabes, [n,w])', () => {
 		it('adds an entry to the nabes', () => {
-			Edge.addEdge(Edge.spawn(), n0);
+			// Edge.addEdge(Edge.spawn(), n0);
 		});
 	});
 	describe('neighbors', () => {
 		it('returns a new map of the src neighbors', function() {
-			console.log(Edge.neighbors(Edge.spawn())(n0));
+			// console.log(Edge.neighbors(Edge.spawn())(n0));
 			// console.log(Edge.neighbors());
 		});
 	});
