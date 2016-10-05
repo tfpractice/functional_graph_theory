@@ -56,9 +56,12 @@ fdescribe('Edge Reducers', function() {
 		});
 	});
 
-	// describe('addEdge(nabes, [n,w])', () => {
-	// 	it('adds an entry to the nabes', () => {});
-	// });
+	describe('addEdges', () => {
+		it('adds an neighbor entry for each node', () => {
+			let nabes = Edge.addEdges(rEdges)(n0)(n1, n2, n3);
+			expect(nabes.has(n2)).toBeTrue();
+		});
+	});
 	describe('neighbors', () => {
 		it('returns a new map of the src neighbors', () => {
 			let nabes = Edge.neighbors(rEdges)(n0);

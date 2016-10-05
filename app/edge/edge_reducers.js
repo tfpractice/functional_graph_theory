@@ -26,6 +26,9 @@ const appendNabe = (edges = new Map) => (src) => (n, w) =>
 
 const appendNabeR = (nabes = new Map, n, w = 0) =>
 	nabes.set(n, w);
+
+const addEdges = (edges = new Map) => (src) => (...nabes) =>
+	nabes.reduce(appendNabeR, neighbors(edges)(src));
 // const addEdge = (edges = new Map, src) =>
 // 	spawn(edges).set(src, neighbors(edges)(src));
 
