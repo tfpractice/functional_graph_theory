@@ -80,7 +80,17 @@ fdescribe('Edge Reducers', function() {
 			expect(nabes.has(n1)).toBeTrue();
 		});
 	});
-	// describe('addNeighbor', () => {
-	// 	it('appends an node to the edgelist', () => {});
-	// });
+	describe('weighedEntry', () => {
+		it('returns a [node, weight] array', function() {
+			expect(Edge.weighedEntry(0)(n2)).toBeArray();
+		});
+	});
+	describe('addEntry', () => {
+		it('appends an [node, weight] pair to the neighbrs', () => {
+			let nabes = Edge.appendNabeR(Edge.neighbors(rEdges)(n0), n1, 3);
+			let w0n2 = Edge.weighedEntry(0)(n2);
+			Edge.addEntry(nabes)(w0n2);
+			expect(Edge.neighbors(rEdges)(n0).has(n2)).toBeTrue();
+		});
+	});
 });

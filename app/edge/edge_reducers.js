@@ -21,14 +21,21 @@ const removeNodes = (edges = new Map) => (...nodes) =>
 const neighbors = (edges = new Map) => (src) =>
 	appendNew(edges)(src).get(src);
 
-const appendNabe = (edges = new Map) => (src) => (n, w) =>
+const appendNabe = (edges = new Map) => (src) => (n, w = 0) =>
 	neighbors(edges)(src).set(n, w);
 
-const appendNabeR = (nabes = new Map, n, w = 0) =>
-	nabes.set(n, w);
+const appendNabeR = (nabes = new Map, n, w = 0) => nabes.set(n, w);
 
 const addEdges = (edges = new Map) => (src) => (...nabes) =>
 	nabes.reduce(appendNabeR, neighbors(edges)(src));
+
+const addEntry = (nabes = new Map) => ([n, w]) => nabes.set(n, w);
+const addEntryR = (nabes = new Map, [n, w = 0]) => addEntry(nabes)([n, w]);
+
+const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
+
+// const setWeight = (nabes = new Map) => (node) => (weight = 0) =>
+
 // const addEdge = (edges = new Map, src) =>
 // 	spawn(edges).set(src, neighbors(edges)(src));
 
@@ -79,6 +86,9 @@ module.exports = {
 	appendNabe,
 	appendNabeR,
 	addEdges,
+	addEntry,
+	addEntryR,
+	weighedEntry,
 	// neighbors,
 	// addEdge,
 	// addNeighbor,
