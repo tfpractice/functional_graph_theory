@@ -65,6 +65,18 @@ fdescribe('Edge Reducers', function() {
 			expect(nabes instanceof Map).toBeTrue();
 		});
 	});
+	describe('appendNabe', () => {
+		it('adds a neigbor and weight to the src entry', function() {
+			let nabes = Edge.appendNabe(rEdges)(n0)(n1, 3);
+			expect(nabes.has(n1)).toBeTrue();
+		});
+	});
+	describe('appendNabe', () => {
+		it('adds a neigbor and weight to the src entry', function() {
+			let nabes = Edge.appendNabeR(Edge.neighbors(rEdges)(n0), n1, 3);
+			expect(nabes.has(n1)).toBeTrue();
+		});
+	});
 	// describe('addNeighbor', () => {
 	// 	it('appends an node to the edgelist', () => {});
 	// });
