@@ -4,6 +4,8 @@ const nSpawn = (nabes = new Map) => nabes;
 
 const appendNew = (edges = new Map) => (src) =>
 	edges.has(src) ? edges : edges.set(src, new Map);
+const removeNode = (edges = new Map) => (src) =>
+	edges.delete(src) ? edges : edges;
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
 const addNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(appendR, edges);
@@ -51,6 +53,7 @@ module.exports = {
 	appendNew,
 	addNodes,
 	appendR,
+	removeNode,
 	// neighbors,
 	// addEdge,
 	// addNeighbor,
