@@ -33,20 +33,38 @@ fdescribe('Edge Reducers', function() {
 		});
 	});
 
-	describe('removeNode', () => {
+	describe('rmNode', () => {
 		it('removes a node from the edges map', () => {
 			Edge.appendR(rEdges, n0);
-			rEdges = Edge.removeNode(rEdges)(n0);
+			rEdges = Edge.rmNode(rEdges)(n0);
 			expect(rEdges.has(n0)).toBeFalse();
+		});
+	});
+	describe('rmNodeR', () => {
+		it('removes a node from the edges map', () => {
+			Edge.appendR(rEdges, n0);
+			rEdges = Edge.rmNodeR(rEdges, n0);
+			expect(rEdges.has(n0)).toBeFalse();
+		});
+	});
+	describe('removeNodes', () => {
+		it('removes the nodes from the edges', function() {
+			Edge.addNodes(rEdges, n0, n1, n2, n3);
+			// Edge.removeNodes(rEdges, n0, n2);
+			expect(rEdges.has(n1)).not.toBeTrue();
+			expect(rEdges.has(n0)).not.toBeTrue();
 		});
 	});
 
 	// describe('addEdge(nabes, [n,w])', () => {
 	// 	it('adds an entry to the nabes', () => {});
 	// });
-	// describe('neighbors', () => {
-	// 	it('returns a new map of the src neighbors', () => {});
-	// });
+	describe('neighbors', () => {
+		it('returns a new map of the src neighbors', () => {
+			let nabes = Edge.neighbors(rEdges)(n0);
+			expect(nabes instanceof Map).toBeTrue();
+		});
+	});
 	// describe('addNeighbor', () => {
 	// 	it('appends an node to the edgelist', () => {});
 	// });

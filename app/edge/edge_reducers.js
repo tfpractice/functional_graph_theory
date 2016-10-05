@@ -4,12 +4,22 @@ const nSpawn = (nabes = new Map) => nabes;
 
 const appendNew = (edges = new Map) => (src) =>
 	edges.has(src) ? edges : edges.set(src, new Map);
-const removeNode = (edges = new Map) => (src) =>
-	edges.delete(src) ? edges : edges;
+
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
+
 const addNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(appendR, edges);
-// const neighbors = (edges = new Map) => (src) => new Map(edges.get(src));
+
+const rmNode = (edges = new Map) => (src) =>
+	edges.delete(src) ? edges : edges;
+
+const rmNodeR = (edges = new Map, src) => rmNode(edges)(src);
+
+const removeNodes = (edges = new Map) => (...nodes) =>
+	nodes.reduce(rmNodeR, edges);
+
+const neighbors = (edges = new Map) => (src) =>
+	appendNew(edges)(src).get(src);
 // const addEdge = (edges = new Map, src) =>
 // 	spawn(edges).set(src, neighbors(edges)(src));
 
@@ -48,20 +58,22 @@ const addNodes = (edges = new Map) => (...nodes) =>
 // const setWeight = (nabes = new Map, [n, w = 0]) =>
 // 	spawn(nabes).set(n, w);
 
-module.exports = {
-	spawn,
-	appendNew,
-	addNodes,
-	appendR,
-	removeNode,
-	// neighbors,
-	// addEdge,
-	// addNeighbor,
-	// spawnEdges,
-	// createEdge,
-	// entry,
-	// addNeighbor,
-	// hasNeighbor,
-	// removeNeighbor,
-	// setWeight,
+module.exports = { spawn,
+    appendNew,
+    addNodes,
+    appendR,
+    rmNode,
+    rmNodeR,
+    removeNodes,
+    neighbors,
+    // neighbors,
+    // addEdge,
+    // addNeighbor,
+    // spawnEdges,
+    // createEdge,
+    // entry,
+    // addNeighbor,
+    // hasNeighbor,
+    // removeNeighbor,
+    // setWeight,
 };
