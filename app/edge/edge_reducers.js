@@ -78,6 +78,7 @@ module.exports = {
 	neighbors,
 	appendNabe,
 	appendNabeR,
+	addEdges,
 	// neighbors,
 	// addEdge,
 	// addNeighbor,

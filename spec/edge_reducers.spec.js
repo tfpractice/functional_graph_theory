@@ -49,9 +49,9 @@ fdescribe('Edge Reducers', function() {
 	});
 	describe('removeNodes', () => {
 		it('removes the nodes from the edges', function() {
-			Edge.addNodes(rEdges, n0, n1, n2, n3);
-			// Edge.removeNodes(rEdges, n0, n2);
-			expect(rEdges.has(n1)).not.toBeTrue();
+			Edge.addNodes(rEdges)(n0, n1, n2, n3);
+			Edge.removeNodes(rEdges)(n0, n2);
+			expect(rEdges.has(n1)).toBeTrue();
 			expect(rEdges.has(n0)).not.toBeTrue();
 		});
 	});
