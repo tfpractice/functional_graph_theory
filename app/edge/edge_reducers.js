@@ -2,8 +2,9 @@ const spawn = (edges = new Map) => new Map(edges);
 const nSpawn = (nabes = new Map) => nabes;
 // const addNode = (edges = new Map, node) => edges.set(node, new Map);
 
-const addNode = (edges = new Map, node) =>
+const addNode = (edges = new Map) => (src) =>
 	edges.has(src) ? edges : edges.set(src, new Map);
+const addNodeR = (edges = new Map, src) => addNode(edges)(src);
 
 // const neighbors = (edges = new Map) => (src) => new Map(edges.get(src));
 // const addEdge = (edges = new Map, src) =>
@@ -46,6 +47,8 @@ const addNode = (edges = new Map, node) =>
 
 module.exports = {
 	spawn,
+	addNode,
+	addNodeR,
 	// neighbors,
 	// addEdge,
 	// addNeighbor,

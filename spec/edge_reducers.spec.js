@@ -3,39 +3,27 @@ fdescribe('Edge Reducers', function() {
 		console.log('\n.........Edge Reducers Spec.........');
 	});
 
-	beforeEach(function() {
-		// myNabes = Array.from(firstTen, e => [e]).reduce(Edge.addNeighbor,
-		// 	Edge.spawn());
-
-		// rEdges = firstTen.reduce(Edge.addEdge, Edge.spawn());
-		// console.log(rEdges);
-	});
+	beforeEach(function() {});
 
 	describe('spawn(nabes)', () => {
 		it('returns a new Map', () => {
 			expect(Edge.spawn() instanceof Map).toBeTrue();
 		});
 	});
-	describe('addEdge(nabes, [n,w])', () => {
-		it('adds an entry to the nabes', () => {
-			// Edge.addEdge(Edge.spawn(), n0);
+	describe('addNode', function() {
+		it('adds an entry to the edges Map', function() {
+			let res = Edge.addNode()(n0);
+			expect(res.has(n0)).toBeTrue();
 		});
 	});
-	describe('neighbors', () => {
-		it('returns a new map of the src neighbors', function() {
-			// console.log(Edge.neighbors(Edge.spawn())(n0));
-			// console.log(Edge.neighbors());
-		});
-	});
-	describe('addNeighbor', () => {
-		it('appends an node to the edgelist', function() {});
-	});
-	// describe('removeNeighbor ', () => {
-	// 	it('retuns a new map with the specified nabe deleted',
-	// 		function() {
-	// 			myNabes = Edge.removeNeighbor(myNabes, n0);
-	// 			expect(myNabes.has(n0)).toBeFalse();
-	// 		});
+
+	// describe('addEdge(nabes, [n,w])', () => {
+	// 	it('adds an entry to the nabes', () => {});
 	// });
-	// describe('setWeight ', () => {});
+	// describe('neighbors', () => {
+	// 	it('returns a new map of the src neighbors', function() {});
+	// });
+	// describe('addNeighbor', () => {
+	// 	it('appends an node to the edgelist', function() {});
+	// });
 });
