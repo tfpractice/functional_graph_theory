@@ -10,9 +10,23 @@ fdescribe('Edge Reducers', function() {
 			expect(Edge.spawn() instanceof Map).toBeTrue();
 		});
 	});
-	describe('addNode', function() {
+	describe('appendNew', function() {
 		it('adds an entry to the edges Map', function() {
-			let res = Edge.addNode()(n0);
+			let res = Edge.appendNew()(n0);
+			expect(res.has(n0)).toBeTrue();
+		});
+	});
+
+	describe('addNodes', function() {
+		it('adds an entry to the edges Map', function() {
+			let res = Edge.addNodes()(n0);
+			expect(res.has(n0)).toBeTrue();
+		});
+	});
+
+	describe('appendR', function() {
+		it('adds entries to the Map via reduce', function() {
+			let res = Edge.appendR(Edge.spawn(), n0);
 			expect(res.has(n0)).toBeTrue();
 		});
 	});
