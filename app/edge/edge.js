@@ -45,6 +45,8 @@ module.exports = {
 	neighbors,
 	addNeighbor,
 	addEdges,
+	addEdgeR,
+
 	addEntry,
 	weighedEntry,
 	mergeNeighbors,
