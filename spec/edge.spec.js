@@ -76,11 +76,9 @@ describe('Edge ', function() {
 	});
 	describe('mergeEdges', () => {
 		it('combines two Edge maps', () => {
-			[...evens.keys()]
-			.map((e, id, arr) => [e, ...arr])
+			[...evens.keys()].map((e, id, arr) => [e, ...arr])
 				.reduce((e, [src, ...ns], id) => {
-					Edge.addEdges(e)(src, id)(...ns);
-					return e;
+					return Edge.addEdges(e)(src, id)(...ns);
 				}, evens);
 			Edge.mergeEdges(evens)(odds);
 			expect(evens.has(n15)).toBeTrue();
