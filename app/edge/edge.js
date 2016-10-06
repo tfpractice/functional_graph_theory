@@ -1,41 +1,52 @@
 const reducers = require('./edge_reducers');
+const { appendNew, appendR, rmNodeR, addNeighborR, addEntryR, } = reducers;
 
-// const spawn = (nabes = new Map) =>
-// 	new Map(nabes);
+const spawn = (edges = new Map) => new Map(edges);
 
-// const entry = (nabe) => [nabe, 0];
-// // const addEntry = (nabes = new Map, n) => {
-// // return addNeighbor(nabes, [n, 0]);
-// // };
-// const getEntry = (nabes = new Map);
-// const addNeighbor = (nabes = new Map, [n, w = 0]) => {
-// 	// console.log('oldNabes', nabes);
-// 	// console.log('newnabe', n, w);
-// 	return spawn(nabes).set(n, w);
-// };
+const addNodes = (edges = new Map) => (...nodes) =>
+	nodes.reduce(appendR, edges);
 
-// const hasNeighbor = (nabes = new Map, n) =>
-// 	nabes.has(n);
+const rmNode = (edges = new Map) => (src) =>
+	edges.delete(src) ? edges : edges;
 
-// const removeNeighbor = (nabes = new Map, n) => {
-// 	if (hasNeighbor(nabes, n)) { nabes.delete(n); }
+const removeNodes = (edges = new Map) => (...nodes) =>
+	nodes.reduce(rmNodeR, edges);
 
-// 	return spawn(nabes);
-// };
+const neighbors = (edges = new Map) => (src) =>
+	appendNew(edges)(src).get(src);
 
-// const setWeight = (nabes = new Map, [n, w = 0]) =>
-// 	spawn(nabes).set(n, w);
+const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
+	addNeighborR(neighbors(edges)(src), n, w);
 
-// reduce(setWeight(n, w)) => sW(n, w)(prev)
-// reduce((prev, next) => setWeight(prev, next, weight), nabes);
+const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
+	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
 
-// const initEdge = (edges) => (src) => edges.set(src, new Map);
-// const initR = (edges = new Map, next) => edges.set(next, new Map);
+const addEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
+	edges.set(src, neighbors(edges)(src).set(nabe, wt));
 
-// const makeEdges = (...elements) =>
-//     spreadValues(new Set(elements))
-//     .reduce((eMap, next) => initEdge(eMap)(next), new Map);
-//
-//
-//
-module.exports = Object.assign({}, reducers);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
+
+const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
+	[...alts].reduce(addEntryR, nabes);
+
+const mergeEdges = (edges = new Map) => (alts = new Map) =>
+	[...alts]
+	.filter(([src, nabes]) => !edges.has(src))
+	.reduce((e, [k, v]) => e.set(k, v), edges);
+
+const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
+const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
+
+module.exports = {
+	spawn,
+	addNodes,
+	rmNode,
+	removeNodes,
+	neighbors,
+	addNeighbor,
+	addEdges,
+	addEntry,
+	weighedEntry,
+	mergeNeighbors,
+	mergeEdges,
+};

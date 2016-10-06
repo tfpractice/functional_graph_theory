@@ -1,4 +1,4 @@
-fdescribe('Graph', function() {
+describe('Graph', function() {
 	beforeAll(function() {
 		console.log('\n.........Graph Spec.........');
 	});
