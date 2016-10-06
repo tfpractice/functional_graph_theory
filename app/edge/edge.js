@@ -13,10 +13,20 @@ const removeNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(rmNodeR, edges);
 
 const neighbors = (edges = new Map) => (src) =>
-	appendNew(edges)(src).get(src);
-
-const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
-	addNeighborR(neighbors(edges)(src), n, w);
+	// new Map(edges.get(src));
+	edges.has(src) ? edges.get(src) : new Map;
+// edges.get(src);
+//
+// appendNew(edges)(src).get(src);
+// console.log(new Map(undefined));
+const addNeighbor = (edges = new Map) => (src, w = 0) => (n) =>
+	// [src, n].map(weighedEntry(w)).reduce(([k,v])=>AddEntry(edges))
+	[
+		[src, n, w],
+		[n, src, w],
+	].reduce(addEdgeR, edges);
+// appendNew(edges)(src).set(n, w) && appendNew(edges)(n).set(src, w)
+// addNeighborR(neighbors(edges)(src), n, w);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
@@ -24,7 +34,8 @@ const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 const addEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
 	edges.set(src, neighbors(edges)(src).set(nabe, wt));
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
+	w);
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[...alts].reduce(addEntryR, nabes);

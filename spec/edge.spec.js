@@ -49,7 +49,7 @@ describe('Edge ', function() {
 	});
 	describe('addNeighbor', () => {
 		it('adds a neigbor and weight to the src entry', () => {
-			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3);
+			let nabes = Edge.addNeighbor(rEdges)(n0, 3)(n1);
 			expect(nabes.has(n1)).toBeTrue();
 		});
 	});
@@ -60,7 +60,7 @@ describe('Edge ', function() {
 	});
 	describe('addEntry', () => {
 		it('appends an [node, weight] pair to the neighbrs', () => {
-			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3);
+			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3).get(n0);
 			let w0n2 = Edge.weighedEntry(0)(n2);
 			Edge.addEntry(nabes)(w0n2);
 			expect(Edge.neighbors(rEdges)(n0).has(n2)).toBeTrue();

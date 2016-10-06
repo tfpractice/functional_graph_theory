@@ -44,7 +44,8 @@ describe('Edge Reducers', function() {
 			let nabes = RD.addNeighborR(Edge.neighbors(rEdges)(n0), n1, 3);
 			let w0n2 = Edge.weighedEntry(0)(n2);
 			RD.addEntryR(nabes, w0n2);
-			expect(Edge.neighbors(rEdges)(n0).has(n2)).toBeTrue();
+			expect(nabes.has(n2)).toBeTrue();
+			expect(Edge.neighbors(rEdges)(n0).has(n2)).not.toBeTrue();
 		});
 	});
 });
