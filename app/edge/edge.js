@@ -1,5 +1,9 @@
 const reducers = require('./edge_reducers');
-const { appendNew, appendR, rmNodeR, addNeighborR, addEntryR, } = reducers;
+const { addEdgeR, appendR, rmNodeR, addNeighborR, addEntryR, } = reducers;
+
+const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
+
+const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
 
 const spawn = (edges = new Map) => new Map(edges);
 
@@ -13,51 +17,39 @@ const removeNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(rmNodeR, edges);
 
 const neighbors = (edges = new Map) => (src) =>
-	// new Map(edges.get(src));
 	edges.has(src) ? edges.get(src) : new Map;
-// edges.get(src);
-//
-// appendNew(edges)(src).get(src);
-// console.log(new Map(undefined));
-const addNeighbor = (edges = new Map) => (src, w = 0) => (n) =>
-	// [src, n].map(weighedEntry(w)).reduce(([k,v])=>AddEntry(edges))
-	[
-		[src, n, w],
-		[n, src, w],
-	].reduce(addEdgeR, edges);
-// appendNew(edges)(src).set(n, w) && appendNew(edges)(n).set(src, w)
-// addNeighborR(neighbors(edges)(src), n, w);
+
+const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
+	addNeighborR(neighbors(edges)(src), n, w);
+
+const rmEdge = (edges = new Map) => (src) => (nabe) =>
+	rmNode(neighbors(edges)(src))(nabe);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
 
-const addEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
-	edges.set(src, neighbors(edges)(src).set(nabe, wt));
-
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
-	w);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[...alts].reduce(addEntryR, nabes);
 
-const mergeEdges = (edges = new Map) => (alts = new Map) =>
-	[...alts]
-	.filter(([src, nabes]) => !edges.has(src))
-	.reduce((e, [k, v]) => e.set(k, v), edges);
+const mergeEdgesR = (edges = new Map, [src, alts]) =>
+	edges.set(src, mergeNeighbors(neighbors(edges)(src))(alts));
 
-const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
-const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
+const mergeEdges = (edges = new Map) => (alts = new Map) => {
+	[...alts].reduce(mergeEdgesR, edges);
+};
 
 module.exports = {
 	spawn,
 	addNodes,
 	rmNode,
+	rmEdge,
 	removeNodes,
 	neighbors,
 	addNeighbor,
 	addEdges,
 	addEdgeR,
-
 	addEntry,
 	weighedEntry,
 	mergeNeighbors,

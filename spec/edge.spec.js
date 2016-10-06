@@ -35,6 +35,9 @@ describe('Edge ', function() {
 			expect(rEdges.has(n0)).not.toBeTrue();
 		});
 	});
+	describe('rmEdge', () => {
+		it('removes an edge entry', function() {});
+	});
 	describe('addEdges', () => {
 		it('adds an neighbor entry for each node', () => {
 			let nabes = Edge.addEdges(rEdges)(n0)(n1, n2, n3);
@@ -49,7 +52,7 @@ describe('Edge ', function() {
 	});
 	describe('addNeighbor', () => {
 		it('adds a neigbor and weight to the src entry', () => {
-			let nabes = Edge.addNeighbor(rEdges)(n0, 3)(n1);
+			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3);
 			expect(nabes.has(n1)).toBeTrue();
 		});
 	});
@@ -60,16 +63,17 @@ describe('Edge ', function() {
 	});
 	describe('addEntry', () => {
 		it('appends an [node, weight] pair to the neighbrs', () => {
-			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3).get(n0);
+			let nabes = Edge.addNeighbor(rEdges)(n0)(n1, 3);
 			let w0n2 = Edge.weighedEntry(0)(n2);
-			Edge.addEntry(nabes)(w0n2);
-			expect(Edge.neighbors(rEdges)(n0).has(n2)).toBeTrue();
+			let newNabes = Edge.addEntry(nabes)(w0n2);
+			expect(newNabes.has(n2)).toBeTrue();
+			expect(Edge.neighbors(rEdges)(n0).has(n2)).toBeFalse();
 		});
 	});
 	describe('mergeNeighbors', () => {
 		it('combines two neighbor maps', () => {
-			let rNabes = Edge.addEdges(rEdges)(n0, 0)(n1, n2, n3);
-			let eNabes = Edge.addEdges(evens)(n2)(n5, n7, n9);
+			let rNabes = Edge.addEdges(rEdges)(n0, 0)(n1, n2, n3).get(n0);
+			let eNabes = Edge.addEdges(evens)(n2)(n5, n7, n9).get(n2);
 			Edge.mergeNeighbors(eNabes)(rNabes);
 			expect(Edge.neighbors(evens)(n2).has(n5)).toBeTrue();
 		});
