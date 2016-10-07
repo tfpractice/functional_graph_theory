@@ -36,11 +36,10 @@ const rmNode = (edges = new Map, src) => {
 };
 
 const removeNodes = (edges = new Map) => (...ns) => {
-	// neighbors;
 	ns.forEach(n =>
 		removeEdges(edges)(n)(...neighbors(edges)(n)));
-	let nMap = ns.map(neighbors(edges));
-	console.log(nMap);
+	// let nMap = ns.map(neighbors(edges));
+	// console.log(nMap);
 	return ns.reduce(rmNode, edges);
 };
 
