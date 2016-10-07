@@ -7,6 +7,8 @@ const edgeEntry = (w = 0) => (src) => (nabe) => [ src, nabe, w ];
 
 const spawn = (edges = new Map) => new Map(edges);
 
+const nodes = (edges = new Map) => [ ...edges.keys() ];
+
 const addNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(appendR, edges);
 
@@ -16,14 +18,14 @@ const rmNode = (edges = new Map) => (src) =>
 const removeNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(rmNodeR, edges);
 
-const adj = (edges = new Map) => (src) =>
+const neighbors = (edges = new Map) => (src) =>
 	edges.has(src) ? edges.get(src) : new Map;
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
-	addNeighborR(adj(edges)(src), n, w);
+	addNeighborR(neighbors(edges)(src), n, w);
 
 const rmEdge = (edges = new Map) => (src) => (nabe) =>
-	rmNode(adj(edges)(src))(nabe);
+	rmNode(neighbors(edges)(src))(nabe);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
@@ -34,18 +36,19 @@ const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[ ...alts ].reduce(addEntryR, nabes);
 
 const mergeEdgesR = (edges = new Map, [src, alts]) =>
-	edges.set(src, mergeNeighbors(adj(edges)(src))(alts));
+	edges.set(src, mergeNeighbors(neighbors(edges)(src))(alts));
 
 const mergeEdges = (edges = new Map) => (alts = new Map) => {
     [ ...alts ].reduce(mergeEdgesR, edges);
 };
 
 module.exports = { spawn,
+    nodes,
     addNodes,
     rmNode,
     rmEdge,
     removeNodes,
-    adj,
+    neighbors,
     addNeighbor,
     addEdges,
     addEdgeR,

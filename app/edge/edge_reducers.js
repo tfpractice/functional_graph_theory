@@ -1,13 +1,5 @@
 const appendNew = (edges = new Map) => (src) =>
-	edges.has(src) ? edges : edges.set(src, new Map);
-
-const coerceNeighbors = (edges = new Map) => (src) =>
-	appendNew(edges)(src).get(src);
-
-const addEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
-	edges
-	.set(src, coerceNeighbors(edges)(src).set(nabe, wt))
-	.set(nabe, coerceNeighbors(edges)(nabe).set(src, wt));
+    edges.has(src) ? edges : edges.set(src, new Map);
 
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
 
@@ -18,14 +10,6 @@ const addNeighborR = (nabes = new Map, n, w = 0) => nabes.set(n, w);
 const addEntryR = (nabes = new Map, [n, w = 0]) => addNeighborR(nabes, n, w);
 
 const mergeNeighborsR = (nabes = new Map, alts = new Map) =>
-	mergeNeighbors(nabes)(alts);
+    mergeNeighbors(nabes)(alts);
 
-module.exports = {
-	appendNew,
-	appendR,
-	rmNodeR,
-	addNeighborR,
-	addEntryR,
-	coerceNeighbors,
-	addEdgeR,
-};
+module.exports = { appendNew, appendR, rmNodeR, addNeighborR, addEntryR };
