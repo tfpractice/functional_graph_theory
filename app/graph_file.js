@@ -36,6 +36,7 @@ const addEdge = ({ edges }) => (n0) => (n1, weight = 0) => {
 		edges.get(n0).set(n1, weight);
 		edges.get(n1).set(n0, weight);
 	}
+
 };
 
 const removeEdge = ({ edges }) => (src) => (nabe) =>
