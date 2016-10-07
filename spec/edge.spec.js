@@ -45,20 +45,25 @@ describe('Edge ', function() {
 	describe('rmNode', () => {
 		it('removes a node from the edges map', () => {
 			Edge.addNodes(rEdges)(n0);
+			console.log('running');
 			rEdges = Edge.rmNode(rEdges)(n0);
 			expect(rEdges.has(n0)).toBeFalse();
 		});
 	});
 	describe('removeNodes', () => {
 		it('removes the nodes from the edges', () => {
-			Edge.addNodes(rEdges)(n0, n1, n2, n3);
+			Edge.addEdges(rEdges)(n0, 1)(n1, n2, n3);
 			Edge.removeNodes(rEdges)(n0, n2);
 			expect(rEdges.has(n1)).toBeTrue();
 			expect(rEdges.has(n0)).not.toBeTrue();
 		});
 	});
-	describe('rmEdge', () => {
-		it('removes an edge entry', function() {});
+	describe('removeEdges', () => {
+		it('removes an edge entry', function() {
+			let nabes = Edge.addEdges(rEdges)(n0, 1)(n1, n2, n3);
+			Edge.removeEdges(rEdges)(n0)(n1);
+			expect(Edge.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
+		});
 	});
 	describe('addEdges', () => {
 		it('adds an neighbor entry for each node', () => {

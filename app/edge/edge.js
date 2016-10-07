@@ -1,5 +1,6 @@
 const reducers = require('./edge_reducers');
-const { addEdgeR, appendR, rmNodeR, addNeighborR, addEntryR, } = reducers;
+const { addEdgeR, appendR, rmNodeR, addNeighborR, addEntryR, removeEdgeR } =
+reducers;
 
 const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
 
@@ -24,25 +25,39 @@ const clearEdges = (edges) => edges.clear;
 const addNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(appendR, edges);
 
-const rmNode = (edges = new Map) => (src) =>
-	edges.delete(src) ? edges : edges;
+const rmNode = (edges = new Map, src) => {
+	if (adj(edges)(src).size > 0) {
+		neighbors(edges)(src)
+			.map(edgeEntry(0)(src))
+			.reduce(removeEdgeR, edges);
+	}
 
-const removeNodes = (edges = new Map) => (...nodes) =>
-	nodes.reduce(rmNodeR, edges);
+	return edges.delete(src) ? edges : edges;
+};
+
+const removeNodes = (edges = new Map) => (...ns) => {
+	// neighbors;
+	ns.forEach(n =>
+		removeEdges(edges)(n)(...neighbors(edges)(n)));
+	let nMap = ns.map(neighbors(edges));
+	console.log(nMap);
+	return ns.reduce(rmNode, edges);
+};
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
 	addNeighborR(adj(edges)(src), n, w);
 
 const rmEdge = (edges = new Map) => (src) => (nabe) =>
-	rmNode(adj(edges)(src))(nabe);
-
-const rmEdges = (edges = new Map) => (src) => (...nabes) =>
-	rmNode(adj(edges)(src))(nabe);
+	removeEdgeR(edges, [src, nabe]);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
+const removeEdges = (edges = new Map) => (src) => (...nabes) =>
+	nabes.map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
+
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
+	w);
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[...alts].reduce(addEntryR, nabes);
@@ -59,9 +74,10 @@ module.exports = {
 	contains,
 	nodes,
 	adj,
+	isAdjacent,
 	addNodes,
 	rmNode,
-	rmEdge,
+	removeEdges,
 	removeNodes,
 	neighbors,
 	addNeighbor,

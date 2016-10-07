@@ -3,7 +3,6 @@ const appendNew = (edges = new Map) => (src, nabes = new Map(edges.get(src))) =>
 
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
 const rmNodeR = (edges = new Map, src) => edges.delete(src) ? edges : edges;
-
 const coerceNabes = (edges = new Map) => (src) =>
 	appendNew(edges)(src).get(src);
 
@@ -23,13 +22,13 @@ const removeEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
 	.set(nabe, rmNodeR(coerceNabes(edges)(nabe), src));
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
-	[ ...alts ].reduce(addEntryR, nabes);
+	[...alts].reduce(addEntryR, nabes);
 
 const mergeNeighborsR = (nabes = new Map, alts = new Map) =>
-	[ ...alts ].reduce(addEntryR, nabes);
+	[...alts].reduce(addEntryR, nabes);
 
 const mergeEdgesR = (edges = new Map, [src, alts]) =>
-	edges.set(src, mergeNeighbors(adj(edges)(src))(alts));
+edges.set(src, mergeNeighborsR(adj(edges)(src)), (alts));
 
 module.exports = { appendNew,
     appendR,
