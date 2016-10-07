@@ -18,13 +18,11 @@ const addEdgeR = (nabes = new Map, [src, n, w = 0]) => addNeighborR(nabes, n, w)
 const mergeNeighborsR = (nabes = new Map, alts = new Map) =>
 	mergeNeighbors(nabes)(alts);
 
-module.exports = {
-	appendNew,
-	appendR,
-	rmNodeR,
-	addNeighborR,
-	addEntryR,
-	coerceNeighbors,
-	addEdgeR,
-	removeEdgeR,
-};
+module.exports = { appendNew,
+    appendR,
+    rmNodeR,
+    addNeighborR,
+    addEntryR,
+    coerceNeighbors,
+    addEdgeR,
+    removeEdgeR, };
