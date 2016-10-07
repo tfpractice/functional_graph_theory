@@ -8,7 +8,7 @@ console.log(rmNodeR);
 const removeEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
 	edges
 	.set(src, rmNodeR(coerceNeighbors(edges)(src), nabe))
-	.set(nabe, rmNodeR(coerceNeighbors(edges)(nabe), src))
+	.set(nabe, rmNodeR(coerceNeighbors(edges)(nabe), src));
 
 const addNeighborR = (nabes = new Map, n, w = 0) => nabes.set(n, w);
 
@@ -18,9 +18,6 @@ const addEdgeR = (nabes = new Map, [src, n, w = 0]) => addNeighborR(nabes, n, w)
 const mergeNeighborsR = (nabes = new Map, alts = new Map) =>
 	mergeNeighbors(nabes)(alts);
 
-<<<<<<< HEAD
-module.exports = { appendNew, appendR, rmNodeR, addNeighborR, addEntryR };
-=======
 module.exports = {
 	appendNew,
 	appendR,
@@ -31,4 +28,3 @@ module.exports = {
 	addEdgeR,
 	removeEdgeR,
 };
->>>>>>> a5a9694dc7c05762e9a8843b858cdebbf41b4412
