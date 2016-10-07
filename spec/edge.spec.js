@@ -14,6 +14,28 @@ describe('Edge ', function() {
 			expect(Edge.spawn() instanceof Map).toBeTrue();
 		});
 	});
+	describe('contains', function() {
+		it('checks if a graph has a node', function() {
+			expect(Edge.contains(evens)(n12)).toBeTrue();
+		});
+	});
+
+	describe('nodes', () => {
+		it('returns an array of the nodes in the edgelist', function() {
+			expect(Edge.nodes(evens)).toBeArray();
+		});
+	});
+	describe('adj', () => {
+		it('returns a map of all the neighboring nodes and weights', function() {
+			expect(Edge.adj(evens)(n2) instanceof Map).toBeTrue();
+		});
+	});
+	describe('fromElements', () => {
+		it('returns a new edgelist with the new nodes appended', function() {
+			let sEdges = Edge.fromElements(...myNodes);
+			expect(Edge.contains(sEdges)(n2)).toBeTrue();
+		});
+	});
 	describe('addNodes', () => {
 		it('adds an entry to the edges Map', () => {
 			Edge.addNodes(rEdges)(n0);
