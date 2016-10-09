@@ -1,4 +1,4 @@
-const Graph = require('./graph_file');
+const Graph = require('./graph');
 const { addNodes, addEdges, removeEdges, removeNodes } = Graph;
 const { addNeighbors, mergeNeighbors, mergeEdges } = Graph;
 
