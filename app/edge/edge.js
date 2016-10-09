@@ -30,11 +30,9 @@ const isAdjacent = (edges = new Map) => (src) => (nabe) =>
 
 const clearEdges = (edges) => edges.clear;
 const removeNeighbors = (edges = new Map) => (src) =>
-	neighbors(edges)(src).map(edgeEntry(0)(src))
-	.reduce(removeEdgeR, edges);
+	neighbors(edges)(src).map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
 
-const addNodes = (edges = new Map) => (...nodes) =>
-	nodes.reduce(appendR, edges);
+const addNodes = (edges = new Map) => (...nodes) => nodes.reduce(appendR, edges);
 
 const rmNode = (edges = new Map, src) => {
 	if (adj(edges)(src).size > 0) {
@@ -46,12 +44,15 @@ const rmNode = (edges = new Map, src) => {
 	return edges.delete(src) ? edges : edges;
 };
 
+const rmNodeXX = (edges = new Map) => (src) =>
+	rmNode(removeNeighbors(edges)(src))(src);
 const removeNodes = (edges = new Map) => (...ns) => {
-	ns.forEach(n =>
-		removeEdges(edges)(n)(...neighbors(edges)(n)));
-	// let nMap = ns.map(neighbors(edges));
-	// console.log(nMap);
-	return ns.reduce(rmNode, edges);
+	return ns.reduce(rmNodeXX, edges);
+	// ns.forEach(n =>
+	// 	removeEdges(edges)(n)(...neighbors(edges)(n)));
+	// // let nMap = ns.map(neighbors(edges));
+	// // console.log(nMap);
+	// return ns.reduce(rmNode, edges);
 };
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
