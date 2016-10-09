@@ -1,13 +1,13 @@
 beforeAll(function() {
 	require('jasmine-expect');
 	App = require('../../index');
-	({ Graph, utils, traversals, AsyncOps, Edge } = App);
-	({ makeEdges, fromElements, nodes, edges } = Graph);
-	({ neighbors, contains, isAdjacent } = Graph);
-	({ addEdge, removeEdge } = Graph);
-	({ addNodes, removeNode } = Graph);
-	({ importEdge, mergeGraphs } = Graph);
-	({ clearEdges, showGraph } = Graph);
+	({ Graph, utils, traversals, AsyncOps, Edge, Reducers } = App);
+	// ({ makeEdges, fromElements, nodes } = Graph);
+	// ({ neighbors, contains, isAdjacent } = Graph);
+	// ({ addEdge, removeEdge } = Graph);
+	// ({ addNodes, removeNode } = Graph);
+	// ({ importEdge, mergeGraphs } = Graph);
+	// ({ clearEdges, showGraph } = Graph);
 	trav = traversals;
 	Node = (label = '', data = {}) => ({
 		label,
@@ -19,21 +19,13 @@ beforeAll(function() {
 		0);
 	oFilter = (coll) => coll.filter(({ data }) => data.position % 2 ===
 		1);
-	nEdges = ({ edges }) => eFilter(Array.from(nodes({ edges })))
-		.reduce((prev, next, id) => {
-			addEdge({ edges })(prev)(next, id * 2);
-			return next;
-		});
+
 	nEdgesR = (edges) => eFilter(Array.from(Edge.nodes(edges)))
 		.reduce((prev, next, id) => {
 			Edge.addEdges(edges)(prev, id * 2)(next);
 			return next;
 		});
-	oEdges = ({ edges }) => oFilter(Array.from(nodes({ edges })))
-		.reduce((prev, next, id) => {
-			addEdge({ edges })(prev)(next, (id * 2) + 1);
-			return next;
-		});
+
 	oEdgesR = (edges) => oFilter(Array.from(Edge.nodes(edges)))
 		.reduce((prev, next, id) => {
 			Edge.addEdges(edges)(prev, id * 2)(next);
@@ -75,7 +67,7 @@ beforeEach(function() {
 	Edge.addEdges(oddGraphR)(n0, 22)(n9);
 	oEdgesR(oddGraphR);
 
-	myEdgesR = edges(myGraphR);
-	oddEdgesR = edges(oddGraphR);
-	evenEdgesR = edges(evenGraphR);
+	myEdgesR = Edge.spawn(myGraphR);
+	oddEdgesR = Edge.spawn(oddGraphR);
+	evenEdgesR = Edge.spawn(evenGraphR);
 });

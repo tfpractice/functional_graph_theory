@@ -1,6 +1,6 @@
-const Graph = require('./graph');
-const { addNodes, addEdge, removeEdge, removeNode } = Graph;
-const { addNeighbor, importEdge, mergeGraphs, } = Graph;
+const Graph = require('./graph_file');
+const { addNodes, addEdges, removeEdges, removeNodes } = Graph;
+const { addNeighbors, mergeNeighbors, mergeEdges } = Graph;
 
 const addNodesAsync = (graph) => (...additional) =>
 	new Promise((resolve) => {
@@ -8,9 +8,9 @@ const addNodesAsync = (graph) => (...additional) =>
 		resolve(graph);
 	});
 
-const addEdgeAsync = (graph) => (n0) => (n1, weight = 0) =>
+const addEdgesAsync = (graph) => (n0, weight = 0) => (...nodes) =>
 	new Promise((resolve) => {
-		addEdge(graph)(n0)(n1, weight);
+		addEdges(graph)(n0, weight)(...nodes);
 		resolve(graph);
 	});
 
@@ -26,7 +26,7 @@ const removeEdgeAsync = (graph) => (src) => (nabe) =>
 
 const removeNodeAsync = (graph) => (exNode) =>
 	new Promise((resolve) => {
-		removeNode(graph)(exNode);
+		removeNodes(graph)(exNode);
 		resolve(graph);
 	});
 
@@ -36,23 +36,23 @@ const addNeighborAsync = (graph) => (src) => ([nabe, wt]) =>
 		resolve(graph);
 	});
 
-const importEdgeAsync = (graph) => ([src, nabes]) =>
+// const importEdgeAsync = (graph) => ([src, nabes]) =>
+// 	new Promise((resolve) => {
+// 		addEntry(graph)([src, nabes]);
+// 		resolve(graph);
+// 	});
+const mergeEdgesAsync = (graph) => (altGraph) =>
 	new Promise((resolve) => {
-		importEdge(graph)([src, nabes]);
-		resolve(graph);
-	});
-const mergeGraphsAsync = (graph) => (altGraph) =>
-	new Promise((resolve) => {
-		mergeGraphs(graph)(altGraph);
+		mergeEdges(graph)(altGraph);
 		resolve(graph);
 	});
 
 module.exports = {
 	addNodesAsync,
-	addEdgeAsync,
+	addEdgesAsync,
 	removeEdgeAsync,
 	removeNodeAsync,
 	addNeighborAsync,
-	importEdgeAsync,
-	mergeGraphsAsync,
+	// importEdgeAsync,
+	mergeEdgesAsync,
 };

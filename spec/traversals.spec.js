@@ -4,8 +4,8 @@ fdescribe('traversal functions', () => {
 	});
 
 	beforeEach(function() {
-		// myDepth = trav.dfs(myGraphR)(n0);
-		// myBreadth = trav.bfs(myGraphR)(n5);
+		myDepth = trav.dfs(myGraphR)(n0);
+		myBreadth = trav.bfs(myGraphR)(n5);
 	});
 
 	describe('unvisitedNeighbors', () => {

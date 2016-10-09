@@ -1,7 +1,7 @@
-describe('Edge Reducers', function() {
+fdescribe(' Reducers', function() {
 	beforeAll(function() {
-		console.log('\n.........Edge Reducers Spec.........');
-		({ Reducers: RD } = Edge);
+		console.log('\n......... Reducers Spec.........');
+		RD = Reducers;
 	});
 
 	beforeEach(function() {

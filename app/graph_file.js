@@ -59,28 +59,26 @@ const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
 const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
 	[...altNabes].reduce(addEntryR, nabes);
 
-const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-	[...altEdges].reduce(mergeEdgesR, edges);
+	const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
+			[...altEdges].reduce(mergeEdgesR, edges);
 };
 
-module.exports = {
-	spawn,
-	contains,
-	nodes,
-	adj,
-	copy,
-	isAdjacent,
-	addNodes,
-	removeEdges,
-	removeNodes,
-	neighbors,
-	addNeighbor,
-	addEdges,
-	addEdgeR,
-	addEntry,
-	weighedEntry,
-	removeNeighbors,
-	mergeNeighbors,
-	mergeEdges,
-	fromElements,
-};
+module.exports = { spawn,
+    contains,
+    nodes,
+    adj,
+    copy,
+    isAdjacent,
+    addNodes,
+    removeEdges,
+    removeNodes,
+    neighbors,
+    addNeighbor,
+    addEdges,
+    addEdgeR,
+    addEntry,
+    weighedEntry,
+    removeNeighbors,
+    mergeNeighbors,
+    mergeEdges,
+    fromElements, };
