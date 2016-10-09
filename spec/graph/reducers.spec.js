@@ -1,39 +1,60 @@
-// fdescribe('Graph reducers', function() {
-// 	beforeAll(function() {
-// 		console.log('\n.........GraphReducer Spec.........');
-// 	});
+describe('Edge Reducers', function() {
+	beforeAll(function() {
+		console.log('\n.........Edge Reducers Spec.........');
+		({ Reducers: RD } = Edge);
+	});
 
-// 	beforeEach(function() {
-// 		rGraph = Graph.spawn();
-// 		rEdges = firstTen.reduce(Graph.createEdge, rGraph);
-// 		// myNabes = Graph.spawn();
-// 		// console.log(Array.from(firstTen, e => [e]));
-// 		// myNabes = Array.from(firstTen, e => [e]).reduce(Graph.addNeighbor,
-// 		//     Graph.spawn());
-// 		// console.log(fmap);
-// 		// console.log([...new Map(firstTen)]);
-// 	});
+	beforeEach(function() {
+		rEdges = Edge.spawn();
+		evens = Edge.addNodes()(...eFilter(myNodes));
+		odds = Edge.addNodes()(...oNodes);
+	});
 
-// 	describe('spawn(nabes)', () => {
-// 		it('returns a new Map', () => {
-// 			// console.log(Graph.spawn());
-// 			expect(Graph.spawn()).toBeObject();
-// 			// expect(Graph.spawn() instanceof Map).toBeTrue();
-// 		});
-// 	});
-// 	describe('createEdge({edges},src)', () => {
-// 		it('adds an entry to the nabes', () => {
-// 			e0 = Graph.createEdge(rGraph, n0);
-// 			// console.log(e0);
-// 			// console.log(myNabes);
-// 			// expect(myNabes.has(n0)).toBeTrue();
-// 		});
-// 	});
-// 	// describe('removeNeighbor ', () => {
-// 	//     it('retuns a new map with the specified nabe deleted', function () {
-// 	//         myNabes = Graph.removeNeighbor(myNabes, n0);
-// 	//         expect(myNabes.has(n0)).toBeFalse();
-// 	//     });
-// 	// });
-// 	// describe('setWeight ', () => {});
-// });
+	describe('appendNew', () => {
+		it('adds an entry to the edges Map', () => {
+			RD.appendNew(rEdges)(n0);
+			expect(rEdges.has(n0)).toBeTrue();
+		});
+	});
+
+	describe('appendR', () => {
+		it('adds entries to the Map via reduce', () => {
+			RD.appendR(rEdges, n0);
+			expect(rEdges.has(n0)).toBeTrue();
+		});
+	});
+
+	describe('rmNodeR', () => {
+		it('removes a node from the edges map', () => {
+			RD.appendR(rEdges, n0);
+			rEdges = RD.rmNodeR(rEdges, n0);
+			expect(rEdges.has(n0)).toBeFalse();
+		});
+	});
+
+	describe('addNeighborR', () => {
+		it('adds a neigbor and weight to the src entry', () => {
+			let nabes = RD.addNeighborR(Edge.adj(
+				rEdges)(n0), n1, 3);
+			expect(nabes.has(n1)).toBeTrue();
+		});
+	});
+
+	describe('addEntryR', () => {
+		it('appends an [node, weight] pair to the neighbrs', () => {
+			let nabes = RD.addNeighborR(Edge.adj(rEdges)(n0), n1, 3);
+			let w0n2 = Edge.weighedEntry(0)(n2);
+			RD.addEntryR(nabes, w0n2);
+			expect(nabes.has(n2)).toBeTrue();
+			expect(Edge.adj(rEdges)(n0).has(n2)).not.toBeTrue();
+		});
+	});
+	describe('removeEdgeR', function() {
+		it('removes the connections beteen ', function() {
+			let rNabes = Edge.addEdges(rEdges)(n0, 0)(
+				n1, n2, n3).get(n0);
+			RD.removeEdgeR(rEdges, [n0, n1]);
+			expect(Edge.adj(rEdges)(n0).has(n1)).toBeFalse();
+		});
+	});
+});

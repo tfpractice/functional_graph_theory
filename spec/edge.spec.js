@@ -1,7 +1,5 @@
 describe('Edge ', function() {
-	beforeAll(function() {
-		console.log('\n.........Edge  Spec.........');
-	});
+	beforeAll(function() {});
 
 	beforeEach(function() {
 		rEdges = Edge.spawn();
@@ -42,14 +40,7 @@ describe('Edge ', function() {
 			expect(rEdges.has(n0)).toBeTrue();
 		});
 	});
-	describe('rmNode', () => {
-		it('removes a node from the edges map', () => {
-			Edge.addNodes(rEdges)(n0);
-			console.log('running');
-			rEdges = Edge.rmNode(rEdges, n0);
-			expect(rEdges.has(n0)).toBeFalse();
-		});
-	});
+
 	describe('removeNodes', () => {
 		it('removes the nodes from the edges', () => {
 			Edge.addEdges(rEdges)(n0, 1)(n1, n2, n3);

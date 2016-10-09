@@ -6,7 +6,9 @@ const {
 	addNeighborR,
 	addEntryR,
 	removeEdgeR,
-	mergeEdgesR: MER,
+	removeNeighborsR,
+	rmNodeXR,
+	mergeEdgesR,
 } =
 reducers;
 
@@ -29,51 +31,31 @@ const isAdjacent = (edges = new Map) => (src) => (nabe) =>
 	contains(adj(edges)(src))(nabe);
 
 const clearEdges = (edges) => edges.clear;
-const removeNeighbors = (edges = new Map) => (src) =>
-	neighbors(edges)(src).map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
 
 const addNodes = (edges = new Map) => (...nodes) => nodes.reduce(appendR, edges);
 
-const rmNode = (edges = new Map, src) => {
-	if (adj(edges)(src).size > 0) {
-		neighbors(edges)(src)
-			.map(edgeEntry(0)(src))
-			.reduce(removeEdgeR, edges);
-	}
-
-	return edges.delete(src) ? edges : edges;
-};
-
-const rmNodeXX = (edges = new Map) => (src) =>
-	rmNode(removeNeighbors(edges)(src))(src);
-const removeNodes = (edges = new Map) => (...ns) => {
-	return ns.reduce(rmNodeXX, edges);
-	// ns.forEach(n =>
-	// 	removeEdges(edges)(n)(...neighbors(edges)(n)));
-	// // let nMap = ns.map(neighbors(edges));
-	// // console.log(nMap);
-	// return ns.reduce(rmNode, edges);
-};
+const removeNodes = (edges = new Map) => (...ns) => ns.reduce(rmNodeXR, edges);
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
 	addNeighborR(adj(edges)(src), n, w);
 
-const rmEdge = (edges = new Map) => (src) => (nabe) =>
-	removeEdgeR(edges, [src, nabe]);
-
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
+
+const removeNeighbors = (edges = new Map) => (...nodes) =>
+	nodes.reduce(removeNeighborsR, edges);
 
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 	nabes.map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
+	w);
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[...alts].reduce(addEntryR, nabes);
 
 const mergeEdges = (edges = new Map) => (alts = new Map) => {
-	[...alts].reduce(MER, edges);
+	[...alts].reduce(mergeEdgesR, edges);
 };
 
 module.exports = {
@@ -83,7 +65,6 @@ module.exports = {
 	adj,
 	isAdjacent,
 	addNodes,
-	rmNode,
 	removeEdges,
 	removeNodes,
 	neighbors,
