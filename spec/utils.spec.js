@@ -1,12 +1,12 @@
-describe('Utils', function() {
+fdescribe('Utils', function() {
 	let nabes0;
 	beforeAll(function() {
 		console.log('\n.........Utils Spec.........');
 	});
 
 	beforeEach(function() {
-		nabes0 = neighbors(myGraph)(n0);
-		myEdges = edges(myGraph);
+		nabes0 = Edge.neighbors(myGraphR)(n0);
+		myEdges = Edge.spawn(myGraphR);
 	});
 
 	describe('spreadKeys', () => {
@@ -37,7 +37,7 @@ describe('Utils', function() {
 	});
 	describe('rmFirst', () => {
 		it('deletes the last key in a map/set', () => {
-			let copied = new Set(nodes(myGraph));
+			let copied = new Set(Edge.nodes(myGraphR));
 			let first = utils.rmFirst((copied));
 			expect(first).toBe(n0);
 			expect(copied.has(n0)).toBeFalse();

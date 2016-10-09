@@ -50,7 +50,7 @@ fdescribe('Graph', function() {
 	describe('operators', () => {
 		describe('isAdjacent(graph)(n0)(n1)', () => {
 			it('checks for the presence of a node in the graph', () => {
-				expect(isAdjacent(myGraph)(n0)(n6)).toBeFalse();
+				expect(Edge.isAdjacent(myGraphR)(n0)(n6)).toBeFalse();
 			});
 		});
 

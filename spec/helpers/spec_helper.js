@@ -52,56 +52,30 @@ beforeEach(function() {
 	lastTen = myNodes.slice(-10);
 	[n0, n1, n2, n3, n4, n5, n6, n7, n8, n9] = firstTen;
 	[n10, n11, n12, n13, n14, n15, n16, n17, n18, n19] = lastTen;
-
 	eNodes = eFilter(lastTen);
 	oNodes = oFilter(lastTen);
-
-	myGraph = fromElements(...firstTen);
 	myGraphR = Edge.fromElements(...firstTen);
-	altGraph = fromElements(n4, n5, n6, n7, n8, n9);
 	altGraphR = Edge.fromElements(n4, n5, n6, n7, n8, n9);
-	evenGraph = fromElements(...firstTen, ...eNodes);
 	evenGraphR = Edge.fromElements(...firstTen, ...eNodes);
-	oddGraph = fromElements(...firstTen, ...oNodes);
 	oddGraphR = Edge.fromElements(...firstTen, ...oNodes);
 
-	addEdge(myGraph)(n0)(n1, 2);
-	Edge.addEdges(myGraphR)(n0, 2)(n1);
-	addEdge(myGraph)(n0)(n2, 2);
-	Edge.addEdges(myGraphR)(n0, 2)(n2);
-	addEdge(myGraph)(n1)(n4, 4);
-	Edge.addEdges(myGraphR)(n1, 4)(n4);
-	addEdge(myGraph)(n1)(n6, 6);
+	Edge.addEdges(myGraphR)(n0, 2)(n1, n2);
+	Edge.addEdges(myGraphR)(n1, 4)(n4, n2);
 	Edge.addEdges(myGraphR)(n1, 6)(n6);
-	addEdge(myGraph)(n2)(n3, 3);
 	Edge.addEdges(myGraphR)(n2, 3)(n3);
-	addEdge(myGraph)(n5)(n4, 4);
 	Edge.addEdges(myGraphR)(n5, 4)(n4);
-	addEdge(myGraph)(n1)(n2, 4);
-	Edge.addEdges(myGraphR)(n1, 4)(n2);
-	addEdge(myGraph)(n3)(n4, 8);
 	Edge.addEdges(myGraphR)(n3, 8)(n4);
-	addEdge(myGraph)(n5)(n6, 7);
 	Edge.addEdges(myGraphR)(n5, 7)(n6);
 
-	addEdge(evenGraph)(n0)(n1, 11);
 	Edge.addEdges(evenGraphR)(n0, 11)(n1);
-	addEdge(evenGraph)(n0)(n9, 22);
 	Edge.addEdges(evenGraphR)(n0, 22)(n9);
-	nEdges(evenGraph);
 	nEdgesR(evenGraphR);
 
-	addEdge(oddGraph)(n0)(n1, 11);
 	Edge.addEdges(oddGraphR)(n0, 11)(n1);
-	addEdge(oddGraph)(n0)(n9, 22);
 	Edge.addEdges(oddGraphR)(n0, 22)(n9);
-	oEdges(oddGraph);
 	oEdgesR(oddGraphR);
 
-	myEdges = edges(myGraph);
 	myEdgesR = edges(myGraphR);
-	oddEdges = edges(oddGraph);
 	oddEdgesR = edges(oddGraphR);
-	evenEdges = edges(evenGraph);
 	evenEdgesR = edges(evenGraphR);
 });
