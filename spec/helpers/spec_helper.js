@@ -2,12 +2,6 @@ beforeAll(function() {
 	require('jasmine-expect');
 	App = require('../../index');
 	({ Graph, utils, traversals, AsyncOps, Edge, Reducers } = App);
-	// ({ makeEdges, fromElements, nodes } = Graph);
-	// ({ neighbors, contains, isAdjacent } = Graph);
-	// ({ addEdge, removeEdge } = Graph);
-	// ({ addNodes, removeNode } = Graph);
-	// ({ importEdge, mergeGraphs } = Graph);
-	// ({ clearEdges, showGraph } = Graph);
 	trav = traversals;
 	Node = (label = '', data = {}) => ({
 		label,
