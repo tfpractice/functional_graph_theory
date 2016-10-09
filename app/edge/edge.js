@@ -1,5 +1,13 @@
 const reducers = require('./edge_reducers');
-const { addEdgeR, appendR, rmNodeR, addNeighborR, addEntryR, removeEdgeR } =
+const {
+	addEdgeR,
+	appendR,
+	rmNodeR,
+	addNeighborR,
+	addEntryR,
+	removeEdgeR,
+	mergeEdgesR: MER,
+} =
 reducers;
 
 const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
@@ -21,6 +29,9 @@ const isAdjacent = (edges = new Map) => (src) => (nabe) =>
 	contains(adj(edges)(src))(nabe);
 
 const clearEdges = (edges) => edges.clear;
+const removeNeighbors = (edges = new Map) => (src) =>
+	neighbors(edges)(src).map(edgeEntry(0)(src))
+	.reduce(removeEdgeR, edges);
 
 const addNodes = (edges = new Map) => (...nodes) =>
 	nodes.reduce(appendR, edges);
@@ -55,17 +66,13 @@ const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 	nabes.map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
-	w);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n, w);
 
 const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
 	[...alts].reduce(addEntryR, nabes);
 
-const mergeEdgesR = (edges = new Map, [src, alts]) =>
-	edges.set(src, mergeNeighbors(adj(edges)(src))(alts));
-
 const mergeEdges = (edges = new Map) => (alts = new Map) => {
-	[...alts].reduce(mergeEdgesR, edges);
+	[...alts].reduce(MER, edges);
 };
 
 module.exports = {
@@ -84,6 +91,7 @@ module.exports = {
 	addEdgeR,
 	addEntry,
 	weighedEntry,
+	removeNeighbors,
 	mergeNeighbors,
 	mergeEdges,
 	fromElements,

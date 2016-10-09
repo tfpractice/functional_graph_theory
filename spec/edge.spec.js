@@ -46,7 +46,7 @@ describe('Edge ', function() {
 		it('removes a node from the edges map', () => {
 			Edge.addNodes(rEdges)(n0);
 			console.log('running');
-			rEdges = Edge.rmNode(rEdges)(n0);
+			rEdges = Edge.rmNode(rEdges, n0);
 			expect(rEdges.has(n0)).toBeFalse();
 		});
 	});
@@ -95,6 +95,13 @@ describe('Edge ', function() {
 			let newNabes = Edge.addEntry(nabes)(w0n2);
 			expect(newNabes.has(n2)).toBeTrue();
 			expect(Edge.adj(rEdges)(n0).has(n2)).toBeFalse();
+		});
+	});
+	describe('removeNeighbors', () => {
+		it('removes all edges connecting a node and its neighbors', function() {
+			Edge.addEdges(rEdges)(n0, 0)(n1, n2, n3);
+			Edge.removeNeighbors(rEdges)(n0);
+			expect(Edge.neighbors(rEdges)(n0)).toBeEmptyArray();
 		});
 	});
 	describe('mergeNeighbors', () => {
