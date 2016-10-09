@@ -14,7 +14,7 @@ fdescribe('async', function() {
 	describe('addNodesAsync', () => {
 		it('adds a node to the graph', (done) => {
 			addNodesAsync(oddGraphR)(e2);
-			expect(Edge.contains(oddGraphR)(e2)).toBeTrue();
+			expect(Graph.contains(oddGraphR)(e2)).toBeTrue();
 			done();
 		});
 	});
@@ -22,7 +22,7 @@ fdescribe('async', function() {
 	describe('addEdgesAsync(e2)(o2,weight)', () => {
 		it('updates each nodes edge entry', (done) => {
 			addEdgesAsync(oddGraphR)(e2, 2)(o2);
-			expect(Edge.neighbors(oddGraphR)(e2)).toContain(o2);
+			expect(Graph.neighbors(oddGraphR)(e2)).toContain(o2);
 			expect((oddGraphR).get(e2).get(o2)).toBe(2);
 			done();
 		});
@@ -56,7 +56,7 @@ fdescribe('async', function() {
 			let OddNabe = utils.spreadKeys(firstOdd[1])[0];
 			mergeEdgesAsync(evenGraphR)(oddGraphR);
 			removeNodeAsync(evenGraphR)(OddNode);
-			expect(Edge.contains(evenGraphR)(OddNode)).toBeFalse();
+			expect(Graph.contains(evenGraphR)(OddNode)).toBeFalse();
 			done();
 		});
 	});
@@ -65,7 +65,7 @@ fdescribe('async', function() {
 			let elevOdd = utils.spreadEntries(oddGraphR)[3];
 			let OddNode = elevOdd[0];
 			mergeEdgesAsync(evenGraphR)(oddGraphR);
-			expect(Edge.contains(evenGraphR)(OddNode)).toBeTrue();
+			expect(Graph.contains(evenGraphR)(OddNode)).toBeTrue();
 			done();
 		});
 	});

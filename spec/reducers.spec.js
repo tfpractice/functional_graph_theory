@@ -5,9 +5,9 @@ fdescribe(' Reducers', function() {
 	});
 
 	beforeEach(function() {
-		rEdges = Edge.spawn();
-		evens = Edge.addNodes()(...eFilter(myNodes));
-		odds = Edge.addNodes()(...oNodes);
+		rEdges = Graph.spawn();
+		evens = Graph.addNodes()(...eFilter(myNodes));
+		odds = Graph.addNodes()(...oNodes);
 	});
 
 	describe('appendNew', () => {
@@ -34,7 +34,7 @@ fdescribe(' Reducers', function() {
 
 	describe('addNeighborR', () => {
 		it('adds a neigbor and weight to the src entry', () => {
-			let nabes = RD.addNeighborR(Edge.adj(
+			let nabes = RD.addNeighborR(Graph.adj(
 				rEdges)(n0), n1, 3);
 			expect(nabes.has(n1)).toBeTrue();
 		});
@@ -42,21 +42,19 @@ fdescribe(' Reducers', function() {
 
 	describe('addEntryR', () => {
 		it('appends an [node, weight] pair to the neighbrs', () => {
-			let nabes = RD.addNeighborR(Edge.adj(
-				rEdges)(n0), n1, 3);
-			let w0n2 = Edge.weighedEntry(0)(n2);
+			let nabes = RD.addNeighborR(Graph.adj(rEdges)(n0), n1, 3);
+			let w0n2 = Graph.weighedEntry(0)(n2);
 			RD.addEntryR(nabes, w0n2);
 			expect(nabes.has(n2)).toBeTrue();
-			expect(Edge.adj(rEdges)(n0).has(n2)).not
-				.toBeTrue();
+			expect(Graph.adj(rEdges)(n0).has(n2)).not.toBeTrue();
 		});
 	});
 	describe('removeEdgeR', function() {
 		it('removes the connections beteen ', function() {
-			let rNabes = Edge.addEdges(rEdges)(n0, 0)(
+			let rNabes = Graph.addEdges(rEdges)(n0, 0)(
 				n1, n2, n3).get(n0);
 			RD.removeEdgeR(rEdges, [n0, n1]);
-			expect(Edge.adj(rEdges)(n0).has(n1)).toBeFalse();
+			expect(Graph.adj(rEdges)(n0).has(n1)).toBeFalse();
 		});
 	});
 });

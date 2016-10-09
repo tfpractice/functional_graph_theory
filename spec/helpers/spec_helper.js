@@ -1,8 +1,8 @@
 beforeAll(function() {
 	require('jasmine-expect');
 	App = require('../../index');
-	({ Graph, utils, traversals, AsyncOps, Edge, Reducers } = App);
-	trav = traversals;
+	({ Graph, utils, Traversals, AsyncOps, Reducers } = App);
+	Trav = Traversals;
 	Node = (label = '', data = {}) => ({
 		label,
 		data,
