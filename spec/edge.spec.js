@@ -1,4 +1,4 @@
-describe('Edge ', function() {
+fdescribe('Edge ', function() {
 	beforeAll(function() {});
 
 	beforeEach(function() {

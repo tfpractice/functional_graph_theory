@@ -13,18 +13,16 @@ const {
 	rmNodeXR,
 	mergeEdgesR,
 } =
-reducers;
+Reducers;
 
 const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
 
 const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
 
 const spawn = (edges = new Map) => new Map(edges);
-// const edges = ({ edges = new Map }) => edges;
 
 const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
-// const makeEdges = (...elements) =>
 
 const contains = (edges = new Map) => (node) => edges.has(node);
 const nodes = (edges = new Map) => [...new Set(edges.keys())];
@@ -58,11 +56,11 @@ const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
 	w);
 
-const mergeNeighbors = (nabes = new Map) => (alts = new Map) =>
-	[...alts].reduce(addEntryR, nabes);
+const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
+	[...altNabes].reduce(addEntryR, nabes);
 
-const mergeEdges = (edges = new Map) => (alts = new Map) => {
-	[...alts].reduce(mergeEdgesR, edges);
+const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
+	[...altEdges].reduce(mergeEdgesR, edges);
 };
 
 module.exports = {
@@ -70,6 +68,7 @@ module.exports = {
 	contains,
 	nodes,
 	adj,
+	copy,
 	isAdjacent,
 	addNodes,
 	removeEdges,

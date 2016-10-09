@@ -17,8 +17,12 @@ const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
 const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
 
 const spawn = (edges = new Map) => new Map(edges);
+// const edges = ({ edges = new Map }) => edges;
+
 const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
+// const makeEdges = (...elements) =>
+
 const contains = (edges = new Map) => (node) => edges.has(node);
 const nodes = (edges = new Map) => [...new Set(edges.keys())];
 
