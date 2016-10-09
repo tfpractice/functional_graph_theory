@@ -10,6 +10,8 @@ const initPath = (node) =>
 
 const unvisitedNeighbors = ({ edges }) => (path) => (node) =>
 	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
+const unvisitedNeighbors = ({ edges }) => (path) => (node) =>
+	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
 
 const unvisitedMap = ({ edges }) => (path) => (node) =>
 	new Map(spreadEntries(edges.get(node)).filter(x_pathHasEntry(path)));
