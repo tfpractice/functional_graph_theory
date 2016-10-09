@@ -8,20 +8,18 @@ const { componentString } = UTILS;
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
-const unvisitedNeighbors = ({ edges }) => (path) => (node) =>
-	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
-const unvisitedNeighbors = ({ edges }) => (path) => (node) =>
+const unvisitedNeighbors = (edges) => (path) => (node) =>
 	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
 
-const unvisitedMap = ({ edges }) => (path) => (node) =>
+const unvisitedMap = (edges) => (path) => (node) =>
 	new Map(spreadEntries(edges.get(node)).filter(x_pathHasEntry(path)));
 
-const dfs = ({ edges }) => (iNode) => {
+const dfs = (edges) => (iNode) => {
 	let dPath = initPath(iNode);
 	let dVisit = (path) => {
 		let pred = lastKey(path);
 		let { length: pCount, weight: pWeight } = path.get(pred);
-		let nextNabes = unvisitedMap({ edges })(path)(pred);
+		let nextNabes = unvisitedMap(edges)(path)(pred);
 		for (let [nabe, weight] of nextNabes) {
 			path.set(nabe, {
 				pred,
@@ -36,12 +34,12 @@ const dfs = ({ edges }) => (iNode) => {
 	return dPath;
 };
 
-const bfs = ({ edges }) => (iNode) => {
+const bfs = (edges) => (iNode) => {
 	var bPath = initPath(iNode);
 	var bQueue = new Set([iNode]);
 	while (bQueue.size > 0) {
 		let pred = rmFirst(bQueue);
-		let nextNabes = unvisitedMap({ edges })(bPath)(pred);
+		let nextNabes = unvisitedMap(edges)(bPath)(pred);
 		let { length: pCount, weight: pWeight } = bPath.get(pred);
 		for (let [nabe, weight] of nextNabes) {
 			bPath.set(nabe, {
@@ -56,8 +54,8 @@ const bfs = ({ edges }) => (iNode) => {
 	return bPath;
 };
 
-const dijkstra = ({ edges }) => (iNode) => {
-	let reachables = bfs({ edges })(iNode);
+const dijkstra = (edges) => (iNode) => {
+	let reachables = bfs(edges)(iNode);
 	let inspectQueue = new Set().add(iNode);
 	let solutionSet = initPath(iNode);
 	while (inspectQueue.size > 0) {
@@ -79,7 +77,7 @@ const dijkstra = ({ edges }) => (iNode) => {
 	return solutionSet;
 };
 
-const components = ({ edges }) => {
+const components = (edges) => {
 	let cMap = new Map();
 
 	let visitComponent = (comp = new Set) => (node) => {
