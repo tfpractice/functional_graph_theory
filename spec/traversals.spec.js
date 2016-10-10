@@ -43,6 +43,16 @@ fdescribe('Traversal functions', () => {
 			expect((Trav.components(myGraphR) instanceof Map)).toBeTrue();
 		});
 	});
+	describe('componentSet', () => {
+		it('returns a set of all the components', function() {
+			expect(Trav.componentSet(myGraphR) instanceof Set).toBeTrue();
+		});
+	});
+	describe('pathBetween', function() {
+		it('returns a true if nodes are in same component', function() {
+			expect(Trav.pathBetween(myGraphR)(n7)(n8)).toBeTrue();
+		});
+	});
 	// describe('intersection', () => {
 	// 	it('returns an array of [k,v] pairs which share keys',
 	// 		() => {

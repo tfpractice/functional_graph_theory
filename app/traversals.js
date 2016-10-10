@@ -4,19 +4,26 @@ const { lastKey, firstKey, rmFirst, } = UTILS;
 const { pathHasNode, x_pathHasNode } = UTILS;
 const { pathHasEntry, x_pathHasEntry } = UTILS;
 const { componentString } = UTILS;
+
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
-const unvisitedNeighbors = (edges) => (path) => (node) =>
-	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
-const unvisitedMap = (edges) => (path) => (node) =>
-	new Map(spreadEntries(edges.get(node)).filter(x_pathHasEntry(path)));
+
 const pathEntry = (pred) => ([n, w]) => [pred, n, w];
+
+const appendSet = (set = new Set, val) => set.add(val);
+
 const appendEntry = (path = new Map, [pred, n, w]) => {
 	let { length: pCount, weight: pWeight } = path.get(pred);
 	let length = pCount + 1;
 	let weight = pCount + w;
 	return path.set(n, { pred, length, weight });
 };
+
+const unvisitedNeighbors = (edges) => (path) => (node) =>
+	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
+
+const unvisitedMap = (edges) => (path) => (node) =>
+	new Map(spreadEntries(edges.get(node)).filter(x_pathHasEntry(path)));
 
 const dfs = (edges) => (iNode) => {
 	const dVisit = (path) => {
@@ -31,7 +38,6 @@ const dfs = (edges) => (iNode) => {
 	return dVisit(initPath(iNode));
 };
 
-const appendSet = (set = new Set, val) => set.add(val);
 const bfs = (edges) => (iNode) => {
 	const bVisit = (bPath) => (bQueue) => {
 		let pred = rmFirst(bQueue);
@@ -57,7 +63,7 @@ const dijkstra = (edges) => (iNode) => {
 		for (let [nabe, nWeight] of nextNabes) {
 			let prevMap = reachables.get(nabe);
 			let { length: rCount, weight: rWeight } = prevMap;
-			let dMap = { pred: pred, length: dCount + 1, weight: dWeight + nWeight, };
+			let dMap = { pred: pred, length: dCount + 1, weight: dWeight + nWeight };
 			let sMap = ((dWeight + nWeight) < rWeight) ? dMap : prevMap;
 			if (!solutionSet.has(nabe)) {
 				inspectQueue.add(nabe);
@@ -84,11 +90,16 @@ const components = (edges) => {
 	return cMap;
 };
 
+const componentSet = (edges) => new Set(spreadValues(components(edges)));
+const pathBetween = (edges) => (n0) => (n1) => components(edges).get(n0).has(n1);
+
 module.exports = {
 	dfs,
 	bfs,
 	dijkstra,
 	components,
+	componentSet,
+	pathBetween,
 	unvisitedMap,
 	unvisitedNeighbors,
 };
