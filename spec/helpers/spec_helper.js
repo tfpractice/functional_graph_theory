@@ -42,6 +42,7 @@ beforeEach(function() {
 	Graph.addEdges(myGraphR)(n5, 4)(n4);
 	Graph.addEdges(myGraphR)(n3, 8)(n4);
 	Graph.addEdges(myGraphR)(n5, 7)(n6);
+	Graph.addEdges(myGraphR)(n7, 7)(n8);
 
 	Graph.addEdges(evenGraphR)(n0, 11)(n1);
 	Graph.addEdges(evenGraphR)(n0, 22)(n9);

@@ -1,3 +1,8 @@
+/**
+ * Graph module.
+ * @module Graph
+ 
+ */
 const utils = require('./utils');
 const { spreadKeys, spreadValues, spreadEntries } = utils;
 const { hasKey, x_hasKey, showGraph } = utils;
@@ -15,12 +20,33 @@ const {
 } =
 Reducers;
 
-const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
+/**
+ *
+ * creates an array of the weight and neighbor
+ * @param  {Number} weight the weight of the associated edge
+ * @return {Function} a function receiving the neighboring node
+ */
+const weighedEntry = (weight = 0) =>
+	/**
+	 * returns an array of the weight and node
+	 * @inner
+	 * @param  {Object} the neighboring node
+	 * @return {Array}   neighbor, weight tuple
+	 */
+	(nabe) => [nabe, weight];
 
 const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
-
+/**
+ * creates a new graph
+ * @member spawn
+ * @param  {Map}    edges an optional edgelist
+ * @return {Map}       a new edgelist
+ */
 const spawn = (edges = new Map) => new Map(edges);
-
+/**
+ * returns a copy of the graph
+ * @type {Map}
+ */
 const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
 
