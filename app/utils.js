@@ -1,13 +1,3 @@
-// const { spreadK, spreadValues, spreadKV } = utils;
-// const { hasK, x_hasK, showGraph } = utils;
-// const { spreadK, spreadValues, spreadKV } = UTILS;
-// const { lastK, firstK, rmFirst, } = UTILS;
-// const { hasK, x_hasK } = UTILS;
-// const { hasKV, x_hasKV } = UTILS;
-// const { componentString } = UTILS;
-// let myMap = new Map().set(1, 11).set(2, 22).set(3, 33);
-// let mySet = new Set().add(1).add(2).add(3).add(4);
-// let myArr = [ 11, 22, 33, 44, 55 ];
 const spread = (coll = []) => [...coll];
 const spreadK = (coll = []) => [...coll.keys()];
 const spreadV = (coll = []) => [...coll.values()];
@@ -26,11 +16,15 @@ let rmFirst = (coll = []) => {
 	return elem;
 };
 
-let hasK = (coll = []) => (key) => coll.has(key);
-let x_hasK = (coll = []) => (key) => !coll.has(key);
-let hasKV = (path) => ([key, val]) => path.has(key);
-let x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
+const hasK = (coll = []) => (key) => coll.has(key);
+const x_hasK = (coll = []) => (key) => !coll.has(key);
+const hasKV = (path) => ([key, val]) => path.has(key);
+const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
+const redStr = (str = '', val, id, coll) => str.concat(val);
+
+const keyStr = (coll) =>
+	spreadK(coll).reduce(redStr, 'keys');
 let pathString = (path) =>
 	spreadK(path).reduce((str, next, id, coll) =>
 		id === (coll.length - 1) ?
@@ -57,33 +51,6 @@ let difference = (m0) => (m1) =>
 let union = (m0) => (m1) =>
 	spreadKV(m0).concat(difference(m1)(m0));
 
-// module.exports.spreadK = spreadK;
-// module.exports.spreadValues = spreadValues;
-// module.exports.spreadKV = spreadKV;
-// module.exports.hasK = hasK;
-// module.exports.x_hasK = x_hasK;
-// module.exports.lastK = lastK;
-// module.exports.firstK = firstK;
-// module.exports.rmFirst = rmFirst;
-// module.exports.hasK = hasK;
-// module.exports.x_hasK = x_hasK;
-// module.exports.hasKV = hasKV;
-// module.exports.x_hasKV = x_hasKV;
-// module.exports.componentString = componentString;
-// module.exports.showGraph = showGraph;
-// module.exports.intersection = intersection;
-// module.exports.difference = difference;
-// module.exports.union = union;
-// module.exports.edgeString = edgeString;
-// module.exports.pathString = pathString;
-// module.exports.graphString = graphString;
-
-
-// {spread,
-// spreadK,
-// spreadV,
-// spreadKV,}
-
 module.exports = {
 	spread,
 	spreadK,
@@ -91,12 +58,11 @@ module.exports = {
 	spreadKV,
 	first,
 	last,
+	firstK,
+	lastK,
+	rmFirst,
 	hasK,
 	x_hasK,
-	lastK,
-	firstK,
-	rmFirst,
-
 	hasKV,
 	x_hasKV,
 	componentString,
@@ -107,6 +73,3 @@ module.exports = {
 	edgeString,
 	pathString,
 };
-//
-//
-//
