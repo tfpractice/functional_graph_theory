@@ -1,6 +1,6 @@
 const UTILS = require('./utils');
 const { spreadK, spreadV, spreadKV } = UTILS;
-const { lastKey, firstK, rmFirst, } = UTILS;
+const { lastK, firstK, rmFirst, } = UTILS;
 const { pathHasNode, x_pathHasNode } = UTILS;
 const { pathHasEntry, x_pathHasEntry } = UTILS;
 const { componentString } = UTILS;
@@ -8,7 +8,7 @@ const { componentString } = UTILS;
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
-const pathEntry = (pred) => ([n, w]) => [ pred, n, w ];
+const pathEntry = (pred) => ([n, w]) => [pred, n, w];
 
 const appendSet = (set = new Set, val) => set.add(val);
 
@@ -28,7 +28,7 @@ const unvisitedMap = (edges) => (path) => (node) =>
 
 const dfs = (edges) => (iNode) => {
     const dVisit = (path) => {
-        let pred = lastKey(path);
+        let pred = lastK(path);
         let nextNabes = unvisitedMap(edges)(path)(pred);
         spreadKV(nextNabes)
          .map(pathEntry(pred))
@@ -50,12 +50,12 @@ const bfs = (edges) => (iNode) => {
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
     };
 
-    return bVisit(initPath(iNode))(new Set([ iNode ]));
+    return bVisit(initPath(iNode))(new Set([iNode]));
 };
 
 const dijkstra = (edges) => (iNode) => {
     let reachables = bfs(edges)(iNode);
-    let inspectQueue = new Set([ iNode ]);
+    let inspectQueue = new Set([iNode]);
     let solutionSet = initPath(iNode);
     while (inspectQueue.size > 0) {
         let pred = rmFirst(inspectQueue);
@@ -77,7 +77,7 @@ const dijkstra = (edges) => (iNode) => {
 };
 
 const components = (edges) => {
-    const mapEntry = (comp = new Set) => (node) => [ node, comp ];
+    const mapEntry = (comp = new Set) => (node) => [node, comp];
 
     const appE = (mMap, [node, comp]) => mMap.set(node, comp);
 

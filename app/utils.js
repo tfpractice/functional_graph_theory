@@ -1,7 +1,7 @@
 // const { spreadK, spreadValues, spreadKV } = utils;
 // const { hasKey, x_hasKey, showGraph } = utils;
 // const { spreadK, spreadValues, spreadKV } = UTILS;
-// const { lastKey, firstK, rmFirst, } = UTILS;
+// const { lastK, firstK, rmFirst, } = UTILS;
 // const { pathHasNode, x_pathHasNode } = UTILS;
 // const { pathHasEntry, x_pathHasEntry } = UTILS;
 // const { componentString } = UTILS;
@@ -14,7 +14,7 @@ const first = (coll = []) => spread(coll).shift();
 const last = (coll = []) => spread(coll).pop();
 
 const firstK = (coll) => first(spreadK(coll));
-const lastKey = (coll) => last(spreadK(coll));
+const lastK = (coll) => last(spreadK(coll));
 
 let rmFirst = (coll) => {
     let elem = getFirst(coll);
@@ -46,7 +46,7 @@ let edgeString = ([source, nabes]) =>
 	'{ Edge ' + source + ' } >> [ ' + spreadK(nabes) + ' ]\n';
 
 let componentString = ([node, set]) =>
-	' ' + node + ' { Component ' + firstK(set) + '... ' + lastKey(set) + '}';
+	' ' + node + ' { Component ' + firstK(set) + '... ' + lastK(set) + '}';
 
 let graphString = (edges) =>
 	spreadKV(edges).reduce((str, [node, nabes], id) =>
@@ -67,7 +67,7 @@ let union = (m0) => (m1) =>
 // module.exports.spreadKV = spreadKV;
 // module.exports.hasKey = hasKey;
 // module.exports.x_hasKey = x_hasKey;
-// module.exports.lastKey = lastKey;
+// module.exports.lastK = lastK;
 // module.exports.firstK = firstK;
 // module.exports.rmFirst = rmFirst;
 // module.exports.pathHasNode = pathHasNode;
@@ -93,9 +93,11 @@ module.exports = { spread,
     spreadK,
     spreadV,
     spreadKV,
+	first,
+    last,
     hasKey,
     x_hasKey,
-    lastKey,
+    lastK,
     firstK,
     rmFirst,
     pathHasNode,
