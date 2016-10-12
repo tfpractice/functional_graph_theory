@@ -21,6 +21,12 @@ const x_hasK = (coll = []) => (key) => !coll.has(key);
 const hasKV = (path) => ([key, val]) => path.has(key);
 const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
+const intersection = (c0) => (c1) => spread(c0).filter(hasK(c1));
+const difference = (c0) => (c1) => spread(c0).filter(x_hasK(c1));
+
+let union = (c0) => (c1) =>
+	spreadKV(c0).concat(difference(c1)(c0));
+
 const redStr = (str = ' ', val, id, coll) => str.concat(val, ' , ');
 const collString = (coll) => spread(coll).reduce(redStr, '');
 const kString = (coll) => spreadK(coll).reduce(redStr, '');
@@ -44,13 +50,6 @@ let graphString = (edges) =>
 		'Showing Edges\n');
 
 let showGraph = ({ edges }) => (graphString(edges));
-
-let intersection = (m0) => (m1) =>
-	spreadKV(m0).filter(([k, v]) => m1.has(k));
-let difference = (m0) => (m1) =>
-	spreadKV(m0).filter(([k, v]) => !m1.has(k));
-let union = (m0) => (m1) =>
-	spreadKV(m0).concat(difference(m1)(m0));
 
 module.exports = {
 	spread,
