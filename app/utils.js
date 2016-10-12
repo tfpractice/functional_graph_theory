@@ -3,15 +3,15 @@
 // const { spreadK, spreadValues, spreadKV } = UTILS;
 // const { lastK, firstK, rmFirst, } = UTILS;
 // const { hasK, x_hasK } = UTILS;
-// const { pathHasEntry, x_pathHasEntry } = UTILS;
+// const { hasKV, x_hasKV } = UTILS;
 // const { componentString } = UTILS;
 // let myMap = new Map().set(1, 11).set(2, 22).set(3, 33);
 // let mySet = new Set().add(1).add(2).add(3).add(4);
 // let myArr = [ 11, 22, 33, 44, 55 ];
-const spread = (coll = []) => [ ...coll ];
-const spreadK = (coll = []) => [ ...coll.keys() ];
-const spreadV = (coll = []) => [ ...coll.values() ];
-const spreadKV = (coll = []) => [ ...coll.entries() ];
+const spread = (coll = []) => [...coll];
+const spreadK = (coll = []) => [...coll.keys()];
+const spreadV = (coll = []) => [...coll.values()];
+const spreadKV = (coll = []) => [...coll.entries()];
 
 const first = (coll = []) => spread(coll).shift();
 const last = (coll = []) => spread(coll).pop();
@@ -28,10 +28,9 @@ let rmFirst = (coll) => {
 
 let hasK = (coll) => (key) => coll.has(key);
 let x_hasK = (coll) => (key) => !coll.has(key);
-// let hasK = hasK;
-// let x_hasK = x_hasK;
-let pathHasEntry = (path) => ([key, val]) => path.has(key);
-let x_pathHasEntry = (path) => ([key, val]) => !pathHasEntry(path)([ key, val ]);
+
+let hasKV = (path) => ([key, val]) => path.has(key);
+let x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
 let pathString = (path) =>
 	spreadK(path).reduce((str, next, id, coll) =>
@@ -47,7 +46,7 @@ let componentString = ([node, set]) =>
 
 let graphString = (edges) =>
 	spreadKV(edges).reduce((str, [node, nabes], id) =>
-		str + edgeString([ node, nabes ]),
+		str + edgeString([node, nabes]),
 		'Showing Edges\n');
 
 let showGraph = ({ edges }) => (graphString(edges));
@@ -69,8 +68,8 @@ let union = (m0) => (m1) =>
 // module.exports.rmFirst = rmFirst;
 // module.exports.hasK = hasK;
 // module.exports.x_hasK = x_hasK;
-// module.exports.pathHasEntry = pathHasEntry;
-// module.exports.x_pathHasEntry = x_pathHasEntry;
+// module.exports.hasKV = hasKV;
+// module.exports.x_hasKV = x_hasKV;
 // module.exports.componentString = componentString;
 // module.exports.showGraph = showGraph;
 // module.exports.intersection = intersection;
@@ -97,10 +96,9 @@ module.exports = { spread,
     lastK,
     firstK,
     rmFirst,
-    // hasK,
-    // x_hasK,
-    pathHasEntry,
-    x_pathHasEntry,
+
+    hasKV,
+    x_hasKV,
     componentString,
     showGraph,
     intersection,

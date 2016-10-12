@@ -68,16 +68,16 @@ fdescribe('Utils', function() {
 			expect(utils.x_hasK(myEdges)(n0)).toBeFalse();
 		});
 	});
-	describe('pathHasEntry', () => {
+	describe('hasKV', () => {
 		it('checks a path for an entry', () => {
 			let first = [...myEdges][0];
-			expect(utils.pathHasEntry(myEdges)(first)).toBeTrue();
+			expect(utils.hasKV(myEdges)(first)).toBeTrue();
 		});
 	});
-	describe('x_pathHasEntry', () => {
+	describe('x_hasKV', () => {
 		it('checks a path for an entry', () => {
 			let first = [...myEdges][0];
-			expect(utils.x_pathHasEntry(myEdges)(first))
+			expect(utils.x_hasKV(myEdges)(first))
 				.toBeFalse();
 		});
 	});
