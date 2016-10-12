@@ -21,7 +21,7 @@ const x_hasK = (coll = []) => (key) => !coll.has(key);
 const hasKV = (path) => ([key, val]) => path.has(key);
 const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
-const redStr = (str = '', val, id, coll) => str.concat(val);
+const redStr = (str = ' ', val, id, coll) => str.concat(val, ' , ');
 const collString = (coll) => spread(coll).reduce(redStr, '');
 const kString = (coll) => spreadK(coll).reduce(redStr, '');
 const vString = (coll) => spreadV(coll).reduce(redStr, '');

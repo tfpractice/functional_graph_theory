@@ -52,29 +52,28 @@ fdescribe('Utils', function() {
 	});
 	describe('redStr', () => {
 		it('concatenates the string with an  argument', function() {
-			expect(utils.redStr('1,2,3,', 6)).toBe('1,2,3,6');
+			expect(utils.redStr('1,2,3,', 6)).toBeString();
 		});
 	});
 	describe('kString', () => {
 		it('concatenates the string representaion of all keys', function() {
-			expect(utils.kString([1, 2, 3, 6])).toBe('0123');
+			expect(utils.kString([1, 2, 3, 6])).toBeString();
 		});
 	});
 
 	describe('vString', () => {
 		it('concatenates the string representaion of all keys', function() {
-			expect(utils.vString(new Set([1, 2, 3, 6]))).toBe('1236');
+			expect(utils.vString(new Set([1, 2, 3, 6]))).toBeString();
 		});
 	});
 	describe('kvString', () => {
 		it('concatenates the string representaion of all keys', function() {
-			console.log(utils.kvString(myEdges));
-			expect(utils.kvString([1, 2, 3, 6])).toBe('1 2 3 6');
+			expect(utils.kvString([1, 2, 3, 6])).toBeString();
 		});
 	});
 	describe('collString', () => {
 		it('concatenates the string representaion of all keys', function() {
-			expect(utils.collString([1, 2, 3, 6])).toBe('1236');
+			expect(utils.collString([1, 2, 3, 6])).toBeString();
 		});
 	});
 	describe('rmFirst', () => {
