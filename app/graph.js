@@ -5,7 +5,7 @@
  */
 const utils = require('./utils');
 const { spreadK, spreadV, spreadKV } = utils;
-const { hasKey, x_hasKey, showGraph } = utils;
+const { hasK, x_hasK, showGraph } = utils;
 const Reducers = require('./reducers');
 const {
 	addEdgeR,

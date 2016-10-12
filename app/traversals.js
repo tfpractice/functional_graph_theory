@@ -1,7 +1,7 @@
 const UTILS = require('./utils');
 const { spreadK, spreadV, spreadKV } = UTILS;
 const { lastK, firstK, rmFirst, } = UTILS;
-const { hasKey, x_hasKey } = UTILS;
+const { hasK, x_hasK } = UTILS;
 const { pathHasEntry, x_pathHasEntry } = UTILS;
 const { componentString } = UTILS;
 
@@ -19,9 +19,9 @@ const appendEntry = (path = new Map, [pred, n, w]) => {
 	return path.set(n, { pred, length, weight });
 };
 
-const difference = (s0) => (s1) => spreadV(s0).filter(x_hasKey(s1));
+const difference = (s0) => (s1) => spreadV(s0).filter(x_hasK(s1));
 const unvisitedNeighbors = (edges) => (path) => (node) =>
-	spreadK(edges.get(node)).filter(x_hasKey(path));
+	spreadK(edges.get(node)).filter(x_hasK(path));
 
 const unvisitedMap = (edges) => (path) => (node) =>
 	new Map(spreadKV(edges.get(node)).filter(x_pathHasEntry(path)));

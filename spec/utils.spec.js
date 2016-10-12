@@ -58,14 +58,14 @@ fdescribe('Utils', function() {
 			expect(copied.has(n0)).toBeFalse();
 		});
 	});
-	describe('hasKey', () => {
+	describe('hasK', () => {
 		it('checks a path for a node', () => {
-			expect(utils.hasKey(myEdges)(n0)).toBeTrue();
+			expect(utils.hasK(myEdges)(n0)).toBeTrue();
 		});
 	});
-	describe('x_hasKey', () => {
+	describe('x_hasK', () => {
 		it('checks a path for a node', () => {
-			expect(utils.x_hasKey(myEdges)(n0)).toBeFalse();
+			expect(utils.x_hasK(myEdges)(n0)).toBeFalse();
 		});
 	});
 	describe('pathHasEntry', () => {
