@@ -50,6 +50,33 @@ fdescribe('Utils', function() {
 			expect(utils.firstK(myEdges)).toBe(n0);
 		});
 	});
+	describe('redStr', () => {
+		it('concatenates the string with an  argument', function() {
+			expect(utils.redStr('1,2,3,', 6)).toBe('1,2,3,6');
+		});
+	});
+	describe('kString', () => {
+		it('concatenates the string representaion of all keys', function() {
+			expect(utils.kString([1, 2, 3, 6])).toBe('0123');
+		});
+	});
+
+	describe('vString', () => {
+		it('concatenates the string representaion of all keys', function() {
+			expect(utils.vString(new Set([1, 2, 3, 6]))).toBe('1236');
+		});
+	});
+	describe('kvString', () => {
+		it('concatenates the string representaion of all keys', function() {
+			console.log(utils.kvString(myEdges));
+			expect(utils.kvString([1, 2, 3, 6])).toBe('1 2 3 6');
+		});
+	});
+	describe('collString', () => {
+		it('concatenates the string representaion of all keys', function() {
+			expect(utils.collString([1, 2, 3, 6])).toBe('1236');
+		});
+	});
 	describe('rmFirst', () => {
 		it('deletes the last key in a map/set', () => {
 			let copied = new Set(Graph.nodes(myGraphR));

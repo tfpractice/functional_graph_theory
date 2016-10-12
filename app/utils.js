@@ -22,9 +22,10 @@ const hasKV = (path) => ([key, val]) => path.has(key);
 const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
 const redStr = (str = '', val, id, coll) => str.concat(val);
-
-const keyStr = (coll) =>
-	spreadK(coll).reduce(redStr, 'keys');
+const collString = (coll) => spread(coll).reduce(redStr, '');
+const kString = (coll) => spreadK(coll).reduce(redStr, '');
+const vString = (coll) => spreadV(coll).reduce(redStr, '');
+const kvString = (coll) => spreadKV(coll).reduce(redStr, '');
 let pathString = (path) =>
 	spreadK(path).reduce((str, next, id, coll) =>
 		id === (coll.length - 1) ?
@@ -65,6 +66,11 @@ module.exports = {
 	x_hasK,
 	hasKV,
 	x_hasKV,
+	redStr,
+	collString,
+	kString,
+	vString,
+	kvString,
 	componentString,
 	showGraph,
 	intersection,
