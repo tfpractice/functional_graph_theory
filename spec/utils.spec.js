@@ -77,8 +77,7 @@ fdescribe('Utils', function() {
 	describe('x_hasKV', () => {
 		it('checks a path for an entry', () => {
 			let first = [...myEdges][0];
-			expect(utils.x_hasKV(myEdges)(first))
-				.toBeFalse();
+			expect(utils.x_hasKV(myEdges)(first)).toBeFalse();
 		});
 	});
 });
