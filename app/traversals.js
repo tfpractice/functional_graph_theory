@@ -19,6 +19,7 @@ const appendEntry = (path = new Map, [pred, n, w]) => {
 	return path.set(n, { pred, length, weight });
 };
 
+const difference = (s0) => (s1) => spreadValues(s0).filter(x_pathHasNode(s1));
 const unvisitedNeighbors = (edges) => (path) => (node) =>
 	spreadKeys(edges.get(node)).filter(x_pathHasNode(path));
 
@@ -76,18 +77,19 @@ const dijkstra = (edges) => (iNode) => {
 };
 
 const components = (edges) => {
-	let cMap = new Map();
-	const visitComponent = (comp = new Set, node) => {
-		if (!cMap.has(node)) {
-			cMap.set(node, appendSet(comp, node));
-			return unvisitedNeighbors(edges)(comp)(node)
-				.reduce(visitComponent, comp);
-		}
-	};
+	const mapEntry = (comp = new Set) => (node) => [node, comp];
 
-	spreadKeys(edges).reduce(visitComponent, new Set);
+	const appE = (mMap, [node, comp]) => mMap.set(node, comp);
 
-	return cMap;
+	const vc = (comp = new Set, node) =>
+		comp.add(node) && unvisitedNeighbors(edges)(comp)(node).reduce(vc, comp);
+
+	const visitMap = (mMap = new Map, node) =>
+		difference(vc(new Set, node))(mMap)
+		.map(mapEntry(vc(new Set, node)))
+		.reduce(appE, mMap);
+
+	return spreadKeys(edges).reduce(visitMap, new Map);
 };
 
 const componentSet = (edges) => new Set(spreadValues(components(edges)));
