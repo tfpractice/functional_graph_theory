@@ -1,10 +1,10 @@
 /**
  * Graph module.
  * @module Graph
- 
+
  */
 const utils = require('./utils');
-const { spreadKeys, spreadValues, spreadEntries } = utils;
+const { spreadK, spreadV, spreadKV } = utils;
 const { hasKey, x_hasKey, showGraph } = utils;
 const Reducers = require('./reducers');
 const {
@@ -51,7 +51,7 @@ const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
 
 const contains = (edges = new Map) => (node) => edges.has(node);
-const nodes = (edges = new Map) => [...new Set(spreadKeys(edges))];
+const nodes = (edges = new Map) => [...new Set(spreadK(edges))];
 
 const adj = (edges = new Map) => (src) => edges.get(src) || new Map;
 
@@ -86,27 +86,25 @@ const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
 	[...altNabes].reduce(addEntryR, nabes);
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-	[...altEdges].reduce(mergeEdgesR, edges);
+    [...altEdges].reduce(mergeEdgesR, edges);
 };
 
-module.exports = {
-	spawn,
-	contains,
-	nodes,
-	adj,
-	copy,
-	isAdjacent,
-	addNodes,
-	removeEdges,
-	removeNodes,
-	neighbors,
-	addNeighbor,
-	addEdges,
-	addEdgeR,
-	addEntry,
-	weighedEntry,
-	removeNeighbors,
-	mergeNeighbors,
-	mergeEdges,
-	fromElements,
-};
+module.exports = { spawn,
+    contains,
+    nodes,
+    adj,
+    copy,
+    isAdjacent,
+    addNodes,
+    removeEdges,
+    removeNodes,
+    neighbors,
+    addNeighbor,
+    addEdges,
+    addEdgeR,
+    addEntry,
+    weighedEntry,
+    removeNeighbors,
+    mergeNeighbors,
+    mergeEdges,
+    fromElements, };

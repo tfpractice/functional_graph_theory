@@ -4,25 +4,30 @@ fdescribe('Utils', function () {
         console.log('\n.........Utils Spec.........');
     });
 
-	beforeEach(function() {
-		nabes0 = Graph.neighbors(myGraphR)(n0);
-        myEdges = Graph.spawn(myGraphR);
+    beforeEach(function () {
+        nabes0 = Graph.neighbors(myGraphR)(n0);
+		myEdges = Graph.spawn(myGraphR);
     });
 
-    describe('spreadKeys', () => {
+    describe('spread', () => {
+        it('returns an array of the collections default values', function () {
+            expect(utils.spread(myEdges)).toBeArray();
+        });
+    });
+    describe('spreadK', () => {
         it('returns an array of Map keys', () => {
-            expect(utils.spreadKeys(myEdges)).toBeArray();
-            expect(utils.spreadKeys(myEdges)).toContain(n0);
+            expect(utils.spreadK(myEdges)).toBeArray();
+            expect(utils.spreadK(myEdges)).toContain(n0);
         });
     });
-    describe('spreadValues', () => {
+    describe('spreadV', () => {
         it('returns an array of map values', () => {
-            expect(utils.spreadValues(myEdges)).toBeArray();
+            expect(utils.spreadV(myEdges)).toBeArray();
         });
     });
-    describe('spreadEntries', () => {
+    describe('spreadKV', () => {
         it('returns an array of key values pairs', () => {
-            expect(utils.spreadEntries(myEdges)[0]).toBeArray();
+            expect(utils.spreadKV(myEdges)[0]).toBeArray();
         });
     });
     describe('lastKey', () => {
@@ -30,9 +35,9 @@ fdescribe('Utils', function () {
             expect(utils.lastKey(myEdges)).toBe(n9);
         });
     });
-    describe('firstKey', () => {
-		it('retrieves the last key in a map', () => {
-					expect(utils.firstKey(myEdges)).toBe(n0);
+    describe('firstK', () => {
+        it('retrieves the last key in a map', () => {
+            expect(utils.firstK(myEdges)).toBe(n0);
         });
     });
     describe('rmFirst', () => {
@@ -62,7 +67,8 @@ fdescribe('Utils', function () {
     describe('x_pathHasEntry', () => {
         it('checks a path for an entry', () => {
             let first = [ ...myEdges ][0];
-            expect(utils.x_pathHasEntry(myEdges)(first)).toBeFalse();
+            expect(utils.x_pathHasEntry(myEdges)(first))
+             .toBeFalse();
         });
     });
 });
