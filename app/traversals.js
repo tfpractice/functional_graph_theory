@@ -1,14 +1,14 @@
 const Utils = require('./utils');
 const { Commands: { spreadK, spreadV, spreadKV, popFirst } } = Utils;
+const { Commands: { tuple, triple, rmColl, addMap, addSet } } = Utils;
 const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV } } = Utils;
 const { Strings: { componentString } } = Utils;
+const { Comparitors: { diff, } } = Utils;
 
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
 const pathEntry = (pred) => ([n, w]) => [ pred, n, w ];
-
-const appendSet = (set = new Set, val) => set.add(val);
 
 const appendEntry = (path = new Map, [pred, n, w]) => {
     let { length: pCount, weight: pWeight } = path.get(pred);
@@ -17,9 +17,8 @@ const appendEntry = (path = new Map, [pred, n, w]) => {
     return path.set(n, { pred, length, weight });
 };
 
-const difference = (s0) => (s1) => spreadV(s0).filter(x_hasK(s1));
 const unvisitedNeighbors = (edges) => (path) => (node) =>
-	spreadK(edges.get(node)).filter(x_hasK(path));
+	diff(spreadK(edges.get(node)))(path);
 
 const unvisitedMap = (edges) => (path) => (node) =>
 	new Map(spreadKV(edges.get(node)).filter(x_hasKV(path)));
@@ -44,7 +43,7 @@ const bfs = (edges) => (iNode) => {
         spreadKV(nextNabes)
          .map(pathEntry(pred))
          .reduce(appendEntry, bPath);
-        spreadK(nextNabes).reduce(appendSet, bQueue);
+        spreadK(nextNabes).reduce(addSet, bQueue);
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
     };
 
@@ -66,7 +65,7 @@ const dijkstra = (edges) => (iNode) => {
             let sMap = ((dWeight + nWeight) < rWeight) ? dMap : prevMap;
             if (!solutionSet.has(nabe)) {
                 inspectQueue.add(nabe);
-                solutionSet.set(nabe, sMap);
+				solutionSet.set(nabe, sMap);
             }
         }
     }
@@ -75,18 +74,13 @@ const dijkstra = (edges) => (iNode) => {
 };
 
 const components = (edges) => {
-    const mapEntry = (comp = new Set) => (node) => [ node, comp ];
-
-    const appE = (mMap, [node, comp]) => mMap.set(node, comp);
-
     const vc = (comp = new Set, node) =>
-     comp.add(node) && unvisitedNeighbors(edges)(comp)(node).reduce(vc,
-      comp);
+     unvisitedNeighbors(edges)(comp)(node).reduce(vc, comp.add(node));
 
     const visitMap = (mMap = new Map, node) =>
-     difference(vc(new Set, node))(mMap)
-     .map(mapEntry(vc(new Set, node)))
-     .reduce(appE, mMap);
+     diff(vc(new Set, node))(mMap)
+     .map(tuple(vc(new Set, node)))
+     .reduce(addMap, mMap);
 
     return spreadK(edges).reduce(visitMap, new Map);
 };
