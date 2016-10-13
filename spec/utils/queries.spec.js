@@ -29,14 +29,7 @@ fdescribe('Utils/Queries', function() {
 			expect(Query.firstK(qMap)).toBe(8);
 		});
 	});
-	describe('rmFirst', () => {
-		it('deletes the last key in a map/set', () => {
-			let copied = new Set(Graph.nodes(myGraphR));
-			let first = Query.rmFirst((copied));
-			expect(first).toBe(n0);
-			expect(copied.has(n0)).toBeFalse();
-		});
-	});
+
 	describe('hasK', () => {
 		it('checks a map for a key', () => {
 			expect(Query.hasK(qMap)(6)).toBeTrue();

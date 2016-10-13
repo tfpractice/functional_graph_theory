@@ -9,6 +9,8 @@ const spreadKV = (coll = []) => [...coll.entries()];
 const addSet = (coll = new Set, elem) => coll.add(elem);
 const addMap = (coll = new Map, [k, v]) => coll.set(k, v);
 const rmColl = (coll = new Set, elem) => coll.delete(elem) ? coll : coll;
+const popElem = (coll = new Set) => (el) => rmColl(coll, el) && el;
+const popFirst = (coll = new Set) => popElem(coll)(spread(coll).shift());
 
 module.exports = {
 	spread,
@@ -20,4 +22,5 @@ module.exports = {
 	addSet,
 	addMap,
 	rmColl,
+	popFirst,
 };

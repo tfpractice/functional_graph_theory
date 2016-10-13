@@ -12,12 +12,6 @@ const x_hasK = (coll = []) => (key) => !coll.has(key);
 const hasKV = (path) => ([key, val]) => path.has(key);
 const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
 
-const rmFirst = (coll = []) => {
-	let elem = first(coll);
-	coll.delete(elem);
-	return elem;
-};
-
 module.exports = {
 	first,
 	last,
@@ -28,5 +22,4 @@ module.exports = {
 	x_hasK,
 	hasKV,
 	x_hasKV,
-	rmFirst,
 };
