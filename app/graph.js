@@ -5,13 +5,12 @@
  */
 const Utils = require('./utils');
 const { Queries: { hasK, x_hasK, } } = Utils;
-const { Commands: { spreadK, spreadV, spreadKV } } = Utils;
+const { Commands: { spreadK, spreadV, spreadKV, addMap } } = Utils;
 const { Strings: { showGraph } } = Utils;
 const Reducers = require('./reducers');
 const {
 	addEdgeR,
 	appendR,
-	// rmNodeR,
 	addNeighborR,
 	addEntryR,
 	removeEdgeR,
@@ -84,7 +83,7 @@ const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
 	w);
 
 const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
-	[...altNabes].reduce(addEntryR, nabes);
+	[...altNabes].reduce(addMap, nabes);
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
 	[...altEdges].reduce(mergeEdgesR, edges);
