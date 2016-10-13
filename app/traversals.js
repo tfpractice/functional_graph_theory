@@ -64,7 +64,7 @@ const dijkstra = (edges) => (iNode) => {
             let dMap = { pred: pred, length: dCount + 1, weight: dWeight + nWeight, };
             let sMap = ((dWeight + nWeight) < rWeight) ? dMap : prevMap;
             if (!solutionSet.has(nabe)) {
-                inspectQueue.add(nabe);
+				inspectQueue.add(nabe);
 				solutionSet.set(nabe, sMap);
             }
         }
