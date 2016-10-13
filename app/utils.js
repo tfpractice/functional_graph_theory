@@ -16,6 +16,10 @@ let rmFirst = (coll = []) => {
 	return elem;
 };
 
+const addSet = (coll = new Set, elem) => coll.add(elem);
+const addMap = (coll = new Map, [k, v]) => coll.set(k, v);
+const rmColl = (coll = new Set, elem) => coll.delete(elem) ? set : set;
+
 const hasK = (coll = []) => (key) => coll.has(key);
 const x_hasK = (coll = []) => (key) => !coll.has(key);
 const hasKV = (path) => ([key, val]) => path.has(key);
