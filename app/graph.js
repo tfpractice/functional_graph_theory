@@ -1,11 +1,11 @@
 /**
  * Graph module.
  * @module Graph
-
+ 
  */
-const utils = require('./utils');
-const { spreadK, spreadV, spreadKV } = utils;
-const { hasK, x_hasK, showGraph } = utils;
+const Utils = require('./utils');
+const { Queries: { spreadK, spreadV, spreadKV, hasK, x_hasK, } } = Utils;
+const { Strings: { showGraph } } = Utils;
 const Reducers = require('./reducers');
 const {
 	addEdgeR,
@@ -86,25 +86,27 @@ const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
 	[...altNabes].reduce(addEntryR, nabes);
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-    [...altEdges].reduce(mergeEdgesR, edges);
+	[...altEdges].reduce(mergeEdgesR, edges);
 };
 
-module.exports = { spawn,
-    contains,
-    nodes,
-    adj,
-    copy,
-    isAdjacent,
-    addNodes,
-    removeEdges,
-    removeNodes,
-    neighbors,
-    addNeighbor,
-    addEdges,
-    addEdgeR,
-    addEntry,
-    weighedEntry,
-    removeNeighbors,
-    mergeNeighbors,
-    mergeEdges,
-    fromElements, };
+module.exports = {
+	spawn,
+	contains,
+	nodes,
+	adj,
+	copy,
+	isAdjacent,
+	addNodes,
+	removeEdges,
+	removeNodes,
+	neighbors,
+	addNeighbor,
+	addEdges,
+	addEdgeR,
+	addEntry,
+	weighedEntry,
+	removeNeighbors,
+	mergeNeighbors,
+	mergeEdges,
+	fromElements,
+};
