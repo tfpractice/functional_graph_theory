@@ -25,22 +25,18 @@ const inter = (c0) => (c1) => spread(c0).filter(hasK(c1));
 const diff = (c0) => (c1) => spread(c0).filter(x_hasK(c1));
 const union = (c0) => (c1) => spread(c0).concat(diff(c1)(c0));
 
-const redStr = (str = ' ', val, id, coll) => str.concat(val, ' , ');
+const redStr = (str = ' ', val, id, coll) =>
+	val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
 const collString = (coll) => spread(coll).reduce(redStr, '');
 const kString = (coll) => spreadK(coll).reduce(redStr, '');
 const vString = (coll) => spreadV(coll).reduce(redStr, '');
 const kvString = (coll) => spreadKV(coll).reduce(redStr, '');
-let pathString = (path) =>
-	spreadK(path).reduce((str, next, id, coll) =>
-		id === (coll.length - 1) ?
-		(str + next + ' }') :
-		(str + next + ' => '), '{ ');
 
-let edgeString = ([source, nabes]) =>
-	'{ Edge ' + source + ' } >> [ ' + spreadK(nabes) + ' ]\n';
+let pathString = (path) => ` { ${spreadK(path).join(' => ')} }`;
+let edgeString = ([src, nbs]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
 
 let componentString = ([node, set]) =>
-	' ' + node + ' { Component ' + firstK(set) + '... ' + lastK(set) + '}';
+	`{ component ${src} >> [ ${kString(nbs)} ] } `;
 
 let graphString = (edges) =>
 	spreadKV(edges).reduce((str, [node, nabes], id) =>
@@ -68,7 +64,7 @@ module.exports = {
 	kString,
 	vString,
 	kvString,
-	componentString,
+
 	showGraph,
 	inter,
 	diff,
