@@ -1,5 +1,5 @@
 const Utils = require('./utils');
-const { Queries: { spreadK, spreadV, spreadKV } } = Utils;
+const { Commands: { spreadK, spreadV, spreadKV } } = Utils;
 const { Queries: { lastK, firstK, rmFirst, } } = Utils;
 const { Queries: { hasK, x_hasK } } = Utils;
 const { Queries: { hasKV, x_hasKV } } = Utils;

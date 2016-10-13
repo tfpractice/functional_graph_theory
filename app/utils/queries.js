@@ -1,7 +1,4 @@
-const spread = (coll = []) => [...coll];
-const spreadK = (coll = []) => [...coll.keys()];
-const spreadV = (coll = []) => [...coll.values()];
-const spreadKV = (coll = []) => [...coll.entries()];
+const { spread, spreadK, spreadV, spreadKV } = require('./commands');
 
 const first = (coll = []) => spread(coll).shift();
 const last = (coll = []) => spread(coll).pop();
@@ -22,10 +19,6 @@ const rmFirst = (coll = []) => {
 };
 
 module.exports = {
-	spread,
-	spreadK,
-	spreadV,
-	spreadKV,
 	first,
 	last,
 	fromIndex,

@@ -4,7 +4,8 @@
  
  */
 const Utils = require('./utils');
-const { Queries: { spreadK, spreadV, spreadKV, hasK, x_hasK, } } = Utils;
+const { Queries: { hasK, x_hasK, } } = Utils;
+const { Commands: { spreadK, spreadV, spreadKV } } = Utils;
 const { Strings: { showGraph } } = Utils;
 const Reducers = require('./reducers');
 const {

@@ -1,4 +1,5 @@
-const { spread, spreadK, spreadV, spreadKV, last, } = require('./queries');
+const { spread, spreadK, spreadV, spreadKV, } = require('./commands');
+const { last } = require('./queries');
 
 const redStr = (str = ' ', val, id, coll) =>
 	val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');

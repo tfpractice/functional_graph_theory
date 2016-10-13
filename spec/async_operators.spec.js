@@ -51,9 +51,9 @@ fdescribe('async', function() {
 	// });
 	describe('removeNodeAsync', () => {
 		it('removes an entry from the edgs map', (done) => {
-			let firstOdd = Utils.Queries.spreadKV(oddGraphR)[0];
+			let firstOdd = Comm.spreadKV(oddGraphR)[0];
 			let OddNode = firstOdd[0];
-			let OddNabe = Utils.Queries.spreadK(firstOdd[1])[0];
+			let OddNabe = Comm.spreadK(firstOdd[1])[0];
 			mergeEdgesAsync(evenGraphR)(oddGraphR);
 			removeNodeAsync(evenGraphR)(OddNode);
 			expect(Graph.contains(evenGraphR)(OddNode)).toBeFalse();
@@ -62,7 +62,7 @@ fdescribe('async', function() {
 	});
 	describe('mergeEdgesAsync(e2)(o2,weight)', () => {
 		it('merges nodes and edges of two graphs', (done) => {
-			let elevOdd = Utils.Queries.spreadKV(oddGraphR)[3];
+			let elevOdd = Comm.spreadKV(oddGraphR)[3];
 			let OddNode = elevOdd[0];
 			mergeEdgesAsync(evenGraphR)(oddGraphR);
 			expect(Graph.contains(evenGraphR)(OddNode)).toBeTrue();
