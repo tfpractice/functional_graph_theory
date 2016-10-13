@@ -6,9 +6,6 @@ const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
 	edges.set(src, nbs);
 
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
-
-const addNeighborR = (nbs = new Map, n, w = 0) => addMap(nbs, [n, w]);
-const addEntry = (nbs = new Map) => ([n, w = 0]) => addMap(nbs, [n, w]);
 const coerceAdj = (edges = new Map) => (src) => appendNew(edges)(src).get(src);
 const nabes = (edges = new Map) => (src) => spreadK(coerceAdj(edges)(src));
 
@@ -37,7 +34,6 @@ const mergeEdgesR = (edges = new Map, [src, alts]) =>
 module.exports = {
 	appendNew,
 	appendR,
-	addNeighborR,
 	coerceAdj,
 	addEdgeR,
 	removeEdgeR,

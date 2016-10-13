@@ -11,8 +11,6 @@ const Reducers = require('./reducers');
 const {
 	addEdgeR,
 	appendR,
-	addNeighborR,
-	// addEntryR,
 	removeEdgeR,
 	removeNeighborsR,
 	rmNodeXR,
@@ -68,7 +66,7 @@ const addNodes = (edges = new Map) => (...nodes) => nodes.reduce(appendR,
 const removeNodes = (edges = new Map) => (...ns) => ns.reduce(rmNodeXR, edges);
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
-	addNeighborR(adj(edges)(src), n, w);
+	addMap(adj(edges)(src), [n, w]);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
@@ -79,8 +77,7 @@ const removeNeighbors = (edges = new Map) => (...nodes) =>
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 	nabes.map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addNeighborR(nabes, n,
-	w);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
 
 const mergeNeighbors = (nabes = new Map) => (altNabes = new Map) =>
 	[...altNabes].reduce(addMap, nabes);
