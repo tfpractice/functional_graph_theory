@@ -1,5 +1,6 @@
 const queries = require('./queries');
 const comparitors = require('./comparitors');
+const strings = require('./strings');
 const {
 	spread,
 	spreadK,
@@ -16,6 +17,18 @@ const {
 	x_hasKV,
 } = queries;
 const { inter, diff, union, } = comparitors;
+const {
+	redStr,
+	collString,
+	kString,
+	vString,
+	kvString,
+	pathString,
+	edgeString,
+	componentString,
+	graphString,
+	showGraph,
+} = strings;
 const addSet = (coll = new Set, elem) => coll.add(elem);
 const addMap = (coll = new Map, [k, v]) => coll.set(k, v);
 const rmColl = (coll = new Set, elem) => coll.delete(elem) ? set : set;
@@ -28,27 +41,27 @@ const rmColl = (coll = new Set, elem) => coll.delete(elem) ? set : set;
 // const diff = (c0) => (c1) => spread(c0).filter(x_hasK(c1));
 // const union = (c0) => (c1) => spread(c0).concat(diff(c1)(c0));
 
-const redStr = (str = ' ', val, id, coll) =>
-	val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
-const collString = (coll) => spread(coll).reduce(redStr, '');
-const kString = (coll) => spreadK(coll).reduce(redStr, '');
-const vString = (coll) => spreadV(coll).reduce(redStr, '');
-const kvString = (coll) => spreadKV(coll).reduce(redStr, '');
+// const redStr = (str = ' ', val, id, coll) =>
+// 	val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
+// const collString = (coll) => spread(coll).reduce(redStr, '');
+// const kString = (coll) => spreadK(coll).reduce(redStr, '');
+// const vString = (coll) => spreadV(coll).reduce(redStr, '');
+// const kvString = (coll) => spreadKV(coll).reduce(redStr, '');
 
-let pathString = (path) => ` { ${spreadK(path).join(' => ')} }`;
-let edgeString = ([src, nbs]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
+// let pathString = (path) => ` { ${spreadK(path).join(' => ')} }`;
+// let edgeString = ([src, nbs]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
 
-let componentString = ([node, set]) =>
-	`{ component ${src} >> [ ${kString(nbs)} ] } `;
+// let componentString = ([node, set]) =>
+// 	`{ component ${src} >> [ ${kString(nbs)} ] } `;
 
-let graphString = (edges) =>
-	spreadKV(edges).reduce((str, [node, nabes], id) =>
-		str + edgeString([node, nabes]),
-		'Showing Edges\n');
+// let graphString = (edges) =>
+// 	spreadKV(edges).reduce((str, [node, nabes], id) =>
+// 		str + edgeString([node, nabes]),
+// 		'Showing Edges\n');
 
-let showGraph = ({ edges }) => (graphString(edges));
+// let showGraph = ({ edges }) => (graphString(edges));
 
-module.exports = Object.assign({}, queries, comparitors, {
+module.exports = Object.assign({}, queries, comparitors, strings, {
 	// spread,
 	// spreadK,
 	// spreadV,
@@ -62,17 +75,17 @@ module.exports = Object.assign({}, queries, comparitors, {
 	// x_hasK,
 	// hasKV,
 	// x_hasKV,
-	redStr,
-	collString,
-	kString,
-	vString,
-	kvString,
-	showGraph,
-	// inter,
-	// diff,
-	// union,
-	edgeString,
-	pathString,
+	// redStr,
+	// collString,
+	// kString,
+	// vString,
+	// kvString,
+	// showGraph,
+	// // inter,
+	// // diff,
+	// // union,
+	// edgeString,
+	// pathString,
 });
 
 // module.exports = Object.assign({}, queries, comparitors, commands);
