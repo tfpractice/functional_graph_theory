@@ -1,35 +1,38 @@
-const weighedEntry = (weight = 0) => (nabe) => [nabe, weight];
-const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
+const Utils = require('./utils');
+const { Commands: { tuple, triple, rmColl, addMap, } } = Utils;
+const { Commands: { spread, spreadK, } } = Utils;
 
-const appendNew = (edges = new Map) => (src, nabes = new Map(edges.get(src))) =>
-	edges.set(src, nabes);
+const rmNodeR = rmColl;
+const addEntryR = addMap;
+
+const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
+	edges.set(src, nbs);
 
 const appendR = (edges = new Map, src) => appendNew(edges)(src);
-const rmNodeR = (edges = new Map, src) => edges.delete(src) ? edges : edges;
-const addNeighborR = (nabes = new Map, n, w = 0) => appendNew(nabes)(n, w);
-const addEntry = (nabes = new Map) => ([n, w = 0]) => appendNew(nabes)(n, w);
-const addEntryR = (nabes = new Map, [n, w = 0]) => appendNew(nabes)(n, w);
+
+const addNeighborR = (nbs = new Map, n, w = 0) => addMap(nbs, [n, w]);
+const addEntry = (nbs = new Map) => ([n, w = 0]) => addMap(nbs, [n, w]);
 const coerceAdj = (edges = new Map) => (src) => appendNew(edges)(src).get(src);
-const neighborsR = (edges = new Map) => (src) => [...coerceAdj(edges)(src).keys()];
+const nabes = (edges = new Map) => (src) => spreadK(coerceAdj(edges)(src));
 
-const addEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
+const addEdgeR = (edges = new Map, [src, nb, wt = 0]) =>
 	edges
-	.set(src, addNeighborR(coerceAdj(edges)(src), nabe, wt))
-	.set(nabe, addNeighborR(coerceAdj(edges)(nabe), src, wt));
+	.set(src, addMap(coerceAdj(edges)(src), [nb, wt]))
+	.set(nb, addMap(coerceAdj(edges)(nb), [src, wt]));
 
-const removeEdgeR = (edges = new Map, [src, nabe, wt = 0]) =>
+const removeEdgeR = (edges = new Map, [src, nb, wt = 0]) =>
 	edges
-	.set(src, rmNodeR(coerceAdj(edges)(src), nabe))
-	.set(nabe, rmNodeR(coerceAdj(edges)(nabe), src));
+	.set(src, rmColl(coerceAdj(edges)(src), nb))
+	.set(nb, rmColl(coerceAdj(edges)(nb), src));
 
 const removeNeighborsR = (edges = new Map, src) =>
-	neighborsR(edges)(src).map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
+	nabes(edges)(src).map(triple(0)(src)).reduce(removeEdgeR, edges);
 
 const rmNodeXR = (edges = new Map, src) =>
-	rmNodeR(removeNeighborsR(edges, src), src);
+	rmColl(removeNeighborsR(edges, src), src);
 
-const mergeNeighborsR = (nabes = new Map, alts = new Map) =>
-	[...alts].reduce(addEntryR, nabes);
+const mergeNeighborsR = (nbs = new Map, alts = new Map) =>
+	[...alts].reduce(addEntryR, nbs);
 
 const mergeEdgesR = (edges = new Map, [src, alts]) =>
 	edges.set(src, mergeNeighborsR(coerceAdj(edges)(src)), (alts));
