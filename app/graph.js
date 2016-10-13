@@ -12,7 +12,7 @@ const {
 	addEdgeR,
 	appendR,
 	addNeighborR,
-	addEntryR,
+	// addEntryR,
 	removeEdgeR,
 	removeNeighborsR,
 	rmNodeXR,

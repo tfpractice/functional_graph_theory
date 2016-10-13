@@ -2,8 +2,6 @@ const Utils = require('./utils');
 const { Commands: { tuple, triple, rmColl, addMap, } } = Utils;
 const { Commands: { spread, spreadK, } } = Utils;
 
-const addEntryR = addMap;
-
 const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
 	edges.set(src, nbs);
 
@@ -31,7 +29,7 @@ const rmNodeXR = (edges = new Map, src) =>
 	rmColl(removeNeighborsR(edges, src), src);
 
 const mergeNeighborsR = (nbs = new Map, alts = new Map) =>
-	[...alts].reduce(addEntryR, nbs);
+	[...alts].reduce(addMap, nbs);
 
 const mergeEdgesR = (edges = new Map, [src, alts]) =>
 	edges.set(src, mergeNeighborsR(coerceAdj(edges)(src)), (alts));
@@ -40,7 +38,6 @@ module.exports = {
 	appendNew,
 	appendR,
 	addNeighborR,
-	addEntryR,
 	coerceAdj,
 	addEdgeR,
 	removeEdgeR,
