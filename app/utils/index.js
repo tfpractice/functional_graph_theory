@@ -1,20 +1,32 @@
-const spread = (coll = []) => [...coll];
-const spreadK = (coll = []) => [...coll.keys()];
-const spreadV = (coll = []) => [...coll.values()];
-const spreadKV = (coll = []) => [...coll.entries()];
+const queries = require('./queries');
+const {
+	spread,
+	spreadK,
+	spreadV,
+	spreadKV,
+	first,
+	last,
+	firstK,
+	lastK,
+	rmFirst,
+} = queries;
+// const spread = (coll = []) => [...coll];
+// const spreadK = (coll = []) => [...coll.keys()];
+// const spreadV = (coll = []) => [...coll.values()];
+// const spreadKV = (coll = []) => [...coll.entries()];
 
-const first = (coll = []) => spread(coll).shift();
-const last = (coll = []) => spread(coll).pop();
-const fromIndex = (coll = new Set) => (index) => spread(coll).slice(index, 1);
+// const first = (coll = []) => spread(coll).shift();
+// const last = (coll = []) => spread(coll).pop();
+// const fromIndex = (coll = new Set) => (index) => spread(coll).slice(index, 1);
 
-const firstK = (coll = []) => first(spreadK(coll));
-const lastK = (coll = []) => last(spreadK(coll));
+// const firstK = (coll = []) => first(spreadK(coll));
+// const lastK = (coll = []) => last(spreadK(coll));
 
-let rmFirst = (coll = []) => {
-	let elem = first(coll);
-	coll.delete(elem);
-	return elem;
-};
+// let rmFirst = (coll = []) => {
+// 	let elem = first(coll);
+// 	coll.delete(elem);
+// 	return elem;
+// };
 
 const addSet = (coll = new Set, elem) => coll.add(elem);
 const addMap = (coll = new Map, [k, v]) => coll.set(k, v);
@@ -49,16 +61,16 @@ let graphString = (edges) =>
 
 let showGraph = ({ edges }) => (graphString(edges));
 
-module.exports = {
-	spread,
-	spreadK,
-	spreadV,
-	spreadKV,
-	first,
-	last,
-	firstK,
-	lastK,
-	rmFirst,
+module.exports = Object.assign({}, queries, {
+	// spread,
+	// spreadK,
+	// spreadV,
+	// spreadKV,
+	// first,
+	// last,
+	// firstK,
+	// lastK,
+	// rmFirst,
 	hasK,
 	x_hasK,
 	hasKV,
@@ -75,6 +87,6 @@ module.exports = {
 	union,
 	edgeString,
 	pathString,
-};
+});
 
 // module.exports = Object.assign({}, queries, comparitors, commands);
