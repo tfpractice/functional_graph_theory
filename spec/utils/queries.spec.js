@@ -16,19 +16,17 @@ fdescribe('Utils/Queries', function() {
 	});
 	describe('spreadK', () => {
 		it('returns an array of Map keys', () => {
-			expect(Query.spreadK(qMap)).toBeArray();
 			expect(Query.spreadK(qMap)).toContain(8);
 		});
 	});
 	describe('spreadV', () => {
 		it('returns an array of map values', () => {
-			expect(Query.spreadV(qMap)).toBeArray();
 			expect(Query.spreadV(qMap)).toContain(1);
 		});
 	});
 	describe('spreadKV', () => {
 		it('returns an array of key values pairs', () => {
-			expect(Query.spreadKV(qArr)[0]).toBeArray();
+			expect(Query.spreadKV(qArr)[0]).toBeContain([0, 0]);
 		});
 	});
 	describe('first', () => {
