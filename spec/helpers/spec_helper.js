@@ -2,7 +2,7 @@ beforeAll(function() {
 	require('jasmine-expect');
 	App = require('../../index');
 	({ Graph, Utils, Traversals, AsyncOps, Reducers } = App);
-	({ Queries: Query, Comparitors: Comp, Strings: Str } = Utils);
+	({ Queries: Query, Comparitors: Comp, Strings: Str, Commands: Comm } = Utils);
 	Trav = Traversals;
 	Node = (label = '', data = {}) => ({
 		label,
