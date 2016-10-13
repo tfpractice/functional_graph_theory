@@ -11,7 +11,7 @@ const Reducers = require('./reducers');
 const {
 	addEdgeR,
 	appendR,
-	rmNodeR,
+	// rmNodeR,
 	addNeighborR,
 	addEntryR,
 	removeEdgeR,
