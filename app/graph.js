@@ -15,17 +15,13 @@ const {
 } =
 Reducers;
 
-const weighedEntry = tuple;
-
-const edgeEntry = (w = 0) => triple(w);
-
 const spawn = (edges = new Map) => new Map(edges);
 
 const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
 
 const contains = (edges = new Map) => (node) => edges.has(node);
-const nodes = (edges = new Map) => [...new Set(spreadK(edges))];
+const nodes = (edges = new Map) => [ ...new Set(spreadK(edges)) ];
 
 const adj = (edges = new Map) => (src) => edges.get(src) || new Map;
 
@@ -42,7 +38,7 @@ const addNodes = (edges = new Map) => (...nodes) => nodes.reduce(appendR,
 const removeNodes = (edges = new Map) => (...ns) => ns.reduce(rmNode, edges);
 
 const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
-	addMap(adj(edges)(src), [n, w]);
+	addMap(adj(edges)(src), [ n, w ]);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
 	nabes.map(triple(w)(src)).reduce(addEdgeR, edges);
@@ -53,32 +49,29 @@ const removeNeighbors = (edges = new Map) => (...nodes) =>
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 	nabes.map(triple(0)(src)).reduce(rmEdge, edges);
 
-const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
+const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [ n, w ]);
 
 const mergeNeighbors = uniteMap;
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-	spread(altEdges).reduce(importEdge, edges);
+    spread(altEdges).reduce(importEdge, edges);
 };
 
-module.exports = {
-	spawn,
-	contains,
-	nodes,
-	adj,
-	copy,
-	isAdjacent,
-	addNodes,
-	removeEdges,
-	removeNodes,
-	neighbors,
-	addNeighbor,
-	addEdges,
-	addEdgeR,
-	addEntry,
-	weighedEntry,
-	removeNeighbors,
-	mergeNeighbors,
-	mergeEdges,
-	fromElements,
-};
+module.exports = { spawn,
+    contains,
+    nodes,
+    adj,
+    copy,
+    isAdjacent,
+    addNodes,
+    removeEdges,
+    removeNodes,
+    neighbors,
+    addNeighbor,
+    addEdges,
+    addEdgeR,
+    addEntry,
+    removeNeighbors,
+    mergeNeighbors,
+    mergeEdges,
+    fromElements, };

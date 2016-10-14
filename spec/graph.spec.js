@@ -75,15 +75,11 @@ fdescribe('Graph', function() {
 				expect(Graph.adj(rEdges)(n0).has(n2)).toBeTrue();
 			});
 		});
-		describe('weighedEntry', () => {
-			it('returns a [node, weight] array', () => {
-				expect(Graph.weighedEntry(0)(n2)).toBeArray();
-			});
-		});
+
 		describe('addEntry', () => {
 			it('appends an [node, weight] pair to the neighbrs', () => {
 				let nabes = Graph.addNeighbor(rEdges)(n0)(n1, 3);
-				let w0n2 = Graph.weighedEntry(0)(n2);
+				let w0n2 = Comm.tuple(0)(n2);
 				let newNabes = Graph.addEntry(nabes)(w0n2);
 				expect(newNabes.has(n2)).toBeTrue();
 				expect(Graph.adj(rEdges)(n0).has(n2)).toBeFalse();
@@ -116,11 +112,6 @@ fdescribe('Graph', function() {
 					.reduce(Graph.addEdgeR, evens);
 				Graph.mergeEdges(evens)(odds);
 				expect(evens.has(n15)).toBeTrue();
-			});
-		});
-		describe('weighedEntry', () => {
-			it('returns a [node, weight] array', () => {
-				expect(Graph.weighedEntry(0)(n2)).toBeArray();
 			});
 		});
 	});
