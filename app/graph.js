@@ -17,7 +17,7 @@ Reducers;
 
 const weighedEntry = tuple;
 
-const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
+const edgeEntry = (w = 0) => triple(w);
 
 const spawn = (edges = new Map) => new Map(edges);
 
@@ -45,13 +45,13 @@ const addNeighbor = (edges = new Map) => (src) => (n, w = 0) =>
 	addMap(adj(edges)(src), [n, w]);
 
 const addEdges = (edges = new Map) => (src, w = 0) => (...nabes) =>
-	nabes.map(edgeEntry(w)(src)).reduce(addEdgeR, edges);
+	nabes.map(triple(w)(src)).reduce(addEdgeR, edges);
 
 const removeNeighbors = (edges = new Map) => (...nodes) =>
 	nodes.reduce(rmAdj, edges);
 
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
-	nabes.map(edgeEntry(0)(src)).reduce(rmEdge, edges);
+	nabes.map(triple(0)(src)).reduce(rmEdge, edges);
 
 const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
 
