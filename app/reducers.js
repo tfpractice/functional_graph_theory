@@ -10,11 +10,10 @@ const appendR = (edges = new Map, src) => appendNew(edges)(src);
 const coerceAdj = (edges = new Map) => (src) => appendNew(edges)(src).get(src);
 const nabes = (edges = new Map) => (src) => spreadK(coerceAdj(edges)(src));
 
-const addEdgeR = (edges = new Map, [src, nb, wt = 0]) => {
-	return edges
-		.set(src, addMap(coerceAdj(edges)(src), [nb, wt]))
-		.set(nb, addMap(coerceAdj(edges)(nb), [src, wt]));
-};
+const addEdgeR = (edges = new Map, [src, nb, wt = 0]) =>
+	edges
+	.set(src, addMap(edges.get(src), [nb, wt]))
+	.set(nb, addMap(edges.get(nb), [src, wt]));
 
 const rmEdge = (edges = new Map, [src, nb, wt = 0]) =>
 	edges
