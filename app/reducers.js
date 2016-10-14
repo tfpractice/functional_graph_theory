@@ -5,11 +5,10 @@ const { Comparitors: { uniteMap, mapDiff, mapUnion, } } = Utils;
 
 const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
 	edges.set(src, nbs);
+const nMap = (edges = new Map) => (src) => new Map(edges.get(src));
 
-const appendR = (edges = new Map, src) => appendNew(edges)(src);
-const coerceAdj = (edges = new Map) => (src) => appendNew(edges)(src).get(src);
-const nabes = (edges = new Map) => (src) => spreadK(coerceAdj(edges)(src));
-
+const appendR = (edges = new Map, src) => addMap(edges, [src, nMap(edges)(src)]);
+const nabes = (edges = new Map) => (src) => spreadK(nMap(edges)(src));
 const addEdgeR = (edges = new Map, [src, nb, wt = 0]) => {
 	return edges
 		.set(src, addMap(edges.get(src), [nb, wt]))
@@ -32,7 +31,6 @@ const importEdge = (edges = new Map, [src, alts = new Map]) =>
 module.exports = {
 	appendNew,
 	appendR,
-	coerceAdj,
 	addEdgeR,
 	rmEdge,
 	importEdge,
