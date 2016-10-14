@@ -15,7 +15,7 @@ const {
 	removeEdgeR,
 	removeNeighborsR,
 	rmNodeXR,
-	mergeEdgesR,
+	importEdge,
 } =
 Reducers;
 
@@ -81,10 +81,9 @@ const removeEdges = (edges = new Map) => (src) => (...nabes) =>
 const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
 
 const mergeNeighbors = uniteMap;
-// [...altN].reduce(addMap, nbs);
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-	[...altEdges].reduce(mergeEdgesR, edges);
+	[...altEdges].reduce(importEdge, edges);
 };
 
 module.exports = {
