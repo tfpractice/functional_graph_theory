@@ -29,7 +29,8 @@ const rmNodeXR = (edges = new Map, src) =>
 const mergeNeighborsR = (nbs = new Map, alts = new Map) => uniteMap(nbs)(alts);
 
 const mergeEdgesR = (edges = new Map, [src, alts = new Map]) =>
-	addMap(edges, [src, mapUnion(coerceAdj(edges)(src))(alts)]);
+	addMap(edges, [src, mapUnion(edges.get(src))(alts)]);
+// addMap(edges, [src, mapUnion(coerceAdj(edges)(src))(alts)]);
 
 module.exports = {
 	appendNew,
