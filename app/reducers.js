@@ -1,6 +1,7 @@
 const Utils = require('./utils');
 const { Commands: { tuple, triple, rmColl, addMap, } } = Utils;
 const { Commands: { spread, spreadK, } } = Utils;
+const { Comparitors: { uniteMap, mapDiff, mapUnion, } } = Utils;
 
 const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
 	edges.set(src, nbs);
@@ -25,11 +26,10 @@ const removeNeighborsR = (edges = new Map, src) =>
 const rmNodeXR = (edges = new Map, src) =>
 	rmColl(removeNeighborsR(edges, src), src);
 
-const mergeNeighborsR = (nbs = new Map, alts = new Map) =>
-	[...alts].reduce(addMap, nbs);
+const mergeNeighborsR = (nbs = new Map, alts = new Map) => uniteMap(nbs)(alts);
 
-const mergeEdgesR = (edges = new Map, [src, alts]) =>
-	edges.set(src, mergeNeighborsR(coerceAdj(edges)(src)), (alts));
+const mergeEdgesR = (edges = new Map, [src, alts = new Map]) =>
+	addMap(edges, [src, mapUnion(coerceAdj(edges)(src))(alts)]);
 
 module.exports = {
 	appendNew,
