@@ -1,11 +1,7 @@
-/**
- * Graph module.
- * @module Graph
-
- */
 const Utils = require('./utils');
 const { Queries: { hasK, x_hasK, } } = Utils;
-const { Commands: { spread, spreadK, spreadV, spreadKV, addMap } } = Utils;
+const { Commands: { spread, spreadK, spreadV, spreadKV, } } = Utils;
+const { Commands: { tuple, triple, addMap, } } = Utils;
 const { Comparitors: { uniteMap, } } = Utils;
 const { Strings: { showGraph } } = Utils;
 const Reducers = require('./reducers');
@@ -19,33 +15,12 @@ const {
 } =
 Reducers;
 
-/**
- *
- * creates an array of the weight and neighbor
- * @param  {Number} weight the weight of the associated edge
- * @return {Function} a function receiving the neighboring node
- */
-const weighedEntry = (weight = 0) =>
-	/**
-	 * returns an array of the weight and node
-	 * @inner
-	 * @param  {Object} the neighboring node
-	 * @return {Array}   neighbor, weight tuple
-	 */
-	(nabe) => [nabe, weight];
+const weighedEntry = tuple;
 
 const edgeEntry = (w = 0) => (src) => (nabe) => [src, nabe, w];
-/**
- * creates a new graph
- * @member spawn
- * @param  {Map}    edges an optional edgelist
- * @return {Map}       a new edgelist
- */
+
 const spawn = (edges = new Map) => new Map(edges);
-/**
- * returns a copy of the graph
- * @type {Map}
- */
+
 const copy = spawn;
 const fromElements = (...elements) => addNodes(spawn())(...elements);
 
@@ -83,25 +58,27 @@ const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
 const mergeNeighbors = uniteMap;
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-    spread(altEdges).reduce(importEdge, edges);
+	spread(altEdges).reduce(importEdge, edges);
 };
 
-module.exports = { spawn,
-    contains,
-    nodes,
-    adj,
-    copy,
-    isAdjacent,
-    addNodes,
-    removeEdges,
-    removeNodes,
-    neighbors,
-    addNeighbor,
-    addEdges,
-    addEdgeR,
-    addEntry,
-    weighedEntry,
-    removeNeighbors,
-    mergeNeighbors,
-    mergeEdges,
-    fromElements, };
+module.exports = {
+	spawn,
+	contains,
+	nodes,
+	adj,
+	copy,
+	isAdjacent,
+	addNodes,
+	removeEdges,
+	removeNodes,
+	neighbors,
+	addNeighbor,
+	addEdges,
+	addEdgeR,
+	addEntry,
+	weighedEntry,
+	removeNeighbors,
+	mergeNeighbors,
+	mergeEdges,
+	fromElements,
+};
