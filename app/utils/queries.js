@@ -9,8 +9,8 @@ const lastK = (coll = []) => last(spreadK(coll));
 
 const hasK = (coll = []) => (key) => coll.has(key);
 const x_hasK = (coll = []) => (key) => !coll.has(key);
-const hasKV = (path) => ([key, val]) => path.has(key);
-const x_hasKV = (path) => ([key, val]) => !hasKV(path)([key, val]);
+const hasKV = (coll) => ([key, val]) => coll.has(key);
+const x_hasKV = (coll) => ([key, val]) => !hasKV(coll)([key, val]);
 
 module.exports = {
 	first,

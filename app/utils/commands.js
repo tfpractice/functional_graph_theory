@@ -12,6 +12,30 @@ const rmColl = (coll = new Set, elem) => coll.delete(elem) ? coll : coll;
 const popElem = (coll = new Set) => (el) => rmColl(coll, el) && el;
 const popFirst = (coll = new Set) => popElem(coll)(spread(coll).shift());
 
+const inter = (c0) => (c1) => spread(c0).filter(k => c1.has(k));
+const diff = (c0) => (c1) => spread(c0).filter(k => !c1.has(k));
+const union = (c0) => (c1) => spread(c0).concat(diff(c1)(c0));
+
+const mapInter = (c0) => (c1) =>
+	spread(c0).filter(([k, v]) => c1.has(k)).reduce(addMap, new Map);
+
+const mapDiff = (c0) => (c1) =>
+	spread(c0).filter(([k, v]) => !c1.has(k)).reduce(addMap, new Map);
+
+const mapUnion = (c0) => (c1) =>
+	spread(mapDiff(c1)(c0)).reduce(addMap, new Map(c0))
+
+const merge = (c0) => (c1) => {
+	console.log("c0", c0);
+	console.log("mapInter", mapInter(c0)(c1));
+	console.log("mapDiff", mapDiff(c1)(c0));
+	console.log("mapUnion", mapUnion(c0)(c1));
+	return diff(c1)(c0).reduce(addMap, c0);
+}
+
+// const mergeNeighborsR = (nbs = new Map, alts = new Map) =>
+// [...alts].reduce(addMap, nbs);
+
 module.exports = {
 	spread,
 	spreadK,
@@ -23,4 +47,5 @@ module.exports = {
 	addMap,
 	rmColl,
 	popFirst,
+	merge,
 };
