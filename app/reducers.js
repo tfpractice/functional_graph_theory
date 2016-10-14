@@ -26,19 +26,17 @@ const removeNeighborsR = (edges = new Map, src) =>
 const rmNodeXR = (edges = new Map, src) =>
 	rmColl(removeNeighborsR(edges, src), src);
 
-const mergeNeighborsR = (nbs = new Map, alts = new Map) => uniteMap(nbs)(alts);
+// const mergeNeighborsR = (nbs = new Map, alts = new Map) => uniteMap(nbs)(alts);
 
 const mergeEdgesR = (edges = new Map, [src, alts = new Map]) =>
 	addMap(edges, [src, mapUnion(edges.get(src))(alts)]);
 // addMap(edges, [src, mapUnion(coerceAdj(edges)(src))(alts)]);
 
-module.exports = {
-	appendNew,
-	appendR,
-	coerceAdj,
-	addEdgeR,
-	removeEdgeR,
-	mergeEdgesR,
-	rmNodeXR,
-	removeNeighborsR,
-};
+module.exports = { appendNew,
+    appendR,
+    coerceAdj,
+    addEdgeR,
+    removeEdgeR,
+    mergeEdgesR,
+    rmNodeXR,
+    removeNeighborsR, };
