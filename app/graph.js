@@ -1,7 +1,7 @@
 /**
  * Graph module.
  * @module Graph
-
+ 
  */
 const Utils = require('./utils');
 const { Queries: { hasK, x_hasK, } } = Utils;
@@ -12,7 +12,7 @@ const Reducers = require('./reducers');
 const {
 	addEdgeR,
 	appendR,
-	removeEdgeR,
+	rmEdge,
 	rmAdj,
 	rmNodeXR,
 	importEdge,
@@ -76,32 +76,34 @@ const removeNeighbors = (edges = new Map) => (...nodes) =>
 	nodes.reduce(rmAdj, edges);
 
 const removeEdges = (edges = new Map) => (src) => (...nabes) =>
-	nabes.map(edgeEntry(0)(src)).reduce(removeEdgeR, edges);
+	nabes.map(edgeEntry(0)(src)).reduce(rmEdge, edges);
 
 const addEntry = (nabes = new Map) => ([n, w = 0]) => addMap(nabes, [n, w]);
 
 const mergeNeighbors = uniteMap;
 
 const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
-    spread(altEdges).reduce(importEdge, edges);
+	spread(altEdges).reduce(importEdge, edges);
 };
 
-module.exports = { spawn,
-    contains,
-    nodes,
-    adj,
-    copy,
-    isAdjacent,
-    addNodes,
-    removeEdges,
-    removeNodes,
-    neighbors,
-    addNeighbor,
-    addEdges,
-    addEdgeR,
-    addEntry,
-    weighedEntry,
-    removeNeighbors,
-    mergeNeighbors,
-    mergeEdges,
-    fromElements, };
+module.exports = {
+	spawn,
+	contains,
+	nodes,
+	adj,
+	copy,
+	isAdjacent,
+	addNodes,
+	removeEdges,
+	removeNodes,
+	neighbors,
+	addNeighbor,
+	addEdges,
+	addEdgeR,
+	addEntry,
+	weighedEntry,
+	removeNeighbors,
+	mergeNeighbors,
+	mergeEdges,
+	fromElements,
+};

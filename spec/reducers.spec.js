@@ -24,11 +24,11 @@ fdescribe(' Reducers', function() {
 		});
 	});
 
-	describe('removeEdgeR', function() {
+	describe('rmEdge', function() {
 		it('removes the connections beteen ', function() {
 			let rNabes = Graph.addEdges(rEdges)(n0, 0)(
 				n1, n2, n3).get(n0);
-			RD.removeEdgeR(rEdges, [n0, n1]);
+			RD.rmEdge(rEdges, [n0, n1]);
 			expect(Graph.adj(rEdges)(n0).has(n1)).toBeFalse();
 		});
 	});
