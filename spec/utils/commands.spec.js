@@ -39,6 +39,11 @@ fdescribe('Utils/Commands', function() {
 				expect(Comm.triple(1)('zero')('one')).toBeArray();
 			});
 		});
+		describe('flatTuple(v0)([...elements])', () => {
+			it('returns a [key0,...elements] array', () => {
+				expect(Comm.flatTuple(1)(['zero', 'one'])).toBeArray();
+			});
+		});
 		describe('addSet(val)', () => {
 			it('adds a value to a set', () => {
 				Comm.addSet(cSet, 9);

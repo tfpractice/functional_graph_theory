@@ -1,5 +1,6 @@
 const tuple = (val) => (key) => [key, val];
 const triple = (val) => (key0) => (key1) => [key0, key1, val];
+const flatTuple = (v0 = []) => (v1 = []) => [v0, ...v1];
 
 const spread = (coll = []) => [...coll];
 const spreadK = (coll = []) => [...coll.keys()];
@@ -19,6 +20,7 @@ module.exports = {
 	spreadKV,
 	tuple,
 	triple,
+	flatTuple,
 	addSet,
 	addMap,
 	rmColl,
