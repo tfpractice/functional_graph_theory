@@ -12,8 +12,8 @@ const nabes = (edges = new Map) => (src) => spreadK(coerceAdj(edges)(src));
 
 const addEdgeR = (edges = new Map, [src, nb, wt = 0]) =>
 	edges
-	.set(src, addMap(coerceAdj(edges)(src), [nb, wt]))
-	.set(nb, addMap(coerceAdj(edges)(nb), [src, wt]));
+	.set(src, addMap(coerceAdj(edges)(src), [ nb, wt ]))
+	.set(nb, addMap(coerceAdj(edges)(nb), [ src, wt ]));
 
 const rmEdge = (edges = new Map, [src, nb, wt = 0]) =>
 	edges
@@ -23,11 +23,10 @@ const rmEdge = (edges = new Map, [src, nb, wt = 0]) =>
 const rmAdj = (edges = new Map, src) =>
 	nabes(edges)(src).map(triple(0)(src)).reduce(rmEdge, edges);
 
-const rmNode = (edges = new Map, src) =>
-	rmColl(rmAdj(edges, src), src);
+const rmNode = (edges = new Map, src) => rmColl(rmAdj(edges, src), src);
 
 const importEdge = (edges = new Map, [src, alts = new Map]) =>
-	addMap(edges, [src, mapUnion(edges.get(src))(alts)]);
+	addMap(edges, [ src, mapUnion(edges.get(src))(alts) ]);
 
 module.exports = { appendNew,
     appendR,
