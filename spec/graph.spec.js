@@ -108,7 +108,8 @@ fdescribe('Graph', function() {
 		});
 		describe('mergeEdges', () => {
 			it('combines two Edge maps', () => {
-				[...evens.keys()].map((e, id, arr) => [e, id, ...arr])
+				[...evens.keys()].map((e, id, arr) =>
+						[e, arr[((id + 1) % arr.length)], id])
 					.reduce(Graph.addEdgeR, evens);
 				Graph.mergeEdges(evens)(odds);
 				expect(evens.has(n15)).toBeTrue();

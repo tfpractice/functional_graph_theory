@@ -13,7 +13,6 @@ const mapDiff = (c0 = new Map) => (c1 = new Map) =>
 
 const mapUnion = (c0 = new Map) => (c1 = new Map) =>
 	spread(mapDiff(c1)(c0)).reduce(addMap, new Map(c0));
-
 const uniteMap = (c0 = new Map) => (c1 = new Map) =>
 	spread(mapDiff(c1)(c0)).reduce(addMap, c0);
 

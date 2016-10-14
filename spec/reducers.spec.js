@@ -19,10 +19,23 @@ fdescribe('Reducers', function() {
 
 	describe('rmEdge', function() {
 		it('removes the connections beteen ', function() {
-			let rNabes = Graph.addEdges(rEdges)(n0, 0)(
-				n1, n2, n3).get(n0);
+			let rNabes = Graph.addEdges(rEdges)(n0, 0)(n1, n2, n3).get(n0);
 			RD.rmEdge(rEdges, [n0, n1]);
 			expect(Graph.adj(rEdges)(n0).has(n1)).toBeFalse();
+		});
+	});
+
+	describe('importEdge', function() {
+		it('adds missing neighbors to a graph and adds connections', () => {
+			[
+				[n15, n13, 7],
+				[n15, n17, 7],
+				[n15, n11, 7],
+			].reduce(Graph.addEdgeR, odds);
+			RD.importEdge(evens, [n15, odds.get(n15)]);
+			expect(evens.has(n17)).toBeTrue();
+			expect(evens.get(n15).has(n17)).toBeTrue();
+			expect(evens.get(n15).has(n13)).toBeTrue();
 		});
 	});
 });
