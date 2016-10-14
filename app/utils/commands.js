@@ -23,18 +23,7 @@ const mapDiff = (c0) => (c1) =>
 	spread(c0).filter(([k, v]) => !c1.has(k)).reduce(addMap, new Map);
 
 const mapUnion = (c0) => (c1) =>
-	spread(mapDiff(c1)(c0)).reduce(addMap, new Map(c0))
-
-const merge = (c0) => (c1) => {
-	console.log("c0", c0);
-	console.log("mapInter", mapInter(c0)(c1));
-	console.log("mapDiff", mapDiff(c1)(c0));
-	console.log("mapUnion", mapUnion(c0)(c1));
-	return diff(c1)(c0).reduce(addMap, c0);
-}
-
-// const mergeNeighborsR = (nbs = new Map, alts = new Map) =>
-// [...alts].reduce(addMap, nbs);
+	spread(mapDiff(c1)(c0)).reduce(addMap, new Map(c0));
 
 module.exports = {
 	spread,
@@ -47,5 +36,4 @@ module.exports = {
 	addMap,
 	rmColl,
 	popFirst,
-	merge,
 };

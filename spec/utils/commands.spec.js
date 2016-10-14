@@ -66,12 +66,5 @@ fdescribe('Utils/Commands', function() {
 				expect(copy.has(first)).toBeFalse();
 			});
 		});
-		describe('merge', () => {
-			it('adds all elements of the second collection to the first', function() {
-				let m0 = new Map().set(8, 1).set(7, 2).set(6, 3).set(5, 4);
-				let m1 = new Map().set(8, 2).set(7, 23).set(9, 10).set(11, 12);
-				expect(Comm.spread(Comm.merge(m0)(m1))).toContain([11, 12]);
-			});
-		});
 	});
 });
