@@ -20,11 +20,11 @@ const removeEdgeR = (edges = new Map, [src, nb, wt = 0]) =>
 	.set(src, rmColl(coerceAdj(edges)(src), nb))
 	.set(nb, rmColl(coerceAdj(edges)(nb), src));
 
-const removeNeighborsR = (edges = new Map, src) =>
+	const rmAdj = (edges = new Map, src) =>
 	nabes(edges)(src).map(triple(0)(src)).reduce(removeEdgeR, edges);
 
 const rmNodeXR = (edges = new Map, src) =>
-	rmColl(removeNeighborsR(edges, src), src);
+	rmColl(rmAdj(edges, src), src);
 
 const importEdge = (edges = new Map, [src, alts = new Map]) =>
 	addMap(edges, [ src, mapUnion(edges.get(src))(alts) ]);
@@ -33,7 +33,7 @@ module.exports = { appendNew,
     appendR,
     coerceAdj,
     addEdgeR,
-	removeEdgeR,
+    removeEdgeR,
     importEdge,
     rmNodeXR,
-    removeNeighborsR, };
+    rmAdj, };
