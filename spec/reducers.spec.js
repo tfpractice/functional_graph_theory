@@ -10,9 +10,9 @@ fdescribe('Reducers', function() {
 		odds = Graph.addNodes()(...oNodes);
 	});
 
-	describe('appendR', () => {
+	describe('addSrc', () => {
 		it('adds entries to the Map via reduce', () => {
-			RD.appendR(rEdges, n0);
+			RD.addSrc(rEdges, n0);
 			expect(rEdges.has(n0)).toBeTrue();
 		});
 	});
