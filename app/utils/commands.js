@@ -11,7 +11,6 @@ const addSet = (coll = new Set, elem) => coll.add(elem);
 const addMap = (coll = new Map, [k, v]) => coll.set(k, v);
 const rmColl = (coll = new Map, elem) => coll.delete(elem) ? coll : coll;
 const popElem = (coll = new Set) => (el) => rmColl(coll, el) && el;
-// const tapElem = (coll = new Set)=>(el)
 const popFirst = (coll = new Set) => popElem(coll)(spread(coll).shift());
 
 module.exports = {

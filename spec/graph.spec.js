@@ -15,14 +15,14 @@ fdescribe('Graph', function() {
 		});
 	});
 	describe('fromElements', () => {
-		it('returns a new edgelist with the new nodes appended', function() {
+		it('returns a new edgelist with the new nodes appended', () => {
 			let sEdges = Graph.fromElements(...myNodes);
 			expect(Graph.contains(sEdges)(n2)).toBeTrue();
 		});
 	});
 	describe('accessors', () => {
 		describe('nodes', () => {
-			it('returns an array of the nodes in the edgelist', function() {
+			it('returns an array of the nodes in the edgelist', () => {
 				expect(Graph.nodes(evens)).toBeArray();
 			});
 		});
@@ -32,7 +32,7 @@ fdescribe('Graph', function() {
 			});
 		});
 		describe('adj', () => {
-			it('returns a map of all the neighboring nodes and weights', function() {
+			it('returns a map of all the neighboring nodes and weights', () => {
 				expect(Graph.adj(evens)(n2) instanceof Map).toBeTrue();
 			});
 		});
@@ -41,8 +41,8 @@ fdescribe('Graph', function() {
 				expect(Graph.neighbors(myGraphR)(n0) instanceof Array).toBeTrue();
 			});
 		});
-		describe('contains', function() {
-			it('checks if a graph has a node', function() {
+		describe('contains', () => {
+			it('checks if a graph has a node', () => {
 				expect(Graph.contains(evens)(n12)).toBeTrue();
 			});
 		});
@@ -100,7 +100,7 @@ fdescribe('Graph', function() {
 			});
 		});
 		describe('removeEdges', () => {
-			it('removes an edge entry', function() {
+			it('removes an edge entry', () => {
 				let nabes = Graph.addEdges(rEdges)(n0, 1)(n1, n2, n3);
 				Graph.removeEdges(rEdges)(n0)(n1);
 				expect(Graph.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
