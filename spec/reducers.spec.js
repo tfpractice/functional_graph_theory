@@ -1,4 +1,4 @@
-fdescribe(' Reducers', function() {
+fdescribe('Reducers', function() {
 	beforeAll(function() {
 		console.log('\n......... Reducers Spec.........');
 		RD = Reducers;
@@ -8,13 +8,6 @@ fdescribe(' Reducers', function() {
 		rEdges = Graph.spawn();
 		evens = Graph.addNodes()(...eFilter(myNodes));
 		odds = Graph.addNodes()(...oNodes);
-	});
-
-	describe('appendNew', () => {
-		it('adds an entry to the edges Map', () => {
-			RD.appendNew(rEdges)(n0);
-			expect(rEdges.has(n0)).toBeTrue();
-		});
 	});
 
 	describe('appendR', () => {

@@ -5,6 +5,7 @@ const { Comparitors: { uniteMap, mapDiff, mapUnion, } } = Utils;
 
 const appendNew = (edges = new Map) => (src, nbs = new Map(edges.get(src))) =>
 	edges.set(src, nbs);
+
 const nMap = (edges = new Map) => (src) => new Map(edges.get(src));
 
 const appendR = (edges = new Map, src) => addMap(edges, [src, nMap(edges)(src)]);
@@ -29,7 +30,6 @@ const importEdge = (edges = new Map, [src, alts = new Map]) =>
 	addMap(edges, [src, mapUnion(edges.get(src))(alts)]);
 
 module.exports = {
-	appendNew,
 	appendR,
 	addEdgeR,
 	rmEdge,
