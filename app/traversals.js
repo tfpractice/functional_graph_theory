@@ -1,14 +1,13 @@
 const Utils = require('./utils');
 const { Commands: { spreadK, spreadV, spreadKV, popFirst } } = Utils;
-const { Commands: { tuple, triple, rmColl, addMap, addSet } } = Utils;
+const { Commands: { tuple, flatTuple, triple, rmColl, addMap, addSet } } =
+Utils;
 const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV } } = Utils;
 const { Strings: { componentString } } = Utils;
 const { Comparitors: { diff, } } = Utils;
 
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
-
-const pathEntry = (pred) => ([n, w]) => [pred, n, w];
 
 const appendEntry = (path = new Map, [pred, n, w]) => {
 	let { length: pCount, weight: pWeight } = path.get(pred);
@@ -28,7 +27,7 @@ const dfs = (edges) => (iNode) => {
 		let pred = lastK(path);
 		let nextNabes = unvisitedMap(edges)(path)(pred);
 		spreadKV(nextNabes)
-			.map(pathEntry(pred))
+			.map(flatTuple(pred))
 			.reduce(appendEntry, path);
 		return nextNabes.size > 0 ? dVisit(path) : path;
 	};
@@ -41,7 +40,7 @@ const bfs = (edges) => (iNode) => {
 		let pred = popFirst(bQueue);
 		let nextNabes = unvisitedMap(edges)(bPath)(pred);
 		spreadKV(nextNabes)
-			.map(pathEntry(pred))
+			.map(flatTuple(pred))
 			.reduce(appendEntry, bPath);
 		spreadK(nextNabes).reduce(addSet, bQueue);
 		return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
