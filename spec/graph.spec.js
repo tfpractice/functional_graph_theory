@@ -106,6 +106,13 @@ fdescribe('Graph', function() {
 				expect(Graph.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
 			});
 		});
+		describe('clearNeighbors', () => {
+			it('removes all the neighbors from the source nodes', () => {
+				let nabes = Graph.addEdges(rEdges)(n0, 1)(n1, n2, n3);
+				Graph.clearNeighbors(rEdges)(n0, n1);
+				expect(Graph.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
+			});
+		});
 		describe('mergeEdges', () => {
 			it('combines two Edge maps', () => {
 				[...evens.keys()].map((e, id, arr) =>
