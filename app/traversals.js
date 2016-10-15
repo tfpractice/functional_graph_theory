@@ -4,23 +4,21 @@ const { Commands: { tuple, flatTuple, triple, rmColl, addMap, addSet } } =
 Utils;
 const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV } } = Utils;
 const { Strings: { componentString } } = Utils;
-const { Comparitors: { diff, } } = Utils;
+const { Comparitors: { diff, mapDiff } } = Utils;
 
 const initPath = (node) =>
 	new Map().set(node, { pred: null, weight: 0, length: 0 });
 
 const appendEntry = (path = new Map, [pred, n, w]) => {
 	let { length: pCount, weight: pWeight } = path.get(pred);
-	let length = pCount + 1;
-	let weight = pCount + w;
-	return path.set(n, { pred, length, weight });
+	return path.set(n, { pred, length: pCount + 1, weight: pCount + w });
 };
 
 const unvisitedNeighbors = (edges) => (path) => (node) =>
 	diff(spreadK(edges.get(node)))(path);
 
 const unvisitedMap = (edges) => (path) => (node) =>
-	new Map(spreadKV(edges.get(node)).filter(x_hasKV(path)));
+	mapDiff(edges.get(node))(path);
 
 const dfs = (edges) => (iNode) => {
 	const dVisit = (path) => {
