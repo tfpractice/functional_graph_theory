@@ -1,45 +1,40 @@
 const Utils = require('./utils');
-const { Commands: { spreadK, spreadV, spreadKV, popFirst } } = Utils;
-const { Commands: { tuple, flatTuple, triple, rmColl, addMap, addSet } } =
-Utils;
+const { Commands: { spread, spreadK, spreadV, spreadKV, popFirst } } = Utils;
+const { Commands: { tuple, flatTuple, triple, addMap, addSet } } = Utils;
 const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV } } = Utils;
 const { Strings: { componentString } } = Utils;
 const { Comparitors: { diff, mapDiff } } = Utils;
 
-const initPath = (node) =>
-	new Map().set(node, { pred: null, weight: 0, length: 0 });
+const pathVal = (pred = null) => (length = 1) => (weight = 0) =>
+	({ pred, length, weight });
 
-const appendEntry = (path = new Map, [pred, n, w]) => {
-	let { length: pCount, weight: pWeight } = path.get(pred);
-	return path.set(n, { pred, length: pCount + 1, weight: pCount + w });
-};
+const addSrc = (path = new Map) => (src) =>
+	path.set(src, { pred: lastK(path), weight: 0, length: 1 });
 
-const unvisitedNeighbors = (edges) => (path) => (node) =>
-	diff(spreadK(edges.get(node)))(path);
+const initPath = (node) => addSrc()(node);
+const ptW = ({ weight = 0 }) => weight;
+const ptL = ({ length = 1 }) => length;
+const lastVal = (path) => path.get(lastK(path));
+const lastW = (path) => ptW(lastVal(path));
+const lastL = (path) => ptL(lastVal(path));
+const nextW = (path) => (w = 0) => lastW(path) + w;
+const nextL = (path) => lastL(path) ? lastL(path) + 1 : 1;
 
-const unvisitedMap = (edges) => (path) => (node) =>
-	mapDiff(edges.get(node))(path);
+const nextPath = (path = new Map, [n, w = 0]) =>
+	path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
 
-const dfs = (edges) => (iNode) => {
-	const dVisit = (path) => {
-		let pred = lastK(path);
-		let nextNabes = unvisitedMap(edges)(path)(pred);
-		spreadKV(nextNabes)
-			.map(flatTuple(pred))
-			.reduce(appendEntry, path);
-		return nextNabes.size > 0 ? dVisit(path) : path;
-	};
+const dfs = (edges) => (src) => {
+	const trav = (path = initPath(src), [n, w] = [lastK(path), 0]) =>
+		spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
 
-	return dVisit(initPath(iNode));
+	return trav(initPath(src));
 };
 
 const bfs = (edges) => (iNode) => {
 	const bVisit = (bPath) => (bQueue) => {
 		let pred = popFirst(bQueue);
-		let nextNabes = unvisitedMap(edges)(bPath)(pred);
-		spreadKV(nextNabes)
-			.map(flatTuple(pred))
-			.reduce(appendEntry, bPath);
+		let nextNabes = mapDiff(edges.get(pred))(bPath);
+		spread(nextNabes).reduce(nextPath, bPath);
 		spreadK(nextNabes).reduce(addSet, bQueue);
 		return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
 	};
@@ -71,19 +66,20 @@ const dijkstra = (edges) => (iNode) => {
 };
 
 const components = (edges) => {
-	const vc = (comp = new Set, node) =>
-		unvisitedNeighbors(edges)(comp)(node).reduce(vc, comp.add(node));
+	const trav = (comp = new Set, node) =>
+		diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
 
 	const visitMap = (mMap = new Map, node) =>
-		diff(vc(new Set, node))(mMap)
-		.map(tuple(vc(new Set, node)))
+		diff(trav(new Set, node))(mMap)
+		.map(tuple(trav(new Set, node)))
 		.reduce(addMap, mMap);
 
 	return spreadK(edges).reduce(visitMap, new Map);
 };
 
 const componentSet = (edges) => new Set(spreadV(components(edges)));
-const pathBetween = (edges) => (n0) => (n1) => hasK(components(edges))(n1);
+const pathBetween = (edges) => (n0) => (n1) =>
+	hasK(components(edges).get(n1))(n0);
 
 module.exports = {
 	dfs,
@@ -92,6 +88,4 @@ module.exports = {
 	components,
 	componentSet,
 	pathBetween,
-	unvisitedMap,
-	unvisitedNeighbors,
 };
