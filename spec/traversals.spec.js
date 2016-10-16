@@ -24,6 +24,7 @@ fdescribe('Traversal functions', () => {
 	describe('bfs', () => {
 		it('returns a map of nodes and neighbors', () => {
 			expect(o11B instanceof Map).toBeTrue();
+			console.log(Str.pathString(o11B));
 			expect((o11B).has(n15)).toBeTrue();
 			expect(Graph.neighbors(odds)(n11)).not.toContain(n15);
 		});
