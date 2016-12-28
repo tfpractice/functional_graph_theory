@@ -7,14 +7,11 @@ const defEnvar = { prod: true, };
 
 export default (env = defEnvar) => ({
     context: ROOT_PATH,
-    entry: { turmeric: PATHS.app, },
+    entry: { graph_theory: PATHS.app, },
     resolve: {
       modules: [ 'node_modules', ],
       extensions: [ '.js', '.jsx', '.json', ],
-      alias: {
-        src: PATHS.src,
-          // config: PATHS.config,
-      },
+      alias: { src: PATHS.src, },
     },
     output: {
       path:      PATHS.dist,

@@ -1,48 +1,53 @@
 {
-	"name": "functional_graph_theory",
-	"version": "1.0.0",
-	"description": "a Map based implementation of canonical graph data algorithms",
-	"main": "index.js",
-	"scripts": {
-		"test": "jasmine",
-		"doc": "jsdoc -c config/conf.json app"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/tfpractice/functional_graph_theory.git"
-	},
-	"keywords": [
-		"algorithms",
-		"data-structures",
-		"graph-theory",
-		"functional-programming"
-	],
-	"author": "theory f practice <jackson.brebnor@gmail.com>",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/tfpractice/functional_graph_theory/issues"
-	},
-	"homepage": "https://github.com/tfpractice/functional_graph_theory#readme",
-	"devDependencies": {
-		"babel-cli": "^6.14.0",
-		"babel-core": "^6.21.0",
-		"babel-eslint": "^7.1.1",
-		"babel-loader": "^6.2.10",
-		"babel-plugin-module-resolver": "^2.4.0",
-		"babel-preset-latest": "^6.16.0",
-		"clean-webpack-plugin": "^0.1.14",
-		"eslint": "^3.12.2",
-		"eslint-config-airbnb-base": "^11.0.0",
-		"eslint-import-resolver-babel-module": "^2.2.1",
-		"eslint-import-resolver-webpack": "^0.8.0",
-		"eslint-plugin-import": "^2.2.0",
-		"ink-docstrap": "^1.3.0",
-		"jasmine": "^2.5.2",
-		"jasmine-expect": "^3.0.1",
-		"jest": "^18.0.0",
-		"jest-cli": "^18.0.0",
-		"jsdoc": "^3.4.2",
-		"webpack": "2.1.0-beta.28"
-	},
-	"dependencies": {}
+  "name": "functional_graph_theory",
+  "version": "1.0.0",
+  "description": "a Map based implementation of canonical graph data algorithms",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "doc": "jsdoc -c config/conf.json app",
+    "build": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",
+    "dev": "node .",
+    "lint": "./node_modules/.bin/eslint  --fix -c .eslintrc.js . --ext .js --ignore-path .gitignore --cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tfpractice/functional_graph_theory.git"
+  },
+  "keywords": [
+    "algorithms",
+    "data-structures",
+    "graph-theory",
+    "functional-programming"
+  ],
+  "author": "theory f practice <jackson.brebnor@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tfpractice/functional_graph_theory/issues"
+  },
+  "homepage": "https://github.com/tfpractice/functional_graph_theory#readme",
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-module-resolver": "^2.4.0",
+    "babel-preset-latest": "^6.16.0",
+    "clean-webpack-plugin": "^0.1.14",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-import-resolver-babel-module": "^2.2.1",
+    "eslint-import-resolver-webpack": "^0.8.0",
+    "eslint-plugin-import": "^2.2.0",
+    "ink-docstrap": "^1.3.0",
+    "jasmine": "^2.5.2",
+    "jasmine-expect": "^3.0.1",
+    "jest": "^18.0.0",
+    "jest-cli": "^18.0.0",
+    "jsdoc": "^3.4.2",
+    "webpack": "2.1.0-beta.28"
+  },
+  "dependencies": {
+    "turmeric": "git://github.com/tfpractice/turmeric.git"
+  }
 }
