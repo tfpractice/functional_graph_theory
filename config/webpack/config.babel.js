@@ -35,5 +35,4 @@ export default (env = defEnvar) => ({
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"', }, }),
       new webpack.LoaderOptionsPlugin({ minimize: true, debug: true, }),
     ],
-
 });
