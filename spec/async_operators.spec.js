@@ -1,4 +1,4 @@
-describe('async', () => {
+xdescribe('async', () => {
   beforeAll(() => {
     console.log('\n.........AsyncOps Spec.........');
     ({ addNodesAsync, addEdgesAsync, removeEdgeAsync } = AsyncOps);
@@ -11,7 +11,7 @@ describe('async', () => {
     o2 = oNodes[2];
   });
 
-  describe('addNodesAsync', () => {
+  xdescribe('addNodesAsync', () => {
     it('adds a node to the graph', (done) => {
       addNodesAsync(oddGraphR)(e2);
       expect(Graph.contains(oddGraphR)(e2)).toBeTrue();
@@ -19,7 +19,7 @@ describe('async', () => {
     });
   });
 
-  describe('addEdgesAsync(e2)(o2,weight)', () => {
+  xdescribe('addEdgesAsync(e2)(o2,weight)', () => {
     it('updates each nodes edge entry', (done) => {
       addEdgesAsync(oddGraphR)(e2, 2)(o2);
       expect(Graph.neighbors(oddGraphR)(e2)).toContain(o2);
@@ -28,7 +28,7 @@ describe('async', () => {
     });
   });
 
-  // describe('importEdgeAsync(e2)(o2,weight)', () => {
+  // xdescribe('importEdgeAsync(e2)(o2,weight)', () => {
   //  it('updates each nodes edge entry', (done) => {
   //      let firstOdd = [...oddGraphR.edges.entries()][0];
   //      let OddNode = firstOdd[0];
@@ -39,7 +39,7 @@ describe('async', () => {
   //      done();
   // });
   // });
-  // describe('removeEdgeAsync', () => {
+  // xdescribe('removeEdgeAsync', () => {
   //  it('removes an entry from the edgs map', (done) => {
   //      let firstOdd = [...oddGraphR.edges.entries()][0];
   //      let OddNode = firstOdd[0];
@@ -50,7 +50,7 @@ describe('async', () => {
   //      done();
   //  });
   // });
-  describe('removeNodeAsync', () => {
+  xdescribe('removeNodeAsync', () => {
     it('removes an entry from the edgs map', (done) => {
       const firstOdd = Comm.spreadKV(oddGraphR)[0];
       const OddNode = firstOdd[0];
@@ -62,7 +62,7 @@ describe('async', () => {
       done();
     });
   });
-  describe('mergeEdgesAsync(e2)(o2,weight)', () => {
+  xdescribe('mergeEdgesAsync(e2)(o2,weight)', () => {
     it('merges nodes and edges of two graphs', (done) => {
       const elevOdd = Comm.spreadKV(oddGraphR)[3];
       const OddNode = elevOdd[0];

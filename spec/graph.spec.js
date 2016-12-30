@@ -1,4 +1,4 @@
-describe('Graph', () => {
+xdescribe('Graph', () => {
   beforeAll(() => {
     console.log('\n.........GraphR Spec.........');
   });
@@ -9,59 +9,59 @@ describe('Graph', () => {
     odds = Graph.addNodes()(...oFilter(oNodes));
   });
 
-  describe('spawn(nabes)', () => {
+  xdescribe('spawn(nabes)', () => {
     it('returns a new Map', () => {
       expect(Graph.spawn() instanceof Map).toBeTrue();
     });
   });
-  describe('fromElements', () => {
+  xdescribe('fromElements', () => {
     it('returns a new edgelist with the new nodes appended', () => {
       const sEdges = Graph.fromElements(...myNodes);
 
       expect(Graph.contains(sEdges)(n2)).toBeTrue();
     });
   });
-  describe('accessors', () => {
-    describe('nodes', () => {
+  xdescribe('accessors', () => {
+    xdescribe('nodes', () => {
       it('returns an array of the nodes in the edgelist', () => {
         expect(Graph.nodes(evens)).toBeArray();
       });
     });
-    describe('copy', () => {
+    xdescribe('copy', () => {
       it('returns a Map of nodes and neighbor', () => {
         expect(Graph.copy(rEdges) instanceof Map).toBeTrue();
       });
     });
-    describe('adj', () => {
+    xdescribe('adj', () => {
       it('returns a map of all the neighboring nodes and weights', () => {
         expect(Graph.adj(evens)(n2) instanceof Map).toBeTrue();
       });
     });
-    describe('neighbors(edge)(node)', () => {
+    xdescribe('neighbors(edge)(node)', () => {
       it('returns a map entry of that nodes neighbors ', () => {
         expect(Graph.neighbors(myGraphR)(n0) instanceof Array).toBeTrue();
       });
     });
-    describe('contains', () => {
+    xdescribe('contains', () => {
       it('checks if a graph has a node', () => {
         expect(Graph.contains(evens)(n12)).toBeTrue();
       });
     });
   });
-  describe('operators', () => {
-    describe('isAdjacent(graph)(n0)(n1)', () => {
+  xdescribe('operators', () => {
+    xdescribe('isAdjacent(graph)(n0)(n1)', () => {
       it('checks for the presence of a node in the graph', () => {
         expect(Graph.isAdjacent(myGraphR)(n0)(n6)).toBeFalse();
       });
     });
 
-    describe('addNodes', () => {
+    xdescribe('addNodes', () => {
       it('adds an entry to the edges Map', () => {
         Graph.addNodes(rEdges)(n0);
         expect(rEdges.has(n0)).toBeTrue();
       });
     });
-    describe('removeNodes', () => {
+    xdescribe('removeNodes', () => {
       it('removes the nodes from the edges', () => {
         Graph.addEdges(rEdges)(n0, 1)(n1, n2, n3);
         Graph.removeNodes(rEdges)(n0, n2);
@@ -70,7 +70,7 @@ describe('Graph', () => {
       });
     });
 
-    describe('addEdges', () => {
+    xdescribe('addEdges', () => {
       it('adds an neighbor entry for each node', () => {
         const nabes = Graph.addEdges(rEdges)(n0)(n1, n2, n3);
 
@@ -78,7 +78,7 @@ describe('Graph', () => {
       });
     });
 
-    describe('addEntry', () => {
+    xdescribe('addEntry', () => {
       it('appends an [node, weight] pair to the neighbrs', () => {
         const nabes = Graph.addNeighbor(rEdges)(n0)(n1, 3);
         const w0n2 = Comm.tuple(0)(n2);
@@ -88,14 +88,14 @@ describe('Graph', () => {
         expect(Graph.adj(rEdges)(n0).has(n2)).toBeFalse();
       });
     });
-    describe('addNeighbor', () => {
+    xdescribe('addNeighbor', () => {
       it('adds a neigbor and weight to the src entry', () => {
         const nabes = Graph.addNeighbor(rEdges)(n0)(n1, 3);
 
         expect(nabes.has(n1)).toBeTrue();
       });
     });
-    describe('mergeNeighbors', () => {
+    xdescribe('mergeNeighbors', () => {
       it('combines two neighbor maps', () => {
         const rNabes = Graph.addEdges(rEdges)(n0, 0)(n1, n2, n3).get(n0);
         const eNabes = Graph.addEdges(evens)(n2)(n5, n7, n9).get(n2);
@@ -104,7 +104,7 @@ describe('Graph', () => {
         expect(Graph.adj(evens)(n2).has(n5)).toBeTrue();
       });
     });
-    describe('removeEdges', () => {
+    xdescribe('removeEdges', () => {
       it('removes an edge entry', () => {
         const nabes = Graph.addEdges(rEdges)(n0, 1)(n1, n2, n3);
 
@@ -112,7 +112,7 @@ describe('Graph', () => {
         expect(Graph.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
       });
     });
-    describe('clearNeighbors', () => {
+    xdescribe('clearNeighbors', () => {
       it('removes all the neighbors from the source nodes', () => {
         const nabes = Graph.addEdges(rEdges)(n0, 1)(n1, n2, n3);
 
@@ -120,7 +120,7 @@ describe('Graph', () => {
         expect(Graph.isAdjacent(rEdges)(n0)(n1)).toBeFalse();
       });
     });
-    describe('mergeEdges', () => {
+    xdescribe('mergeEdges', () => {
       it('combines two Edge maps', () => {
         [ ...evens.keys(), ].map((e, id, arr) =>
             [ e, arr[((id + 1) % arr.length)], id, ])

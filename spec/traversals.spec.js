@@ -1,4 +1,4 @@
-describe('Traversal functions', () => {
+xdescribe('Traversal functions', () => {
   beforeAll(() => {
     console.log('\n.........Traversals Spec.........');
   });
@@ -16,36 +16,36 @@ describe('Traversal functions', () => {
     oDijk = Trav.dijkstra(odds)(n11);
   });
 
-  describe('Trav.dfs', () => {
+  xdescribe('Trav.dfs', () => {
     it('returns a map of nodes and neighbors', () => {
       expect(o11D instanceof Map).toBeTrue();
       expect((o11D).has(n15)).toBeTrue();
     });
   });
-  describe('bfs', () => {
+  xdescribe('bfs', () => {
     it('returns a map of nodes and neighbors', () => {
       expect(o11B instanceof Map).toBeTrue();
       expect((o11B).has(n15)).toBeTrue();
       expect(Graph.neighbors(odds)(n11)).not.toContain(n15);
     });
   });
-  describe('dijkstra', () => {
+  xdescribe('dijkstra', () => {
     it('retuns the shortest path from a node to its neighbors', () => {
       expect((Trav.dijkstra(odds)(n11) instanceof Map)).toBeTrue();
     });
   });
-  describe('components', () => {
+  xdescribe('components', () => {
     it('retuns a map of nodes and paths', () => {
       expect((Trav.components(myGraphR) instanceof Map)).toBeTrue();
     });
   });
-  describe('componentSet', () => {
+  xdescribe('componentSet', () => {
     it('returns a set of all the components', () => {
       expect(Trav.componentSet(odds) instanceof Set).toBeTrue();
       expect(Trav.componentSet(odds).size).toBe(1);
     });
   });
-  describe('pathBetween', () => {
+  xdescribe('pathBetween', () => {
     it('returns a true if nodes are in same component', () => {
       expect(Trav.pathBetween(myGraphR)(n7)(n8)).toBeTrue();
     });

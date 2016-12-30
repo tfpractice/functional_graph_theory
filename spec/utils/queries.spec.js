@@ -1,4 +1,4 @@
-describe('Utils/Queries', () => {
+xdescribe('Utils/Queries', () => {
   beforeAll(() => {
     console.log('\n.........U/Queries Spec.........');
   });
@@ -9,45 +9,45 @@ describe('Utils/Queries', () => {
     qArr = [ 0, 11, 22, 33, 44 ];
   });
 
-  describe('first', () => {
+  xdescribe('first', () => {
     it('returns the first value of a collection', () => {
       expect(Query.first(qSet)).toBe(1);
     });
   });
-  describe('last', () => {
+  xdescribe('last', () => {
     it('returns the last value of a collection', () => {
       expect(Query.last(qSet)).toBe(4);
     });
   });
-  describe('lastK', () => {
+  xdescribe('lastK', () => {
     it('retrievs the last key in a map', () => {
       expect(Query.lastK(qMap)).toBe(5);
     });
   });
-  describe('firstK', () => {
+  xdescribe('firstK', () => {
     it('retrieves the last key in a map', () => {
       expect(Query.firstK(qMap)).toBe(8);
     });
   });
 
-  describe('hasK', () => {
+  xdescribe('hasK', () => {
     it('checks a map for a key', () => {
       expect(Query.hasK(qMap)(6)).toBeTrue();
     });
   });
-  describe('x_hasK', () => {
+  xdescribe('x_hasK', () => {
     it('checks a collection for a node', () => {
       expect(Query.x_hasK(qMap)(6)).toBeFalse();
     });
   });
-  describe('hasKV', () => {
+  xdescribe('hasKV', () => {
     it('checks a collection for an entry', () => {
       const first = [ ...qMap ][0];
 
       expect(Query.hasKV(qMap)(first)).toBeTrue();
     });
   });
-  describe('x_hasKV', () => {
+  xdescribe('x_hasKV', () => {
     it('checks a collection for an entry', () => {
       const first = [ ...qMap ][0];
 
