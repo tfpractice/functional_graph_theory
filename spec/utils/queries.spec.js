@@ -1,4 +1,4 @@
-fdescribe('Utils/Queries', function() {
+describe('Utils/Queries', function() {
 	beforeAll(function() {
 		console.log('\n.........U/Queries Spec.........');
 	});

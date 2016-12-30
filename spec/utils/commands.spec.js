@@ -1,4 +1,4 @@
-fdescribe('Utils/Commands', function() {
+describe('Utils/Commands', function() {
 	beforeAll(function() {
 		console.log('\n.........U/Commands Spec.........');
 	});

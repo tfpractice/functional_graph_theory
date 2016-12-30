@@ -1,4 +1,4 @@
-fdescribe('Graph', () => {
+describe('Graph', () => {
   beforeAll(() => {
     console.log('\n.........GraphR Spec.........');
   });

@@ -1,4 +1,4 @@
-fdescribe('Utils/Strings', function() {
+describe('Utils/Strings', function() {
 	beforeAll(function() {
 		console.log('\n.........U/Strings Spec.........');
 	});

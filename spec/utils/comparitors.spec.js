@@ -1,4 +1,4 @@
-fdescribe('Utils/Comparitors', function() {
+describe('Utils/Comparitors', function() {
 	beforeAll(function() {
 		console.log('\n.........U/Comparitors Spec.........');
 	});
