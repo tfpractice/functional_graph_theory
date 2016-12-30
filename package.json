@@ -4,10 +4,9 @@
   "description": "a Map based implementation of canonical graph data algorithms",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine",
+    "test": "nyc jasmine",
     "doc": "jsdoc -c config/conf.json app",
-    "coverage": "nyc yarn test",
-    "coveralls": "yarn test && cat coverage/lcov.info | coveralls",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",
     "dev": "node .",
     "lint": "./node_modules/.bin/eslint  --fix -c .eslintrc.js . --ext .js --ignore-path .gitignore --cache"
@@ -36,7 +35,6 @@
     "babel-plugin-module-resolver": "^2.4.0",
     "babel-preset-latest": "^6.16.0",
     "clean-webpack-plugin": "^0.1.14",
-    "coveralls": "^2.11.15",
     "eslint": "^3.12.2",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-import-resolver-babel-module": "^2.2.1",
@@ -48,6 +46,15 @@
     "jsdoc": "^3.4.2",
     "nyc": "^10.0.0",
     "webpack": "2.1.0-beta.28"
+  },
+  "nyc": {
+    "include": ["src/**"],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "check-coverage": true,
+    "show-process-tree": true
   },
   "dependencies": {
     "turmeric": "git://github.com/tfpractice/turmeric.git"
