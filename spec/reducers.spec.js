@@ -1,19 +1,27 @@
-fdescribe('Reducers', () => {
-  beforeAll(() => {
-    console.log('\n......... Reducers Spec.........');
-    RD = Reducers;
-  });
+import { addSrc, } from 'src/reducers';
 
-  beforeEach(() => {
-    rEdges = Graph.spawn();
-    evens = Graph.addNodes()(...eFilter(myNodes));
-    odds = Graph.addNodes()(...oNodes);
-  });
+const cSet = new Set([ 1, 2, 3, 4, ]);
+const cMap = new Map().set(8, 1).set(7, 2).set(6, 3).set(5, 4);
+const rMap = new Map();
+const cArr = [ 0, 11, 22, 33, 44, ];
 
-  describe('addSrc', () => {
-    it('adds entries to the Map via reduce', () => {
-      RD.addSrc(rEdges, n0);
-      expect(rEdges.has(n0)).toBeTrue();
+// console.log(Reducers);
+//
+// describe('Reducers', () => {
+//   beforeAll(() => {
+//     console.log('\n......... Reducers Spec.........');
+//   });
+//
+//   beforeEach(() => {
+//     // rEdges = Graph.spawn();
+//     // evens = Graph.addNodes()(...eFilter(myNodes));
+//     // odds = Graph.addNodes()(...oNodes);
+//   });
+
+  fdescribe('addSrc', () => {
+    it('adds a [key, Map] pair to a map', () => {
+      // const withString= addSrc(rMap, 'added');
+      expect(addSrc(rMap, 'added').has('added')).toBeTrue();
     });
   });
 

@@ -1,9 +1,10 @@
 import { collections, } from 'turmeric';
-const { default: spread, spreadK } = collections.spread;
-const { group: tuple, triple, flatTuple } = collections;
+const { default: { spread, spreadK }} = collections.spread;
+const { group: { tuple, triple, flatTuple }} = collections;
+const { reducers: { addKV: addMap }, } = collections;
 
 const Utils = require('./utils');
-const { Commands: { rmColl, addMap, }} = Utils;
+const { Commands: { rmColl, }} = Utils;
 
 // tuple, triple,
 // const { Commands: { spread, spreadK, flatTuple }} = Utils;
@@ -13,7 +14,10 @@ const get = m => k => new Map(m).get(k);
 
 const nMap = (edges = new Map) => src => new Map(get(edges)(src));
 const nabes = (edges = new Map) => src => spreadK(nMap(edges)(src));
-const addSrc = (edges = new Map, src) => addMap(edges, [ src, nMap(edges)(src) ]);
+const addSrc = (edges = new Map, src) => {
+  console.log(tuple(nabes(edges)(src))(src));
+  return addMap(edges, [ src, nMap(edges)(src) ]);
+};
 
 const addEdgeR = (edges = new Map, [ src, nb, wt = 0 ]) =>
   edges

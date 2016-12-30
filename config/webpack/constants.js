@@ -9,5 +9,6 @@ export const PATHS = {
   dist: resolve(ROOT_PATH, 'dist'),
   config: resolve(ROOT_PATH, 'config'),
   app:  resolve(ROOT_PATH, 'index'),
+  spec: resolve(ROOT_PATH, 'spec'),
 
 };

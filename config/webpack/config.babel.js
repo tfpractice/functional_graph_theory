@@ -11,7 +11,7 @@ export default (env = defEnvar) => ({
     resolve: {
       modules: [ 'node_modules', ],
       extensions: [ '.js', '.jsx', '.json', ],
-      alias: { src: PATHS.src, },
+      alias: { src: PATHS.src, spec: PATHS.spec },
     },
     output: {
       path:      PATHS.dist,

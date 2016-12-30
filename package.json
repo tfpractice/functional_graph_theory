@@ -4,7 +4,8 @@
   "description": "a Map based implementation of canonical graph data algorithms",
   "main": "index.js",
   "scripts": {
-    "test": "nyc jasmine",
+    "test:babel":"babel-node node_modules/.bin/jasmine",
+    "test": "nyc babel-node node_modules/.bin/jasmine",
     "doc": "jsdoc -c config/conf.json app",
     "coverage": "yarn test && nyc report --reporter=text-lcov | coveralls",
     "build": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",
