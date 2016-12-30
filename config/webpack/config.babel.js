@@ -15,17 +15,19 @@ export default (env = defEnvar) => ({
     },
     output: {
       path:      PATHS.dist,
-      filename:   '[name].bundle.js',
+      filename:   '[name].js',
       publicPath: '/',
+      library: 'functional_graph_theory',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
 
     },
     module: {
-      loaders: [
-        {
+      loaders: [{
           test:    /\.jsx?$/,
           exclude: /node_modules/,
           loaders: [ 'babel-loader', ],
-        }, ],
+      }],
     },
     devtool: env.prod ? 'source-map' : 'eval',
     plugins: [
@@ -33,11 +35,5 @@ export default (env = defEnvar) => ({
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"', }, }),
       new webpack.LoaderOptionsPlugin({ minimize: true, debug: true, }),
     ],
-    node: {
-      fs:  'empty',
-      net: 'mock',
-      tls: 'mock',
-      dns: 'mock',
-    },
 
 });
