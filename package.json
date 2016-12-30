@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jasmine",
     "doc": "jsdoc -c config/conf.json app",
+    "coverage":"nyc yarn test",
     "coveralls":"yarn test && cat coverage/lcov.info | coveralls",
     "build": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",
     "dev": "node .",
