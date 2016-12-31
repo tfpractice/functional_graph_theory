@@ -62,10 +62,19 @@
   },
   "jest": {
     "collectCoverage": "true",
-    "collectCoverageFrom": ["src/**"],
-    "moduleFileExtensions": ["js","jsx"],
-    "testPathDirs":["spec/"],
-    "unmockedModulePathPatterns": [ "jasmine-expect"]
+    "collectCoverageFrom": [
+      "src/**"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "testPathDirs": [
+      "spec/"
+    ],
+    "unmockedModulePathPatterns": [
+      "jasmine-expect"
+    ]
   },
   "dependencies": {
     "turmeric": "git://github.com/tfpractice/turmeric.git"
