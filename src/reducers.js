@@ -3,7 +3,7 @@
 // const { group: { tuple, triple, flatTuple }} = collections;
 // const { manipulate: { addMap }, } = collections;
 // const { accessors: { get }, } = collections;
- import turmeric from 'turmeric';
+ import * as turmeric from 'turmeric';
  console.log(turmeric);
 
 // // const { accessors: { get }, } = collections;
