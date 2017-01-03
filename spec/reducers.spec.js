@@ -6,8 +6,6 @@ const cMap = new Map().set(8, 1).set(7, 2).set(6, 3).set(5, 4);
 const rMap = new Map();
 const cArr = [ 0, 11, 22, 33, 44, ];
 
-console.log(addSrc);
-
 // console.log(Reducers);
 //
 // xdescribe('Reducers', () => {
@@ -23,9 +21,7 @@ console.log(addSrc);
 
 describe('addSrc', () => {
   it('adds a [key, Map] pair to a map', () => {
-    expect(addSrc()).toBeString();
-
-    // expect((addSrc(rMap, 'added')).has('added')).toBeTrue();
+    expect((addSrc(rMap, 'added')).has('added')).toBeTrue();
   });
 });
 
