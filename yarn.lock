@@ -4095,7 +4095,7 @@ tunnel-agent@~0.4.1:
 
 "turmeric@git://github.com/tfpractice/turmeric.git":
   version "1.0.0"
-  resolved "git://github.com/tfpractice/turmeric.git#b9a8c580dea5406f8dbdbaba4151ee4558e8ac6b"
+  resolved "git://github.com/tfpractice/turmeric.git#75f17b30aa15128efa54780cf94fe8218cca3f32"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
