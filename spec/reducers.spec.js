@@ -23,6 +23,8 @@ console.log(addSrc);
 
 describe('addSrc', () => {
   it('adds a [key, Map] pair to a map', () => {
+    expect(addSrc()).toBeString();
+
     // expect((addSrc(rMap, 'added')).has('added')).toBeTrue();
   });
 });
