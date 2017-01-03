@@ -3,7 +3,9 @@
 // const { group: { tuple, triple, flatTuple }} = collections;
 // const { manipulate: { addMap }, } = collections;
 // const { accessors: { get }, } = collections;
-//
+ import turmeric from 'turmeric';
+ console.log(turmeric);
+
 // // const { accessors: { get }, } = collections;
 //
 // const Utils = require('./utils');
@@ -16,7 +18,7 @@
 // const nMap = edges => src => new Map(get(edges)(src));
 // const nabes = (edges = new Map) => src => spreadK(nMap(edges)(src));
 
-export const addSrc = (edges, src) => 'i am s tring';
+ export const addSrc = (edges, src) => 'i am s tring';
 
 //
 // // addMap(edges)(src)(nMap(edges)(src));
