@@ -31,8 +31,10 @@ export const removeEdges = edges => src => (...nabes) =>
 export const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
   const rval = spread(altEdges).reduce(importEdgeBin, edges);
 
-  // console.log('rval', rval);
-  return spreadKV(altEdges).reduce(importEdgeBin, edges);
+  console.log('uniteMapedges(altEdges)', uniteMap(edges)(altEdges));
+
+  console.log('rval', new Map(rval));
+  return new Map(spreadKV(altEdges).reduce(importEdgeBin, edges));
 };
 
 export const addNeighbor = edges => src => (n, w = 0) =>
@@ -45,7 +47,6 @@ export const clearNeighbors = (edges = new Map) => (...nodes) =>
 //
 // export const clearEdges = (edges) => edges.clear;
 //
-// export const copy = spawn;
 export const mergeNeighbors = uniteMap;
 
 // module.exports = {
