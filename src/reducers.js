@@ -1,48 +1,25 @@
 import { collections, } from 'turmeric';
-const { spread, tuple, addMap, get, spreadK, flatTuple, removeMap } = collections;
+const { spread, tuple, addMap, get, spreadK, flatTuple, } = collections;
 const { uniteMap, mapDiff, mapUnion, diff } = collections;
+const { asMap, addBinMap, removeBinTuple, removeMap, removeBin } = collections;
 
-console.log(collections);
+const set = m => k => v => new Map(m).set(k, v);
 
-// const Utils = require('./utils');
-// const { Commands: { removeMap, }} = Utils;
-// const { Comparitors: { uniteMap, mapDiff, mapUnion, diff }} = Utils;
+export const nabeMap = edges => src => new Map(get(edges)(src));
+export const nabes = (edges = new Map) => src => spreadK(nabeMap(edges)(src));
+export const addSrc = (edges, src) => addMap(edges)(src)(nabeMap(edges)(src));
 
-// const get = m => k => new Map(m).get(k);
-// const set = m => k => v => new Map(m).set(k, v);
+export const addEdgeBin = (edges = new Map, [ src, nb, wt = 0 ]) =>
+   edges
+     .set(src, addMap(nabeMap(edges)(src))(nb)(wt))
+     .set(nb, addMap(nabeMap(edges)(nb))(src)(wt));
 
-const nMap = edges => src => new Map(get(edges)(src));
-const nabes = (edges = new Map) => src => spreadK(nMap(edges)(src));
+export const rmEdgeBin = (edges = new Map, [ src, nb, wt = 0 ]) => edges
+  .set(src, removeMap(edges.get(src))(nb))
+  .set(nb, removeMap(edges.get(src))(src));
 
-export const addSrc = (edges, src) => addMap(edges)(src)(nMap(edges)(src));
+export const clearNeighborsBin = (edges = new Map, src) =>
+  edges.set(src, new Map);
 
-//
-// //
-//
-// const addEdgeR = (edges = new Map, [ src, nb, wt = 0 ]) =>
-//   edges
-//     .set(src, addMap(edges.get(src), [ nb, wt ]))
-//     .set(nb, addMap(edges.get(nb), [ src, wt ]));
-//
-// const rmEdge = (edges = new Map, [ src, nb, wt = 0 ]) => edges
-//   .set(src, removeMap(edges.get(src), nb))
-//   .set(nb, removeMap(edges.get(src), src));
-//
-// const rmAdj = (edges = new Map, src) =>
-//   nabes(edges)(src).map(triple(0)(src)).reduce(rmEdge, edges);
-//
-// const rmNode = (edges = new Map, src) => removeMap(rmAdj(edges, src), src);
-//
-// const importEdge = (edges = new Map, [ src, nbs ] = [ , new Map ]) =>
-//   spread(mapDiff(nbs)(edges.get(src)))
-//     .map(flatTuple(src))
-//     .reduce(addEdgeR, addSrc(edges, src));
-//
-// module.exports = {
-//   addSrc,
-//   addEdgeR,
-//   rmEdge,
-//   importEdge,
-//   rmNode,
-//   rmAdj,
-// };
+export const importEdgeBin = (edges = new Map, [ src, nbs ] = [ , new Map ]) =>
+   spread(mapDiff(nbs)(edges.get(src))).map(flatTuple(src)).reduce(addEdgeBin, addSrc(edges, src));
