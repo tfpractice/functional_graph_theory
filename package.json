@@ -9,7 +9,6 @@
     "build:es6": "NODE_ENV=production rollup -c rollup.es6.config.js",
     "build:umd": "NODE_ENV=production rollup -c rollup.config.js",
     "build:dev": "rollup -c rollup.es6.config.js",
-    "preinstall": "yarn run build",
     "test": "jest",
     "doc": "jsdoc -c config/conf.json app",
     "coverage": "yarn test && cat coverage/lcov.info | coveralls",

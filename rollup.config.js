@@ -14,8 +14,6 @@ export default {
   moduleId: 'functional_graphs',
   moduleName: 'functional_graphs',
   sourceMap: true,
-
-  // globals: { turmeric: 'turmeric', },
   external: [ 'turmeric' ],
   plugins: [
     progress({ clearLine: false, }),
@@ -24,7 +22,6 @@ export default {
     commonjs(),
     babel(),
     visualizer({ filename: 'stats.html' }),
-
     replace({ ENV: JSON.stringify(process.env.NODE_ENV || 'development'), }),
     (process.env.NODE_ENV === 'production' && uglify({ beautify: true, })),
   ],
