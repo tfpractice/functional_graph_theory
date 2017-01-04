@@ -2,7 +2,9 @@
   "name": "functional_graph_theory",
   "version": "1.0.0",
   "description": "a Map based implementation of canonical graph data algorithms",
-  "main": "index.js",
+  "main": "dist/bundle.umd.js",
+  "module": "dist/bundle.es6.js",
+  "modules.root": "src",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "yarn run build:umd && yarn run build:es6",
