@@ -1,6 +1,7 @@
-import turmeric from 'turmeric';
-const { collections } = turmeric;
+import { collections, } from 'turmeric';
 
+// const { collections } = turmeric;
+// console.log(turmeric);
 console.log(collections);
 
 // import { collections, } from 'turmeric';

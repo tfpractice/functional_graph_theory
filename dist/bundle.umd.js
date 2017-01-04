@@ -443,19 +443,18 @@ var slicedToArray$1 = function () {
   };
 }();
 
-var collections = turmeric$1.collections;
-
-
-console.log(collections);
+// const { collections } = turmeric;
+// console.log(turmeric);
+console.log(index);
 
 // import { collections, } from 'turmeric';
-var spread = collections.spread;
-var addMap = collections.addMap;
-var get$$1 = collections.get;
-var spreadK = collections.spreadK;
-var flatTuple = collections.flatTuple;
-var mapDiff = collections.mapDiff;
-var removeMap = collections.removeMap;
+var spread = index.spread;
+var addMap = index.addMap;
+var get$$1 = index.get;
+var spreadK = index.spreadK;
+var flatTuple = index.flatTuple;
+var mapDiff = index.mapDiff;
+var removeMap = index.removeMap;
 
 
 var nabeMap = function nabeMap(edges) {
