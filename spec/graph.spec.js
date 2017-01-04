@@ -108,7 +108,7 @@ describe('operators', () => {
       expect(isAdjacent(clearNeighbors(nGraph)(n0, n1))(n0)(n1)).toBeFalse();
     });
   });
-  describe('mergeEdges', () => {
+  xdescribe('mergeEdges', () => {
     it('combines two Edge maps', () => {
       const connGraph = nodes(eGraph).map((e, id, arr) =>
             [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);

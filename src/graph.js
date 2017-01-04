@@ -33,7 +33,7 @@ export const mergeEdges = (edges = new Map) => (altEdges = new Map) => {
 
   console.log('uniteMapedges(altEdges)', uniteMap(edges)(altEdges));
 
-  console.log('rval', new Map(rval));
+  // console.log('rval', new Map(rval));
   return new Map(spreadKV(altEdges).reduce(importEdgeBin, edges));
 };
 

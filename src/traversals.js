@@ -1,16 +1,7 @@
-const Utils = require('./utils');
-
-// const { Commands: { spread, spreadK, spreadV, spreadKV, popFirst }} = Utils;
-// const { Commands: { tuple, flatTuple, triple, addMap, addSet }} = Utils;
-// const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV }} = Utils;
-const { Strings: { componentString }} = Utils;
-
-// const { Comparitors: { diff, mapDiff }} = Utils;
-
 import { collections, } from 'turmeric';
 import { addEdgeBin, clearNeighborsBin, importEdgeBin, rmEdgeBin, } from './reducers';
 const { addMap, get, addSet } = collections;
-const { lastK, hasK, x_hasK, hasKV, x_hasKV } = collections;
+const { lastK, hasK, xhasK, hasKV, xhasKV } = collections;
 const { uniteMap, mapDiff, mapUnion, diff } = collections;
 const { asMap, addBinMap, removeBinTuple, removeMap, removeBin } = collections;
 const { spread, spreadK, spreadKV, popFirst, tuple, flatTuple, triple, } = collections;
@@ -30,13 +21,13 @@ const lastL = path => ptL(lastVal(path));
 const nextW = path => (w = 0) => lastW(path) + w;
 const nextL = path => lastL(path) ? lastL(path) + 1 : 1;
 
-const nextPath = (path = new Map, [ n, w = 0 ]) =>
+const nextPath = (path = new Map, [n, w = 0]) =>
   path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
 
 const dfs = edges => (src) => {
-  const trav = (path = initPath(src), [ n, w ] = [ lastK(path), 0 ]) =>
-    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [ n, w ]));
-
+  const trav = (path = initPath(src), [n, w] = [lastK(path), 0]) =>
+    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
+  
   return trav(initPath(src));
 };
 
@@ -44,50 +35,55 @@ const bfs = edges => (iNode) => {
   const bVisit = bPath => (bQueue) => {
     const pred = popFirst(bQueue);
     const nextNabes = mapDiff(edges.get(pred))(bPath);
-
+    
     spread(nextNabes).reduce(nextPath, bPath);
     spreadK(nextNabes).reduce(addSet, bQueue);
     return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
   };
-
-  return bVisit(initPath(iNode))(new Set([ iNode ]));
+  
+  return bVisit(initPath(iNode))(new Set([iNode]));
 };
 
 const dijkstra = edges => (iNode) => {
   const reachables = bfs(edges)(iNode);
-  const inspectQueue = new Set([ iNode ]);
+  const inspectQueue = new Set([iNode]);
   const solutionSet = initPath(iNode);
-
+  
   while (inspectQueue.size > 0) {
     const pred = popFirst(inspectQueue);
     const nextNabes = edges.get(pred);
     let { length: dCount, weight: dWeight } = solutionSet.get(pred);
-
-    for (let [ nabe, nWeight ] of nextNabes) {
+    
+    console.log('nextNabes', nextNabes);
+    console.log('reachables', reachables);
+    for (let [nabe, nWeight] of nextNabes) {
       const prevMap = reachables.get(nabe);
+      
+      console.log('reachables', reachables);
+      console.log('prevMap', prevMap);
       let { length: rCount, weight: rWeight } = prevMap;
       const dMap = { pred, length: dCount + 1, weight: dWeight + nWeight, };
       const sMap = ((dWeight + nWeight) < rWeight) ? dMap : prevMap;
-
+      
       if (!solutionSet.has(nabe)) {
         inspectQueue.add(nabe);
         solutionSet.set(nabe, sMap);
       }
     }
   }
-
+  
   return solutionSet;
 };
 
 const components = (edges) => {
   const trav = (comp = new Set, node) =>
     diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
-
+  
   const visitMap = (mMap = new Map, node) =>
     diff(trav(new Set, node))(mMap)
       .map(tuple(trav(new Set, node)))
       .reduce(addMap, mMap);
-
+  
   return spreadK(edges).reduce(visitMap, new Map);
 };
 

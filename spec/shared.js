@@ -20,3 +20,5 @@ export const nEdgesR = edges => eFilter(Graph.nodes(edges))
   .reduce((prv, nxt, id) => Graph.addEdges(edges)(prv, id * 2)(nxt) && nxt);
 export const oEdgesR = edges => oFilter(Graph.nodes(edges))
   .reduce((prv, nxt, id) => Graph.addEdges(edges)(prv, id * 2)(nxt) && nxt);
+export const eNodes = eFilter(myNodes);
+export const oNodes = oFilter(myNodes);

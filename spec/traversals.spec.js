@@ -1,93 +1,103 @@
+import 'jasmine-expect';
 import { collections, } from 'turmeric';
 import * as Graph from 'src/graph';
 
 import { eNodes, firstTen, nEdgesR, oEdgesR, oNodes, } from './shared';
 import { eFilter, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
+import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
+import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from 'src/traversals';
 
-const altGraphR = Graph.fromElements(n4, n5, n6, n7, n8, n9);
+const { spread, spreadK } = collections;
+const altGraph = Graph.fromElements(n4, n5, n6, n7, n8, n9);
+const evenGraph = Graph.fromElements(...firstTen, ...eNodes);
+const oddGraph = Graph.fromElements(...firstTen, ...oNodes);
+const myGraph = Graph.fromElements(...firstTen);
+const addMyGraph = Graph.addEdges(myGraph);
+const addEGraph = Graph.addEdges(evenGraph);
+const addOGraph = Graph.addEdges(oddGraph);
 
-const evenGraphR = Graph.fromElements(...firstTen, ...eNodes);
+addMyGraph(n0, 2)(n1, n2);
+addMyGraph(n1, 4)(n4, n2);
+addMyGraph(n1, 6)(n6);
+addMyGraph(n2, 3)(n3);
+addMyGraph(n5, 4)(n4);
+addMyGraph(n3, 8)(n4);
+addMyGraph(n5, 7)(n6);
+addMyGraph(n7, 7)(n8);
+addMyGraph(n0, 11)(n1);
+addEGraph(n0, 22)(n9);
+addOGraph(n0, 11)(n1);
+addOGraph(n0, 22)(n9);
 
-// const oddGraphR = Graph.fromElements(...firstTen, ...oNodes);
+nEdgesR(evenGraph);
 
-// const myGraphR = Graph.fromElements(...firstTen)
-//   .addEdges(myGraphR)(n0, 2)(n1, n2)
-//   .addEdges(myGraphR)(n1, 4)(n4, n2)
-//   .addEdges(myGraphR)(n1, 6)(n6)
-//   .addEdges(myGraphR)(n2, 3)(n3)
-//   .addEdges(myGraphR)(n5, 4)(n4)
-//   .addEdges(myGraphR)(n3, 8)(n4)
-//   .addEdges(myGraphR)(n5, 7)(n6)
-//   .addEdges(myGraphR)(n7, 7)(n8)
-//   .addEdges(evenGraphR)(n0, 11)(n1)
-//   .addEdges(evenGraphR)(n0, 22)(n9);
+// console.log(nEdgesR(evenGraph));
 
-//
-// nEdgesR(evenGraphR);
-// Graph.addEdges(oddGraphR)(n0, 11)(n1);
-// Graph.addEdges(oddGraphR)(n0, 22)(n9);
-// oEdgesR(oddGraphR);
-// myEdgesR = Graph.spawn(myGraphR);
-// oddEdgesR = Graph.spawn(oddGraphR);
-// evenEdgesR = Graph.spawn(evenGraphR);
+oEdgesR(oddGraph);
 
-describe('test', () => {
-  it('is true', () => {
-    expect(true).toBeTruthy();
+// console.log(oEdgesR(oddGraph));
+
+const myEdgesR = Graph.spawn(myGraph);
+const oddEdgesR = Graph.spawn(oddGraph);
+const evenEdgesR = Graph.spawn(evenGraph);
+
+let odds = Graph.fromElements(...oFilter(myNodes));
+
+odds = spreadK(odds).reduce((g, e, id, arr) =>
+      Graph.addEdges(g)(e, id)(arr[((id + 1) % arr.length)]), odds);
+odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
+
+// const myDepth = dfs(odds)(n11);
+// const myBreadth = bfs(odds)(n11);
+
+const myBreadth = bfs(myGraph)(n0);
+const myDepth = dfs(myGraph)(n0);
+const myDijk = dijkstra(myGraph)(n0);
+
+console.log('myBreadth', myBreadth);
+console.log('myDepth', myDepth);
+
+const oDijk = dijkstra(odds)(n11);
+
+describe('Trav.dfs', () => {
+  it('returns a map of nodes and neighbors', () => {
+    expect(myDepth instanceof Map).toBeTrue();
+    expect((myDepth).has(n3)).toBeTrue();
   });
 });
 
-// xdescribe('Traversal functions', () => {
-//   beforeAll(() => {
-//     console.log('\n.........Traversals Spec.........');
-//   });
-//
-//   beforeEach(() => {
-//     odds = Graph.fromElements(...oFilter(myNodes));
-//     [ ...odds.keys() ].reduce((g, e, id, arr) =>
-//       Graph.addEdges(g)(e, id)(arr[((id + 1) % arr.length)]
-//
-//         // arr[((id + 2) % arr.length)]
-//       ), odds);
-//     Graph.addEdges(odds)(n11, 0)(n1, n5);
-//     o11D = Trav.dfs(odds)(n11);
-//     o11B = Trav.bfs(odds)(n11);
-//     oDijk = Trav.dijkstra(odds)(n11);
-//   });
-//
-//   xdescribe('Trav.dfs', () => {
-//     it('returns a map of nodes and neighbors', () => {
-//       expect(o11D instanceof Map).toBeTrue();
-//       expect((o11D).has(n15)).toBeTrue();
-//     });
-//   });
-//   xdescribe('bfs', () => {
-//     it('returns a map of nodes and neighbors', () => {
-//       expect(o11B instanceof Map).toBeTrue();
-//       expect((o11B).has(n15)).toBeTrue();
-//       expect(Graph.neighbors(odds)(n11)).not.toContain(n15);
-//     });
-//   });
-//   xdescribe('dijkstra', () => {
-//     it('retuns the shortest path from a node to its neighbors', () => {
-//       expect((Trav.dijkstra(odds)(n11) instanceof Map)).toBeTrue();
-//     });
-//   });
-//   xdescribe('components', () => {
-//     it('retuns a map of nodes and paths', () => {
-//       expect((Trav.components(myGraphR) instanceof Map)).toBeTrue();
-//     });
-//   });
-//   xdescribe('componentSet', () => {
-//     it('returns a set of all the components', () => {
-//       expect(Trav.componentSet(odds) instanceof Set).toBeTrue();
-//       expect(Trav.componentSet(odds).size).toBe(1);
-//     });
-//   });
-//   xdescribe('pathBetween', () => {
-//     it('returns a true if nodes are in same component', () => {
-//       expect(Trav.pathBetween(myGraphR)(n7)(n8)).toBeTrue();
-//     });
-//   });
+describe('bfs', () => {
+  it('returns a map of nodes and neighbors', () => {
+    expect(myBreadth instanceof Map).toBeTrue();
+    expect(myBreadth.has(n2)).toBeTrue();
+    expect(Graph.neighbors(myGraph)(n2)).not.toContain(n5);
+  });
+});
+
+describe('dijkstra', () => {
+  it('retuns the shortest path from a node to its neighbors', () => {
+    expect((dijkstra(odds)(n11) instanceof Map)).toBeTrue();
+  });
+});
+
+describe('components', () => {
+  it('retuns a map of nodes and paths', () => {
+    expect((components(myGraph) instanceof Map)).toBeTrue();
+  });
+});
+
+describe('componentSet', () => {
+  it('returns a set of all the components', () => {
+    expect(componentSet(odds) instanceof Set).toBeTrue();
+    expect(componentSet(odds).size).toBe(1);
+  });
+});
+
+describe('pathBetween', () => {
+  it('returns a true if nodes are in same component', () => {
+    expect(pathBetween(myGraph)(n7)(n8)).toBeTrue();
+  });
+});
+
 // });
