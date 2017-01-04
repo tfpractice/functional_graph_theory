@@ -1,15 +1,10 @@
 import { collections, } from 'turmeric';
 
-// const { collections } = turmeric;
-// console.log(turmeric);
-console.log(collections);
-
-// import { collections, } from 'turmeric';
 const { spread, tuple, addMap, get, spreadK, flatTuple, } = collections;
 const { uniteMap, mapDiff, mapUnion, diff } = collections;
 const { asMap, addBinMap, removeBinTuple, removeMap, removeBin } = collections;
 
-const set = m => k => v => new Map(m).set(k, v);
+export const set = m => k => v => new Map(m).set(k, v);
 
 export const nabeMap = edges => src => new Map(get(edges)(src));
 export const nabes = (edges = new Map) => src => spreadK(nabeMap(edges)(src));
