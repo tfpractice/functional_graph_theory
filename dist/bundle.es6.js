@@ -195,7 +195,7 @@ var mergeEdges = function mergeEdges() {
 
     console.log('uniteMapedges(altEdges)', uniteMap$1(edges)(altEdges));
 
-    console.log('rval', new Map(rval));
+    // console.log('rval', new Map(rval));
     return new Map(spreadKV(altEdges).reduce(importEdgeBin, edges));
   };
 };
@@ -277,10 +277,6 @@ var graph = Object.freeze({
 });
 
 var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var Utils = require('./utils');
-
-// const { Comparitors: { diff, mapDiff }} = Utils;
 
 var addMap$2 = collections.addMap;
 var addSet = collections.addSet;
@@ -404,18 +400,22 @@ var dijkstra = function dijkstra(edges) {
           dCount = _solutionSet$get.length,
           dWeight = _solutionSet$get.weight;
 
+      console.log('nextNabes', nextNabes);
+      console.log('reachables', reachables);
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-
         for (var _iterator = nextNabes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var _step$value = _slicedToArray$2(_step.value, 2),
               nabe = _step$value[0],
               nWeight = _step$value[1];
 
           var prevMap = reachables.get(nabe);
+
+          console.log('reachables', reachables);
+          console.log('prevMap', prevMap);
           var rCount = prevMap.length,
               rWeight = prevMap.weight;
 
@@ -474,24 +474,20 @@ var pathBetween = function pathBetween(edges) {
   };
 };
 
-module.exports = {
-  dfs: dfs,
-  bfs: bfs,
-  dijkstra: dijkstra,
-  components: components,
-  componentSet: componentSet,
-  pathBetween: pathBetween
-};
-
 var traversals = Object.freeze({
-
+	dfs: dfs,
+	bfs: bfs,
+	dijkstra: dijkstra,
+	components: components,
+	componentSet: componentSet,
+	pathBetween: pathBetween
 });
 
 // exports.Graph = require('./graph');
 
 // exports.Reducers = require('./reducers');
-exports.Utils = require('./utils');
-exports.AsyncOps = require('./async_operators');
+// exports.Utils = require('./utils');
+// exports.AsyncOps = require('./async_operators');
 
 // exports.Traversals = require('./traversals');
 

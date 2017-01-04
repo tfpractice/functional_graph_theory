@@ -32,11 +32,7 @@ addOGraph(n0, 22)(n9);
 
 nEdgesR(evenGraph);
 
-// console.log(nEdgesR(evenGraph));
-
 oEdgesR(oddGraph);
-
-// console.log(oEdgesR(oddGraph));
 
 const myEdgesR = Graph.spawn(myGraph);
 const oddEdgesR = Graph.spawn(oddGraph);
@@ -48,17 +44,15 @@ odds = spreadK(odds).reduce((g, e, id, arr) =>
       Graph.addEdges(g)(e, id)(arr[((id + 1) % arr.length)]), odds);
 odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
 
-// const myDepth = dfs(odds)(n11);
-// const myBreadth = bfs(odds)(n11);
-
 const myBreadth = bfs(myGraph)(n0);
-const myDepth = dfs(myGraph)(n0);
-const myDijk = dijkstra(myGraph)(n0);
 
 console.log('myBreadth', myBreadth);
-console.log('myDepth', myDepth);
 
-const oDijk = dijkstra(odds)(n11);
+const myDepth = dfs(myGraph)(n0);
+
+// const myDijk = dijkstra(myGraph)(n0);
+
+// console.log('myDepth', myDepth);
 
 describe('Trav.dfs', () => {
   it('returns a map of nodes and neighbors', () => {
@@ -69,6 +63,7 @@ describe('Trav.dfs', () => {
 
 describe('bfs', () => {
   it('returns a map of nodes and neighbors', () => {
+    // console.log('myBreadth', myBreadth);
     expect(myBreadth instanceof Map).toBeTrue();
     expect(myBreadth.has(n2)).toBeTrue();
     expect(Graph.neighbors(myGraph)(n2)).not.toContain(n5);
@@ -77,7 +72,9 @@ describe('bfs', () => {
 
 describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
-    expect((dijkstra(odds)(n11) instanceof Map)).toBeTrue();
+    const myDijk = dijkstra(myGraph)(n0);
+
+    console.log('myDepth', myDepth);
   });
 });
 
@@ -99,5 +96,3 @@ describe('pathBetween', () => {
     expect(pathBetween(myGraph)(n7)(n8)).toBeTrue();
   });
 });
-
-// });
