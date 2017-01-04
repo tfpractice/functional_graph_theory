@@ -85,15 +85,6 @@ describe('operators', () => {
     });
   });
 
-//     describe('mergeNeighbors', () => {
-//       it('combines two neighbor maps', () => {
-//         const rNabes = addEdges(rEdges)(n0, 0)(n1, n2, n3).get(n0);
-//         const eNabes = addEdges(eGraph)(n2)(n5, n7, n9).get(n2);
-//
-//         mergeNeighbors(eNabes)(rNabes);
-//         expect(adj(eGraph)(n2).has(n5)).toBeTrue();
-//       });
-//     });
   describe('removeEdges', () => {
     it('removes an edge entry', () => {
       const nabes = addEdges(myGraph)(n0, 1)(n1, n2, n3);
@@ -113,12 +104,7 @@ describe('operators', () => {
       const connGraph = nodes(eGraph).map((e, id, arr) =>
             [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
 
-      // console.log('connGraph', connGraph);
-        // .reduce(addEdgeBin, eGraph);
       const mGraph = mergeEdges(connGraph)(oGraph);
-
-      // console.log('mGraph', nodes(mGraph));
-      // console.log('eGraph', eGraph);
 
       expect(mGraph.has(n7)).toBeTrue();
     });

@@ -46,13 +46,7 @@ odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
 
 const myBreadth = bfs(myGraph)(n0);
 
-console.log('myBreadth', myBreadth);
-
 const myDepth = dfs(myGraph)(n0);
-
-// const myDijk = dijkstra(myGraph)(n0);
-
-// console.log('myDepth', myDepth);
 
 describe('Trav.dfs', () => {
   it('returns a map of nodes and neighbors', () => {
@@ -63,7 +57,6 @@ describe('Trav.dfs', () => {
 
 describe('bfs', () => {
   it('returns a map of nodes and neighbors', () => {
-    // console.log('myBreadth', myBreadth);
     expect(myBreadth instanceof Map).toBeTrue();
     expect(myBreadth.has(n2)).toBeTrue();
     expect(Graph.neighbors(myGraph)(n2)).not.toContain(n5);
@@ -73,8 +66,6 @@ describe('bfs', () => {
 describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
     const myDijk = dijkstra(myGraph)(n0);
-
-    console.log('myDepth', myDepth);
   });
 });
 

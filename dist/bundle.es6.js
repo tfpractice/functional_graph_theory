@@ -91,7 +91,6 @@ var reducers = Object.freeze({
 var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var spread$1 = collections.spread;
-var spreadKV = collections.spreadKV;
 var triple = collections.triple;
 var spreadK$1 = collections.spreadK;
 var hasK = collections.hasK;
@@ -120,19 +119,16 @@ var adj = function adj(edges) {
     return edges.get(src) || new Map();
   };
 };
-
 var neighbors = function neighbors(edges) {
   return function (src) {
     return nodes(adj(edges)(src));
   };
 };
-
 var contains = function contains(edges) {
   return function (node) {
     return hasK(edges)(node);
   };
 };
-
 var isAdjacent = function isAdjacent(edges) {
   return function (src) {
     return function (nabe) {
@@ -190,13 +186,7 @@ var mergeEdges = function mergeEdges() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function () {
     var altEdges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-
-    var rval = spread$1(altEdges).reduce(importEdgeBin, edges);
-
-    console.log('uniteMapedges(altEdges)', uniteMap$1(edges)(altEdges));
-
-    // console.log('rval', new Map(rval));
-    return new Map(spreadKV(altEdges).reduce(importEdgeBin, edges));
+    return new Map(spread$1(altEdges).reduce(importEdgeBin, edges));
   };
 };
 
@@ -208,6 +198,7 @@ var addNeighbor = function addNeighbor(edges) {
     };
   };
 };
+
 var addEntry = function addEntry(nabes$$1) {
   return function (_ref) {
     var _ref2 = _slicedToArray$1(_ref, 2),
@@ -222,39 +213,15 @@ var addEntry = function addEntry(nabes$$1) {
 var clearNeighbors = function clearNeighbors() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function () {
-    for (var _len6 = arguments.length, nodes = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      nodes[_key6] = arguments[_key6];
+    for (var _len6 = arguments.length, srcs = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      srcs[_key6] = arguments[_key6];
     }
 
-    return nodes.reduce(clearNeighborsBin, edges);
+    return srcs.reduce(clearNeighborsBin, edges);
   };
 };
 
-//
-// export const clearEdges = (edges) => edges.clear;
-//
 var mergeNeighbors = uniteMap$1;
-
-// module.exports = {
-// 	spawn,
-// 	contains,
-// 	nodes,
-// 	adj,
-// 	copy,
-// 	isAdjacent,
-// 	addNodes,
-// 	removeEdges,
-// 	removeNodes,
-// 	neighbors,
-// 	addNeighbor,
-// 	addEdges,
-// 	addEdgeR,
-// 	addEntry,
-// 	clearNeighbors,
-// 	mergeNeighbors,
-// 	mergeEdges,
-// 	fromElements,
-// };
 
 var graph = Object.freeze({
 	spawn: spawn,
@@ -278,14 +245,15 @@ var graph = Object.freeze({
 
 var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var addMap$2 = collections.addMap;
 var addSet = collections.addSet;
 var lastK = collections.lastK;
 var hasK$1 = collections.hasK;
 var mapDiff$2 = collections.mapDiff;
 var diff$2 = collections.diff;
+var addBinMap$2 = collections.addBinMap;
 var spread$2 = collections.spread;
 var spreadK$2 = collections.spreadK;
+var spreadV = collections.spreadV;
 var popFirst = collections.popFirst;
 var tuple$2 = collections.tuple;
 
@@ -301,7 +269,7 @@ var pathVal = function pathVal() {
   };
 };
 
-var addSrc$1 = function addSrc$$1() {
+var addSrc$1 = function addSrc() {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function (src) {
     return path.set(src, { pred: lastK(path), weight: 0, length: 1 });
@@ -400,22 +368,18 @@ var dijkstra = function dijkstra(edges) {
           dCount = _solutionSet$get.length,
           dWeight = _solutionSet$get.weight;
 
-      console.log('nextNabes', nextNabes);
-      console.log('reachables', reachables);
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
+
         for (var _iterator = nextNabes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var _step$value = _slicedToArray$2(_step.value, 2),
               nabe = _step$value[0],
               nWeight = _step$value[1];
 
-          var prevMap = reachables.get(nabe);
-
-          console.log('reachables', reachables);
-          console.log('prevMap', prevMap);
+          var prevMap = reachables.get(nabe) || { length: 1, weight: 0 };
           var rCount = prevMap.length,
               rWeight = prevMap.weight;
 
@@ -453,11 +417,10 @@ var components = function components(edges) {
     var node = arguments[1];
     return diff$2(spreadK$2(edges.get(node)))(comp).reduce(trav, comp.add(node));
   };
-
   var visitMap = function visitMap() {
     var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
     var node = arguments[1];
-    return diff$2(trav(new Set(), node))(mMap).map(tuple$2(trav(new Set(), node))).reduce(addMap$2, mMap);
+    return diff$2(trav(new Set(), node))(mMap).map(tuple$2(trav(new Set(), node))).reduce(addBinMap$2, mMap);
   };
 
   return spreadK$2(edges).reduce(visitMap, new Map());
@@ -496,9 +459,6 @@ var src$1 = Object.freeze({
 	Reducers: reducers,
 	Traversals: traversals
 });
-
-// require('babel-register');
-// module.exports = require('./src');
 
 export default src$1;
 //# sourceMappingURL=bundle.es6.js.map

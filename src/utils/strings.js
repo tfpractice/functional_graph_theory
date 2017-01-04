@@ -1,35 +1,22 @@
-const { spread, spreadK, spreadV, spreadKV, } = require('./commands');
-const { last } = require('./queries');
+import { collections, } from 'turmeric';
+const { spread, spreadK, spreadV, spreadKV, last } = collections;
 
-const redStr = (str = ' ', val, id, coll) =>
-	val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
-const collString = (coll) => spread(coll).reduce(redStr, '');
-const kString = (coll) => spreadK(coll).reduce(redStr, '');
-const vString = (coll) => spreadV(coll).reduce(redStr, '');
-const kvString = (coll) => spreadKV(coll).reduce(redStr, '');
+export const redStr = (str = ' ', val, id, coll) =>
+  val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
+export const collString = coll => spread(coll).reduce(redStr, '');
+export const kString = coll => spreadK(coll).reduce(redStr, '');
+export const vString = coll => spreadV(coll).reduce(redStr, '');
+export const kvString = coll => spreadKV(coll).reduce(redStr, '');
 
-const pathString = (path) => ` { ${spreadK(path).join(' => ')} }`;
-const edgeString = ([src, nbs]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
+export const pathString = path => ` { ${spreadK(path).join(' => ')} }`;
+export const edgeString = ([ src, nbs ]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
 
-const componentString = ([node, set]) =>
-	`{ component ${src} >> [ ${kString(nbs)} ] } `;
+export const componentString = ([ node, nbs ]) =>
+  `{ component ${node} >> [ ${kString(nbs)} ] } `;
 
-const graphString = (edges) =>
-	spreadKV(edges).reduce((str, [node, nabes], id) =>
-		str + edgeString([node, nabes]),
-		'Showing Edges\n');
+export const graphString = edges =>
+  spreadKV(edges).reduce((str, [ node, nabes ], id) =>
+    str + edgeString([ node, nabes ]),
+    'Showing Edges\n');
 
-const showGraph = ({ edges }) => (graphString(edges));
-
-module.exports = {
-	redStr,
-	collString,
-	kString,
-	vString,
-	kvString,
-	pathString,
-	edgeString,
-	componentString,
-	graphString,
-	showGraph,
-};
+export const showGraph = ({ edges }) => (graphString(edges));
