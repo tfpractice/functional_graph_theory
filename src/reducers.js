@@ -1,4 +1,9 @@
-import { collections, } from 'turmeric';
+import turmeric from 'turmeric';
+const { collections } = turmeric;
+
+console.log(collections);
+
+// import { collections, } from 'turmeric';
 const { spread, tuple, addMap, get, spreadK, flatTuple, } = collections;
 const { uniteMap, mapDiff, mapUnion, diff } = collections;
 const { asMap, addBinMap, removeBinTuple, removeMap, removeBin } = collections;
