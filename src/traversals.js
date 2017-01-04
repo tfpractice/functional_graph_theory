@@ -1,9 +1,19 @@
 const Utils = require('./utils');
-const { Commands: { spread, spreadK, spreadV, spreadKV, popFirst }} = Utils;
-const { Commands: { tuple, flatTuple, triple, addMap, addSet }} = Utils;
-const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV }} = Utils;
+
+// const { Commands: { spread, spreadK, spreadV, spreadKV, popFirst }} = Utils;
+// const { Commands: { tuple, flatTuple, triple, addMap, addSet }} = Utils;
+// const { Queries: { lastK, hasK, x_hasK, hasKV, x_hasKV }} = Utils;
 const { Strings: { componentString }} = Utils;
-const { Comparitors: { diff, mapDiff }} = Utils;
+
+// const { Comparitors: { diff, mapDiff }} = Utils;
+
+import { collections, } from 'turmeric';
+import { addEdgeBin, clearNeighborsBin, importEdgeBin, rmEdgeBin, } from './reducers';
+const { addMap, get, addSet } = collections;
+const { lastK, hasK, x_hasK, hasKV, x_hasKV } = collections;
+const { uniteMap, mapDiff, mapUnion, diff } = collections;
+const { asMap, addBinMap, removeBinTuple, removeMap, removeBin } = collections;
+const { spread, spreadK, spreadKV, popFirst, tuple, flatTuple, triple, } = collections;
 
 const pathVal = (pred = null) => (length = 1) => (weight = 0) =>
   ({ pred, length, weight });

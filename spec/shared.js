@@ -1,3 +1,5 @@
+import * as Graph from 'src/graph';
+
 export const Node = (label = '', data = {}) =>
   ({ label, data, toString: () => label, });
 

@@ -11,78 +11,64 @@ const myGraph = fromElements(...myNodes);
 const eGraph = fromElements(eFilter(myNodes));
 const oGraph = fromElements(oFilter(myNodes));
 
-// console.log('myGraph', eGraph);
-
 describe('spawn(nabes)', () => {
   it('returns a new Map', () => {
     expect(spawn() instanceof Map).toBeTrue();
   });
 });
-
 describe('fromElements', () => {
   it('returns a new edgelist with the new nodes appended', () => {
     expect(fromElements(...myNodes) instanceof Map).toBeTrue();
   });
 });
-
 describe('accessors', () => {
   describe('nodes', () => {
     it('returns an array of the nodes in the edgelist', () => {
       expect(nodes(myGraph)).toBeArray();
     });
   });
-
   describe('copy', () => {
     it('returns a Map of nodes and neighbor', () => {
       expect(copy(myGraph) instanceof Map).toBeTrue();
     });
   });
-
   describe('adj', () => {
     it('returns a map of all the neighboring nodes and weights', () => {
       expect(adj(eGraph)(n2) instanceof Map).toBeTrue();
     });
   });
-
   describe('neighbors(edge)(node)', () => {
     it('returns a map entry of that nodes neighbors ', () => {
       expect(neighbors(myGraph)(n0) instanceof Array).toBeTrue();
     });
   });
-
   describe('contains', () => {
     it('checks if a graph has a node', () => {
       expect(contains(myGraph)(n4)).toBeTrue();
     });
   });
 });
-
 describe('operators', () => {
   describe('isAdjacent(graph)(n0)(n1)', () => {
     it('checks for the presence of a node in the graph', () => {
       expect(isAdjacent(myGraph)(n0)(n6)).toBeFalse();
     });
   });
-
   describe('addNodes', () => {
     it('adds an entry to the edges Map', () => {
       expect(addNodes(eGraph)(n3).has(n3)).toBeTrue();
     });
   });
-
   describe('removeNodes', () => {
     it('removes the nodes from the edges', () => {
       expect((removeNodes(myGraph)(n0, n2)).has(n0)).toBeFalse();
     });
   });
-
   describe('addEdges', () => {
     it('adds an neighbor entry for each node', () => {
       expect((addEdges(spawn())(n0)(n1, n2, n3)).has(n2)).toBeTrue();
     });
   });
-
-//
   describe('addEntry', () => {
     it('appends an [node, weight] pair to the neighbrs', () => {
       const nabes = addNeighbor(myGraph)(n0)(n1, 3);
@@ -115,7 +101,6 @@ describe('operators', () => {
       expect(isAdjacent(removeEdges(nabes)(n0)(n1))(n0)(n1)).toBeFalse();
     });
   });
-
   describe('clearNeighbors', () => {
     it('removes all the neighbors from the source nodes', () => {
       const nGraph = addEdges(myGraph)(n0, 1)(n1, n2, n3);
@@ -123,20 +108,18 @@ describe('operators', () => {
       expect(isAdjacent(clearNeighbors(nGraph)(n0, n1))(n0)(n1)).toBeFalse();
     });
   });
-
   describe('mergeEdges', () => {
     it('combines two Edge maps', () => {
       const connGraph = nodes(eGraph).map((e, id, arr) =>
             [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
 
       // console.log('connGraph', connGraph);
-
         // .reduce(addEdgeBin, eGraph);
       const mGraph = mergeEdges(connGraph)(oGraph);
 
       // console.log('mGraph', nodes(mGraph));
-
       // console.log('eGraph', eGraph);
+
       expect(mGraph.has(n7)).toBeTrue();
     });
   });
