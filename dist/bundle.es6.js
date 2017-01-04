@@ -1,53 +1,17 @@
 import { collections } from 'turmeric';
 
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var spread = collections.spread;
 var addMap = collections.addMap;
-var get$$1 = collections.get;
+var get = collections.get;
 var spreadK = collections.spreadK;
 var flatTuple = collections.flatTuple;
 var mapDiff = collections.mapDiff;
 var removeMap = collections.removeMap;
 
 
-var set$$1 = function set$$1(m) {
+var set = function set(m) {
   return function (k) {
     return function (v) {
       return new Map(m).set(k, v);
@@ -57,7 +21,7 @@ var set$$1 = function set$$1(m) {
 
 var nabeMap = function nabeMap(edges) {
   return function (src) {
-    return new Map(get$$1(edges)(src));
+    return new Map(get(edges)(src));
   };
 };
 var nabes = function nabes() {
@@ -74,7 +38,7 @@ var addEdgeBin = function addEdgeBin() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref = arguments[1];
 
-  var _ref2 = slicedToArray(_ref, 3),
+  var _ref2 = _slicedToArray(_ref, 3),
       src = _ref2[0],
       nb = _ref2[1],
       _ref2$ = _ref2[2],
@@ -87,7 +51,7 @@ var rmEdgeBin = function rmEdgeBin() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref3 = arguments[1];
 
-  var _ref4 = slicedToArray(_ref3, 3),
+  var _ref4 = _slicedToArray(_ref3, 3),
       src = _ref4[0],
       nb = _ref4[1],
       _ref4$ = _ref4[2],
@@ -106,17 +70,15 @@ var importEdgeBin = function importEdgeBin() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
 
   var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [, new Map()],
-      _ref6 = slicedToArray(_ref5, 2),
+      _ref6 = _slicedToArray(_ref5, 2),
       src = _ref6[0],
       nbs = _ref6[1];
 
   return spread(mapDiff(nbs)(edges.get(src))).map(flatTuple(src)).reduce(addEdgeBin, addSrc(edges, src));
 };
 
-
-
 var reducers = Object.freeze({
-	set: set$$1,
+	set: set,
 	nabeMap: nabeMap,
 	nabes: nabes,
 	addSrc: addSrc,
