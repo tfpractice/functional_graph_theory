@@ -1,14 +1,14 @@
-// export const myNodes = Array(20).fill('node').map((el, id) =>
-//   Node(`${el}::${id}`, { position: id })
-// );
-// export const altNodes = Array(20).fill('altnode').map((el, id) =>
-//   Node(`${el}::${id}`, { position: id })
-// );
-// export const firstTen = myNodes.slice(0, 10);
-// export const lastTen = myNodes.slice(-10);
-// export const [ n0, n1, n2, n3, n4, n5, n6, n7, n8, n9 ] = firstTen;
-// export const [ n10, n11, n12, n13, n14, n15, n16, n17, n18, n19 ] = lastTen;
-//
+export const myNodes = Array(20).fill('node').map((el, id) =>
+  Node(`${el}::${id}`, { position: id })
+);
+export const altNodes = Array(20).fill('altnode').map((el, id) =>
+  Node(`${el}::${id}`, { position: id })
+);
+export const firstTen = myNodes.slice(0, 10);
+export const lastTen = myNodes.slice(-10);
+export const [ n0, n1, n2, n3, n4, n5, n6, n7, n8, n9 ] = firstTen;
+export const [ n10, n11, n12, n13, n14, n15, n16, n17, n18, n19 ] = lastTen;
+
 // // beforeAll(() => {
 // //   require('jasmine-expect');
 // //   App = require('../../index');
