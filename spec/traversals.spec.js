@@ -9,10 +9,6 @@ import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from 'src/
 
 const { spread, spreadK } = collections;
 
-// const altGraph = Graph.fromElements(n4, n5, n6, n7, n8, n9);
-// const evenGraph = Graph.fromElements(...firstTen, ...eNodes);
-// const oddGraph = Graph.fromElements(...firstTen, ...oNodes);
-
 const myGraph = [ Graph.addEdges()(n0, 2)(n1, n2),
   Graph.addEdges()(n1, 4)(n4, n2),
   Graph.addEdges()(n1, 6)(n6),
@@ -23,17 +19,6 @@ const myGraph = [ Graph.addEdges()(n0, 2)(n1, n2),
   Graph.addEdges()(n7, 7)(n8),
   Graph.addEdges()(n0, 11)(n1), ].reduce(Graph.mergeEdgesBin, Graph.fromElements(...firstTen));
 
-// const addEGraph = Graph.addEdges(evenGraph);
-// const addOGraph = Graph.addEdges(oddGraph);
-
-// addEGraph(n0, 22)(n9);
-// addOGraph(n0, 11)(n1);
-// addOGraph(n0, 22)(n9);
-console.log('myGraph', myGraph);
-
-// nEdgesR(evenGraph);
-// oEdgesR(oddGraph);
-
 let odds = Graph.fromElements(...oFilter(myNodes));
 
 odds = spreadK(odds).reduce((g, e, id, arr) =>
@@ -42,11 +27,7 @@ odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
 
 const myBreadth = bfs(myGraph)(n0);
 
-console.log('myBreadth', myBreadth);
-
 const myDepth = dfs(myGraph)(n0);
-
-console.log('myDepth', myDepth);
 
 describe('dfs', () => {
   it('returns a map of nodes and neighbors', () => {
@@ -67,7 +48,7 @@ describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
     const myDijk = dijkstra(myGraph)(n0);
 
-    console.log('myDijk', myDijk);
+    // console.log('myDijk', myDijk);
   });
 });
 

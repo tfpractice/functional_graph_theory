@@ -4,7 +4,7 @@ import { eFilter, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'src/graph';
 import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'src/graph';
-import { addEntry, addNeighbor, clearNeighbors, mergeEdges, removeEdges, } from 'src/graph';
+import { addEntry, addNeighbor, mergeEdges, removeEdges, resetNodes, } from 'src/graph';
 import { addEdgeBin, } from 'src/reducers';
 
 const { tuple } = collections;
@@ -93,11 +93,11 @@ describe('operators', () => {
       expect(isAdjacent(removeEdges(nabes)(n0)(n1))(n0)(n1)).toBeFalse();
     });
   });
-  describe('clearNeighbors', () => {
+  describe('resetNodes', () => {
     it('removes all the neighbors from the source nodes', () => {
       const nGraph = addEdges(myGraph)(n0, 1)(n1, n2, n3);
 
-      expect(isAdjacent(clearNeighbors(nGraph)(n0, n1))(n0)(n1)).toBeFalse();
+      expect(isAdjacent(resetNodes(nGraph)(n0, n1))(n0)(n1)).toBeFalse();
     });
   });
   describe('mergeEdges', () => {
