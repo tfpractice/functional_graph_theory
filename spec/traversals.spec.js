@@ -12,24 +12,24 @@ const { spread, spreadK } = collections;
 const altGraph = Graph.fromElements(n4, n5, n6, n7, n8, n9);
 const evenGraph = Graph.fromElements(...firstTen, ...eNodes);
 const oddGraph = Graph.fromElements(...firstTen, ...oNodes);
-const myGraph = Graph.fromElements(...firstTen);
+let myGraph = Graph.fromElements(...firstTen);
 const addMyGraph = Graph.addEdges(myGraph);
 const addEGraph = Graph.addEdges(evenGraph);
 const addOGraph = Graph.addEdges(oddGraph);
 
-addMyGraph(n0, 2)(n1, n2);
-addMyGraph(n1, 4)(n4, n2);
-addMyGraph(n1, 6)(n6);
-addMyGraph(n2, 3)(n3);
-addMyGraph(n5, 4)(n4);
-addMyGraph(n3, 8)(n4);
-addMyGraph(n5, 7)(n6);
-addMyGraph(n7, 7)(n8);
-addMyGraph(n0, 11)(n1);
+myGraph = Graph.addEdges(myGraph)(n0, 2)(n1, n2),
+myGraph = Graph.addEdges(myGraph)(n1, 4)(n4, n2),
+myGraph = Graph.addEdges(myGraph)(n1, 6)(n6),
+myGraph = Graph.addEdges(myGraph)(n2, 3)(n3),
+myGraph = Graph.addEdges(myGraph)(n5, 4)(n4),
+myGraph = Graph.addEdges(myGraph)(n3, 8)(n4),
+myGraph = Graph.addEdges(myGraph)(n5, 7)(n6),
+myGraph = Graph.addEdges(myGraph)(n7, 7)(n8),
+myGraph = Graph.addEdges(myGraph)(n0, 11)(n1),
 addEGraph(n0, 22)(n9);
 addOGraph(n0, 11)(n1);
 addOGraph(n0, 22)(n9);
-
+console.log('myGraph', myGraph);
 nEdgesR(evenGraph);
 oEdgesR(oddGraph);
 
@@ -45,9 +45,13 @@ odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
 
 const myBreadth = bfs(myGraph)(n0);
 
+console.log('myBreadth', myBreadth);
+
 const myDepth = dfs(myGraph)(n0);
 
-describe('Trav.dfs', () => {
+console.log('myDepth', myDepth);
+
+describe('dfs', () => {
   it('returns a map of nodes and neighbors', () => {
     expect(myDepth instanceof Map).toBeTrue();
     expect((myDepth).has(n3)).toBeTrue();

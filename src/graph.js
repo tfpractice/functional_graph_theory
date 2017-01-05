@@ -16,7 +16,7 @@ export const isAdjacent = edges => src => nabe =>
   contains(adj(edges)(src))(nabe);
 
 export const addNodes = edges => (...srcs) => srcs.reduce(addSrc, edges);
-export const removeNodes = edges => (...srcs) => srcs.reduce(removeBin, edges);
+export const removeNodes = edges => (...srcs) => srcs.reduce(removeBin, copy(edges));
 
 export const addEdges = edges => (src, w = 0) => (...nabes) =>
   nabes.map(triple(w)(src)).reduce(addEdgeBin, edges);
@@ -24,15 +24,18 @@ export const addEdges = edges => (src, w = 0) => (...nabes) =>
 export const removeEdges = edges => src => (...nabes) =>
   nabes.map(triple(0)(src)).reduce(rmEdgeBin, edges);
 
-export const mergeEdges = (edges = new Map) => (altEdges = new Map) =>
- copy(spread(altEdges).reduce(importEdgeBin, edges));
+export const mergeEdgesBin = (edges, alts) =>
+  spread(alts).reduce(importEdgeBin, edges);
+
+export const mergeEdges = edges => (...alts) =>
+   alts.reduce(mergeEdgesBin, edges);
 
 export const addNeighbor = edges => src => (n, w = 0) =>
   addBinMap(adj(edges)(src), [ n, w ]);
 
 export const addEntry = nabes => ([ n, w = 0 ]) => addBinMap(nabes, [ n, w ]);
 
-export const clearNeighbors = (edges = new Map) => (...srcs) =>
+export const clearNeighbors = edges => (...srcs) =>
   srcs.reduce(clearNeighborsBin, edges);
 
 export const mergeNeighbors = uniteMap;
