@@ -19,23 +19,14 @@ var addSrc = function addSrc(edges, src) {
   return addMap(edges)(src)(nabeMap(edges)(src));
 };
 
-var addEdgeBin = function addEdgeBin() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-  var _ref = arguments[1];
-
+var addEdgeBin = function addEdgeBin(edges, _ref) {
   var _ref2 = _slicedToArray(_ref, 3),
       src = _ref2[0],
       nb = _ref2[1],
       _ref2$ = _ref2[2],
       wt = _ref2$ === undefined ? 0 : _ref2$;
 
-  return (
-
-    // console.log('nabeMap(edges)(src)', nabeMap(edges)(src));
-    // console.log('addMap(nabeMap(edges)(src))(nb)(wt)', addMap(nabeMap(edges)(src))(nb)(wt));
-    // console.log('edges.get(src)', edges.get(src));
-    new Map(edges).set(src, addMap(get(edges)(src))(nb)(wt)).set(nb, addMap(get(edges)(nb))(src)(wt))
-  );
+  return new Map(edges).set(src, addMap(get(edges)(src))(nb)(wt)).set(nb, addMap(get(edges)(nb))(src)(wt));
 };
 
 var rmEdgeBin = function rmEdgeBin(edges, _ref3) {
