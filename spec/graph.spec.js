@@ -9,8 +9,11 @@ import { addEdgeBin, } from 'src/reducers';
 
 const { tuple } = collections;
 const myGraph = fromElements(...myNodes);
-const eGraph = fromElements(...eFilter(myNodes));
-const oGraph = fromElements(...oFilter(myNodes));
+
+export { n7, };
+
+export const eGraph = fromElements(...eFilter(myNodes));
+export const oGraph = fromElements(...oFilter(myNodes));
 
 describe('spawn(nabes)', () => {
   it('returns a new Map', () => {

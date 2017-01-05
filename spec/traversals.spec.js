@@ -1,6 +1,7 @@
 import 'jasmine-expect';
 import { collections, } from 'turmeric';
 import * as Graph from 'src/graph';
+import * as Reducers from 'src/reducers';
 
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
@@ -17,16 +18,16 @@ const myGraph = [ Graph.addEdges()(n0, 2)(n1, n2),
   Graph.addEdges()(n3, 8)(n4),
   Graph.addEdges()(n5, 7)(n6),
   Graph.addEdges()(n7, 7)(n8),
-  Graph.addEdges()(n0, 11)(n1), ].reduce(Graph.mergeEdgesBin, Graph.fromElements(...firstTen));
+  Graph.addEdges()(n0, 11)(n1), ]
+  .reduce(Reducers.mergeEdgesBin, Graph.fromElements(...firstTen));
 
 let odds = Graph.fromElements(...oFilter(myNodes));
 
 odds = spreadK(odds).reduce((g, e, id, arr) =>
-      Graph.addEdges(g)(e, id)(arr[((id + 1) % arr.length)]), odds);
+      Graph.addEdges(g)(e, id)(arr[((id + 1) % arr.length)]), new Map(odds));
 odds = Graph.addEdges(odds)(n11, 0)(n1, n5);
 
 const myBreadth = bfs(myGraph)(n0);
-
 const myDepth = dfs(myGraph)(n0);
 
 describe('dfs', () => {
@@ -48,7 +49,7 @@ describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
     const myDijk = dijkstra(myGraph)(n0);
 
-    // console.log('myDijk', myDijk);
+    expect(myDijk instanceof Map).toBeTrue();
   });
 });
 

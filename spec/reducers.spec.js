@@ -1,6 +1,8 @@
 import 'jasmine-expect';
-import { addEdgeBin, addNodeBin, importEdgeBin, removeEdgeBin, resetNodeBin, }
-from 'src/reducers';
+import { nodes, } from 'src/graph';
+import { eGraph, n7, oGraph, } from './graph.spec';
+import { addEdgeBin, addNodeBin, importEdgeBin,
+  mergeEdgesBin, removeEdgeBin, resetNodeBin, } from 'src/reducers';
 
 const cSet = new Set([ 1, 2, 3, 4, ]);
 const cMap = [[ 8, 1 ], [ 7, 2 ], [ 6, 3 ], [ 5, 4 ]].reduce(addEdgeBin, new Map);
@@ -29,8 +31,16 @@ describe('resetNodeBin', () => {
   });
 });
 
-describe('importEdge', () => {
+describe('importEdgeBin', () => {
   it('adds missing neighbors to a graph and adds connections', () => {
     expect(importEdgeBin(cMap, [ 11, dMap.get(8) ]).has(11)).toBeTrue();
+  });
+});
+describe('mergeEdgesBin', () => {
+  it('combines two Edge maps', () => {
+    const connGraph = nodes(eGraph).map((e, id, arr) =>
+        [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
+
+    expect(mergeEdgesBin(connGraph, oGraph).has(n7)).toBeTrue();
   });
 });

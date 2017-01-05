@@ -45,18 +45,23 @@ var importEdgeBin = function importEdgeBin(edges, _ref5) {
   return spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
 };
 
+var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
+  return spread(new Map(alts)).reduce(importEdgeBin, edges);
+};
+
 var reducers = Object.freeze({
 	resetNodeBin: resetNodeBin,
 	addNodeBin: addNodeBin,
 	addEdgeBin: addEdgeBin,
 	removeEdgeBin: removeEdgeBin,
-	importEdgeBin: importEdgeBin
+	importEdgeBin: importEdgeBin,
+	mergeEdgesBin: mergeEdgesBin
 });
 
 var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var spread$1 = collections.spread;
 var triple = collections.triple;
+var tuple = collections.tuple;
 var get$1 = collections.get;
 var spreadK = collections.spreadK;
 var hasK = collections.hasK;
@@ -150,13 +155,9 @@ var removeEdges = function removeEdges(edges) {
         nabes[_key6] = arguments[_key6];
       }
 
-      return nabes.map(triple(0)(src)).reduce(removeEdgeBin, edges);
+      return nabes.map(tuple(src)).reduce(removeEdgeBin, edges);
     };
   };
-};
-
-var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
-  return spread$1(alts).reduce(importEdgeBin, edges);
 };
 
 var mergeEdges = function mergeEdges(edges) {
@@ -205,7 +206,6 @@ var graph = Object.freeze({
 	resetNodes: resetNodes,
 	addEdges: addEdges,
 	removeEdges: removeEdges,
-	mergeEdgesBin: mergeEdgesBin,
 	mergeEdges: mergeEdges,
 	addNeighbor: addNeighbor,
 	addEntry: addEntry,
@@ -220,11 +220,11 @@ var hasK$1 = collections.hasK;
 var mapDiff$1 = collections.mapDiff;
 var diff = collections.diff;
 var addBinMap$2 = collections.addBinMap;
-var spread$2 = collections.spread;
+var spread$1 = collections.spread;
 var spreadK$1 = collections.spreadK;
 var spreadV = collections.spreadV;
 var popFirst = collections.popFirst;
-var tuple = collections.tuple;
+var tuple$1 = collections.tuple;
 
 
 var pathVal = function pathVal() {
@@ -299,7 +299,7 @@ var dfs = function dfs(edges) {
           n = _ref6[0],
           w = _ref6[1];
 
-      return spread$2(mapDiff$1(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
+      return spread$1(mapDiff$1(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
     };
 
     return trav(initPath(src));
@@ -313,7 +313,7 @@ var bfs = function bfs(edges) {
         var pred = popFirst(bQueue);
         var nextNabes = mapDiff$1(edges.get(pred))(bPath);
 
-        spread$2(nextNabes).reduce(nextPath, bPath);
+        spread$1(nextNabes).reduce(nextPath, bPath);
         spreadK$1(nextNabes).reduce(addBinSet, bQueue);
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
       };
@@ -389,7 +389,7 @@ var components = function components(edges) {
   var visitMap = function visitMap() {
     var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
     var node = arguments[1];
-    return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap$2, mMap);
+    return diff(trav(new Set(), node))(mMap).map(tuple$1(trav(new Set(), node))).reduce(addBinMap$2, mMap);
   };
 
   return spreadK$1(edges).reduce(visitMap, new Map());
