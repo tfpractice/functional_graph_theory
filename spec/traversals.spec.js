@@ -2,18 +2,16 @@ import 'jasmine-expect';
 import { collections, } from 'turmeric';
 import * as Graph from 'src/graph';
 
-import { eNodes, firstTen, nEdgesR, oEdgesR, oNodes, } from './shared';
-import { eFilter, myNodes, oFilter, } from './shared';
+import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
 import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from 'src/traversals';
 
 const { spread, spreadK } = collections;
-const altGraph = Graph.fromElements(n4, n5, n6, n7, n8, n9);
-const evenGraph = Graph.fromElements(...firstTen, ...eNodes);
-const oddGraph = Graph.fromElements(...firstTen, ...oNodes);
 
-// let myGraph = Graph.fromElements(...firstTen);
+// const altGraph = Graph.fromElements(n4, n5, n6, n7, n8, n9);
+// const evenGraph = Graph.fromElements(...firstTen, ...eNodes);
+// const oddGraph = Graph.fromElements(...firstTen, ...oNodes);
 
 const myGraph = [ Graph.addEdges()(n0, 2)(n1, n2),
   Graph.addEdges()(n1, 4)(n4, n2),
@@ -25,20 +23,16 @@ const myGraph = [ Graph.addEdges()(n0, 2)(n1, n2),
   Graph.addEdges()(n7, 7)(n8),
   Graph.addEdges()(n0, 11)(n1), ].reduce(Graph.mergeEdgesBin, Graph.fromElements(...firstTen));
 
-const addMyGraph = Graph.addEdges(myGraph);
-const addEGraph = Graph.addEdges(evenGraph);
-const addOGraph = Graph.addEdges(oddGraph);
+// const addEGraph = Graph.addEdges(evenGraph);
+// const addOGraph = Graph.addEdges(oddGraph);
 
-addEGraph(n0, 22)(n9);
-addOGraph(n0, 11)(n1);
-addOGraph(n0, 22)(n9);
+// addEGraph(n0, 22)(n9);
+// addOGraph(n0, 11)(n1);
+// addOGraph(n0, 22)(n9);
 console.log('myGraph', myGraph);
-nEdgesR(evenGraph);
-oEdgesR(oddGraph);
 
-const myEdgesR = Graph.spawn(myGraph);
-const oddEdgesR = Graph.spawn(oddGraph);
-const evenEdgesR = Graph.spawn(evenGraph);
+// nEdgesR(evenGraph);
+// oEdgesR(oddGraph);
 
 let odds = Graph.fromElements(...oFilter(myNodes));
 
@@ -72,6 +66,8 @@ describe('bfs', () => {
 describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
     const myDijk = dijkstra(myGraph)(n0);
+
+    console.log('myDijk', myDijk);
   });
 });
 
