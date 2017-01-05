@@ -36,11 +36,9 @@ var rmEdgeBin = function rmEdgeBin() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref3 = arguments[1];
 
-  var _ref4 = _slicedToArray(_ref3, 3),
+  var _ref4 = _slicedToArray(_ref3, 2),
       src = _ref4[0],
-      nb = _ref4[1],
-      _ref4$ = _ref4[2],
-      wt = _ref4$ === undefined ? 0 : _ref4$;
+      nb = _ref4[1];
 
   return edges.set(src, removeMap(edges.get(src))(nb)).set(nb, removeMap(edges.get(src))(src));
 };
@@ -54,7 +52,7 @@ var clearNeighborsBin = function clearNeighborsBin() {
 var importEdgeBin = function importEdgeBin() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
 
-  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [, new Map()],
+  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [{}, new Map()],
       _ref6 = _slicedToArray(_ref5, 2),
       src = _ref6[0],
       nbs = _ref6[1];
@@ -76,7 +74,7 @@ var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr =
 var spread$1 = collections.spread;
 var triple = collections.triple;
 var get$1 = collections.get;
-var spreadK$1 = collections.spreadK;
+var spreadK = collections.spreadK;
 var hasK = collections.hasK;
 var addBinMap = collections.addBinMap;
 var removeBin = collections.removeBin;
@@ -95,7 +93,7 @@ var fromElements = function fromElements() {
   return elems.reduce(addSrc, copy());
 };
 var nodes = function nodes(edges) {
-  return spreadK$1(copy(edges));
+  return spreadK(copy(edges));
 };
 var adj = function adj(edges) {
   return function (src) {
@@ -234,7 +232,7 @@ var mapDiff$1 = collections.mapDiff;
 var diff = collections.diff;
 var addBinMap$1 = collections.addBinMap;
 var spread$2 = collections.spread;
-var spreadK$2 = collections.spreadK;
+var spreadK$1 = collections.spreadK;
 var spreadV = collections.spreadV;
 var popFirst = collections.popFirst;
 var tuple = collections.tuple;
@@ -327,7 +325,7 @@ var bfs = function bfs(edges) {
         var nextNabes = mapDiff$1(edges.get(pred))(bPath);
 
         spread$2(nextNabes).reduce(nextPath, bPath);
-        spreadK$2(nextNabes).reduce(addSet, bQueue);
+        spreadK$1(nextNabes).reduce(addSet, bQueue);
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
       };
     };
@@ -397,7 +395,7 @@ var components = function components(edges) {
   var trav = function trav() {
     var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
     var node = arguments[1];
-    return diff(spreadK$2(edges.get(node)))(comp).reduce(trav, comp.add(node));
+    return diff(spreadK$1(edges.get(node)))(comp).reduce(trav, comp.add(node));
   };
   var visitMap = function visitMap() {
     var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
@@ -405,7 +403,7 @@ var components = function components(edges) {
     return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap$1, mMap);
   };
 
-  return spreadK$2(edges).reduce(visitMap, new Map());
+  return spreadK$1(edges).reduce(visitMap, new Map());
 };
 
 var componentSet = function componentSet(edges) {
