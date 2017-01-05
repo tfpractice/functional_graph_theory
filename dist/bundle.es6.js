@@ -5,29 +5,14 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var spread = collections.spread;
 var addMap = collections.addMap;
 var get = collections.get;
-var spreadK = collections.spreadK;
 var flatTuple = collections.flatTuple;
 var mapDiff = collections.mapDiff;
 var removeMap = collections.removeMap;
 
 
-var set = function set(m) {
-  return function (k) {
-    return function (v) {
-      return new Map(m).set(k, v);
-    };
-  };
-};
-
 var nabeMap = function nabeMap(edges) {
   return function (src) {
     return new Map(get(edges)(src));
-  };
-};
-var nabes = function nabes() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-  return function (src) {
-    return spreadK(nabeMap(edges)(src));
   };
 };
 var addSrc = function addSrc(edges, src) {
@@ -78,9 +63,7 @@ var importEdgeBin = function importEdgeBin() {
 };
 
 var reducers = Object.freeze({
-	set: set,
 	nabeMap: nabeMap,
-	nabes: nabes,
 	addSrc: addSrc,
 	addEdgeBin: addEdgeBin,
 	rmEdgeBin: rmEdgeBin,
@@ -92,6 +75,7 @@ var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr =
 
 var spread$1 = collections.spread;
 var triple = collections.triple;
+var get$1 = collections.get;
 var spreadK$1 = collections.spreadK;
 var hasK = collections.hasK;
 var addBinMap = collections.addBinMap;
@@ -104,18 +88,18 @@ var spawn = function spawn(edges) {
 };
 var copy = spawn;
 var fromElements = function fromElements() {
-  for (var _len = arguments.length, elements = Array(_len), _key = 0; _key < _len; _key++) {
-    elements[_key] = arguments[_key];
+  for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
+    elems[_key] = arguments[_key];
   }
 
-  return elements.reduce(addSrc, spawn());
+  return elems.reduce(addSrc, copy());
 };
 var nodes = function nodes(edges) {
-  return spreadK$1(new Map(edges));
+  return spreadK$1(copy(edges));
 };
 var adj = function adj(edges) {
   return function (src) {
-    return new Map(edges.get(src));
+    return copy(get$1(edges)(src));
   };
 };
 var neighbors = function neighbors(edges) {
@@ -159,11 +143,11 @@ var addEdges = function addEdges(edges) {
   return function (src) {
     var w = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     return function () {
-      for (var _len4 = arguments.length, nabes$$1 = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-        nabes$$1[_key4] = arguments[_key4];
+      for (var _len4 = arguments.length, nabes = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        nabes[_key4] = arguments[_key4];
       }
 
-      return nabes$$1.map(triple(w)(src)).reduce(addEdgeBin, edges);
+      return nabes.map(triple(w)(src)).reduce(addEdgeBin, edges);
     };
   };
 };
@@ -171,11 +155,11 @@ var addEdges = function addEdges(edges) {
 var removeEdges = function removeEdges(edges) {
   return function (src) {
     return function () {
-      for (var _len5 = arguments.length, nabes$$1 = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-        nabes$$1[_key5] = arguments[_key5];
+      for (var _len5 = arguments.length, nabes = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        nabes[_key5] = arguments[_key5];
       }
 
-      return nabes$$1.map(triple(0)(src)).reduce(rmEdgeBin, edges);
+      return nabes.map(triple(0)(src)).reduce(rmEdgeBin, edges);
     };
   };
 };
@@ -184,7 +168,7 @@ var mergeEdges = function mergeEdges() {
   var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function () {
     var altEdges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-    return new Map(spread$1(altEdges).reduce(importEdgeBin, edges));
+    return copy(spread$1(altEdges).reduce(importEdgeBin, edges));
   };
 };
 
@@ -197,14 +181,14 @@ var addNeighbor = function addNeighbor(edges) {
   };
 };
 
-var addEntry = function addEntry(nabes$$1) {
+var addEntry = function addEntry(nabes) {
   return function (_ref) {
     var _ref2 = _slicedToArray$1(_ref, 2),
         n = _ref2[0],
         _ref2$ = _ref2[1],
         w = _ref2$ === undefined ? 0 : _ref2$;
 
-    return addBinMap(nabes$$1, [n, w]);
+    return addBinMap(nabes, [n, w]);
   };
 };
 
@@ -444,13 +428,7 @@ var traversals = Object.freeze({
 	pathBetween: pathBetween
 });
 
-// exports.Graph = require('./graph');
 
-// exports.Reducers = require('./reducers');
-// exports.Utils = require('./utils');
-// exports.AsyncOps = require('./async_operators');
-
-// exports.Traversals = require('./traversals');
 
 var src$1 = Object.freeze({
 	Graph: graph,
