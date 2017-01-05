@@ -29,35 +29,33 @@ var addEdgeBin = function addEdgeBin() {
       _ref2$ = _ref2[2],
       wt = _ref2$ === undefined ? 0 : _ref2$;
 
-  return edges.set(src, addMap(nabeMap(edges)(src))(nb)(wt)).set(nb, addMap(nabeMap(edges)(nb))(src)(wt));
+  return (
+
+    // console.log('nabeMap(edges)(src)', nabeMap(edges)(src));
+    // console.log('addMap(nabeMap(edges)(src))(nb)(wt)', addMap(nabeMap(edges)(src))(nb)(wt));
+    // console.log('edges.get(src)', edges.get(src));
+    new Map(edges).set(src, addMap(get(edges)(src))(nb)(wt)).set(nb, addMap(get(edges)(nb))(src)(wt))
+  );
 };
 
-var rmEdgeBin = function rmEdgeBin() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-  var _ref3 = arguments[1];
-
+var rmEdgeBin = function rmEdgeBin(edges, _ref3) {
   var _ref4 = _slicedToArray(_ref3, 2),
       src = _ref4[0],
       nb = _ref4[1];
 
-  return edges.set(src, removeMap(edges.get(src))(nb)).set(nb, removeMap(edges.get(src))(src));
+  return new Map(edges).set(src, removeMap(get(edges)(src))(nb)).set(nb, removeMap(get(edges)(src))(src));
 };
 
-var clearNeighborsBin = function clearNeighborsBin() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-  var src = arguments[1];
-  return edges.set(src, new Map());
+var clearNeighborsBin = function clearNeighborsBin(edges, src) {
+  return addMap(edges)(src)(new Map());
 };
 
-var importEdgeBin = function importEdgeBin() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-
-  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [{}, new Map()],
-      _ref6 = _slicedToArray(_ref5, 2),
+var importEdgeBin = function importEdgeBin(edges, _ref5) {
+  var _ref6 = _slicedToArray(_ref5, 2),
       src = _ref6[0],
       nbs = _ref6[1];
 
-  return spread(mapDiff(nbs)(edges.get(src))).map(flatTuple(src)).reduce(addEdgeBin, addSrc(edges, src));
+  return spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addSrc(edges, src));
 };
 
 var reducers = Object.freeze({
@@ -133,7 +131,7 @@ var removeNodes = function removeNodes(edges) {
       srcs[_key3] = arguments[_key3];
     }
 
-    return srcs.reduce(removeBin, edges);
+    return srcs.reduce(removeBin, copy(edges));
   };
 };
 
@@ -162,11 +160,17 @@ var removeEdges = function removeEdges(edges) {
   };
 };
 
-var mergeEdges = function mergeEdges() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
+  return spread$1(alts).reduce(importEdgeBin, edges);
+};
+
+var mergeEdges = function mergeEdges(edges) {
   return function () {
-    var altEdges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-    return copy(spread$1(altEdges).reduce(importEdgeBin, edges));
+    for (var _len6 = arguments.length, alts = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      alts[_key6] = arguments[_key6];
+    }
+
+    return alts.reduce(mergeEdgesBin, edges);
   };
 };
 
@@ -190,11 +194,10 @@ var addEntry = function addEntry(nabes) {
   };
 };
 
-var clearNeighbors = function clearNeighbors() {
-  var edges = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+var clearNeighbors = function clearNeighbors(edges) {
   return function () {
-    for (var _len6 = arguments.length, srcs = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      srcs[_key6] = arguments[_key6];
+    for (var _len7 = arguments.length, srcs = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+      srcs[_key7] = arguments[_key7];
     }
 
     return srcs.reduce(clearNeighborsBin, edges);
@@ -216,6 +219,7 @@ var graph = Object.freeze({
 	removeNodes: removeNodes,
 	addEdges: addEdges,
 	removeEdges: removeEdges,
+	mergeEdgesBin: mergeEdgesBin,
 	mergeEdges: mergeEdges,
 	addNeighbor: addNeighbor,
 	addEntry: addEntry,
@@ -225,7 +229,7 @@ var graph = Object.freeze({
 
 var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var addSet = collections.addSet;
+var addBinSet = collections.addBinSet;
 var lastK = collections.lastK;
 var hasK$1 = collections.hasK;
 var mapDiff$1 = collections.mapDiff;
@@ -325,7 +329,7 @@ var bfs = function bfs(edges) {
         var nextNabes = mapDiff$1(edges.get(pred))(bPath);
 
         spread$2(nextNabes).reduce(nextPath, bPath);
-        spreadK$1(nextNabes).reduce(addSet, bQueue);
+        spreadK$1(nextNabes).reduce(addBinSet, bQueue);
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
       };
     };
