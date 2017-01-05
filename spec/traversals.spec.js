@@ -31,7 +31,6 @@ addOGraph(n0, 11)(n1);
 addOGraph(n0, 22)(n9);
 
 nEdgesR(evenGraph);
-
 oEdgesR(oddGraph);
 
 const myEdgesR = Graph.spawn(myGraph);

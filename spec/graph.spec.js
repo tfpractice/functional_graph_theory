@@ -6,10 +6,11 @@ import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'src/graph';
 import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'src/graph';
 import { addEntry, addNeighbor, clearNeighbors, mergeEdges, removeEdges, } from 'src/graph';
 import { addEdgeBin, } from 'src/reducers';
+
 const { tuple } = collections;
 const myGraph = fromElements(...myNodes);
-const eGraph = fromElements(eFilter(myNodes));
-const oGraph = fromElements(oFilter(myNodes));
+const eGraph = fromElements(...eFilter(myNodes));
+const oGraph = fromElements(...oFilter(myNodes));
 
 describe('spawn(nabes)', () => {
   it('returns a new Map', () => {
@@ -99,14 +100,12 @@ describe('operators', () => {
       expect(isAdjacent(clearNeighbors(nGraph)(n0, n1))(n0)(n1)).toBeFalse();
     });
   });
-  xdescribe('mergeEdges', () => {
+  describe('mergeEdges', () => {
     it('combines two Edge maps', () => {
       const connGraph = nodes(eGraph).map((e, id, arr) =>
             [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
 
-      const mGraph = mergeEdges(connGraph)(oGraph);
-
-      expect(mGraph.has(n7)).toBeTrue();
+      expect(mergeEdges(connGraph)(oGraph).has(n7)).toBeTrue();
     });
   });
 });

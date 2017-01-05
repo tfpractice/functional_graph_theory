@@ -94,10 +94,9 @@ var spread$1 = collections.spread;
 var triple = collections.triple;
 var spreadK$1 = collections.spreadK;
 var hasK = collections.hasK;
-var uniteMap$1 = collections.uniteMap;
-var asMap$1 = collections.asMap;
-var addBinMap$1 = collections.addBinMap;
-var removeBin$1 = collections.removeBin;
+var addBinMap = collections.addBinMap;
+var removeBin = collections.removeBin;
+var uniteMap = collections.uniteMap;
 
 
 var spawn = function spawn(edges) {
@@ -112,11 +111,11 @@ var fromElements = function fromElements() {
   return elements.reduce(addSrc, spawn());
 };
 var nodes = function nodes(edges) {
-  return spreadK$1(asMap$1(edges));
+  return spreadK$1(new Map(edges));
 };
 var adj = function adj(edges) {
   return function (src) {
-    return edges.get(src) || new Map();
+    return new Map(edges.get(src));
   };
 };
 var neighbors = function neighbors(edges) {
@@ -146,14 +145,13 @@ var addNodes = function addNodes(edges) {
     return srcs.reduce(addSrc, edges);
   };
 };
-
 var removeNodes = function removeNodes(edges) {
   return function () {
-    for (var _len3 = arguments.length, nodes = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      nodes[_key3] = arguments[_key3];
+    for (var _len3 = arguments.length, srcs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      srcs[_key3] = arguments[_key3];
     }
 
-    return nodes.reduce(removeBin$1, edges);
+    return srcs.reduce(removeBin, edges);
   };
 };
 
@@ -194,7 +192,7 @@ var addNeighbor = function addNeighbor(edges) {
   return function (src) {
     return function (n) {
       var w = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      return addBinMap$1(adj(edges)(src), [n, w]);
+      return addBinMap(adj(edges)(src), [n, w]);
     };
   };
 };
@@ -206,7 +204,7 @@ var addEntry = function addEntry(nabes$$1) {
         _ref2$ = _ref2[1],
         w = _ref2$ === undefined ? 0 : _ref2$;
 
-    return addBinMap$1(nabes$$1, [n, w]);
+    return addBinMap(nabes$$1, [n, w]);
   };
 };
 
@@ -221,7 +219,7 @@ var clearNeighbors = function clearNeighbors() {
   };
 };
 
-var mergeNeighbors = uniteMap$1;
+var mergeNeighbors = uniteMap;
 
 var graph = Object.freeze({
 	spawn: spawn,
@@ -248,14 +246,14 @@ var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr =
 var addSet = collections.addSet;
 var lastK = collections.lastK;
 var hasK$1 = collections.hasK;
-var mapDiff$2 = collections.mapDiff;
-var diff$2 = collections.diff;
-var addBinMap$2 = collections.addBinMap;
+var mapDiff$1 = collections.mapDiff;
+var diff = collections.diff;
+var addBinMap$1 = collections.addBinMap;
 var spread$2 = collections.spread;
 var spreadK$2 = collections.spreadK;
 var spreadV = collections.spreadV;
 var popFirst = collections.popFirst;
-var tuple$2 = collections.tuple;
+var tuple = collections.tuple;
 
 
 var pathVal = function pathVal() {
@@ -330,7 +328,7 @@ var dfs = function dfs(edges) {
           n = _ref6[0],
           w = _ref6[1];
 
-      return spread$2(mapDiff$2(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
+      return spread$2(mapDiff$1(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
     };
 
     return trav(initPath(src));
@@ -342,7 +340,7 @@ var bfs = function bfs(edges) {
     var bVisit = function bVisit(bPath) {
       return function (bQueue) {
         var pred = popFirst(bQueue);
-        var nextNabes = mapDiff$2(edges.get(pred))(bPath);
+        var nextNabes = mapDiff$1(edges.get(pred))(bPath);
 
         spread$2(nextNabes).reduce(nextPath, bPath);
         spreadK$2(nextNabes).reduce(addSet, bQueue);
@@ -415,12 +413,12 @@ var components = function components(edges) {
   var trav = function trav() {
     var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
     var node = arguments[1];
-    return diff$2(spreadK$2(edges.get(node)))(comp).reduce(trav, comp.add(node));
+    return diff(spreadK$2(edges.get(node)))(comp).reduce(trav, comp.add(node));
   };
   var visitMap = function visitMap() {
     var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
     var node = arguments[1];
-    return diff$2(trav(new Set(), node))(mMap).map(tuple$2(trav(new Set(), node))).reduce(addBinMap$2, mMap);
+    return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap$1, mMap);
   };
 
   return spreadK$2(edges).reduce(visitMap, new Map());

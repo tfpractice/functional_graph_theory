@@ -1,5 +1,6 @@
 import 'jasmine-expect';
-import { addEdgeBin, addSrc, clearNeighborsBin, importEdgeBin, nabeMap, rmEdgeBin, } from 'src/reducers';
+import { addEdgeBin, addSrc, clearNeighborsBin, importEdgeBin, nabeMap,
+  rmEdgeBin, } from 'src/reducers';
 
 const cSet = new Set([ 1, 2, 3, 4, ]);
 const cMap = new Map().set(8, 1).set(7, 2).set(6, 3).set(5, 4);
