@@ -73,14 +73,11 @@
   "jest": {
     "collectCoverage": "true",
     "collectCoverageFrom": [
-      "src/**", "dist/**"
+      "src/**"
     ],
     "moduleFileExtensions": [
       "js",
       "jsx"
-    ],
-    "testPathDirs": [
-      "spec/"
     ],
     "testPathIgnorePatterns":["node_modules/"],
     "testEnvironment":"node",
@@ -88,7 +85,7 @@
       "node_modules/(?!react-native|turmeric|react-native-button)"
     ],
     "unmockedModulePathPatterns": [
-      "jasmine-expect", "turmeric"
+      "jasmine-expect"
     ]
   },
   "dependencies": {
