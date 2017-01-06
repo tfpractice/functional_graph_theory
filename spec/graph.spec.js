@@ -1,4 +1,5 @@
 import 'jasmine-expect';
+jest.unmock('turmeric');
 
 // import { collections, } from 'turmeric';
 import bundle from 'dist/bundle.es6';
