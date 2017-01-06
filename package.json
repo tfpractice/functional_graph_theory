@@ -11,7 +11,7 @@
     "build:es6": "NODE_ENV=production rollup -c rollup.es6.config.js",
     "build:umd": "NODE_ENV=production rollup -c rollup.config.js",
     "build:dev": "rollup -c rollup.es6.config.js",
-    "test": "NODE_ENV=test jest --debug",
+    "test": "NODE_ENV=test jest",
     "doc": "jsdoc -c config/conf.json app",
     "coverage": "yarn test && cat coverage/lcov.info | coveralls",
     "build:wpack": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",

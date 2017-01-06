@@ -1,7 +1,6 @@
 import 'jasmine-expect';
 import { collections, } from 'turmeric';
-import * as Graph from 'src/graph';
-import * as Reducers from 'src/reducers';
+import { Graph, Reducers, } from 'graph-curry';
 
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';

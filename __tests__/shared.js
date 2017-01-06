@@ -1,4 +1,4 @@
-import * as Graph from 'src/graph';
+import { Graph, } from 'graph-curry';
 
 export const Node = (label = '', data = {}) =>
   ({ label, data, toString: () => label, });

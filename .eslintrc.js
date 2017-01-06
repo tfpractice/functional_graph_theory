@@ -2,7 +2,6 @@ module.exports = {
     extends: 'airbnb-base',
     settings: {
       'import/resolver': {
-        webpack: { config: './config/webpack/config.babel.js' },
         'babel-module': {},
       }, },
     env: {
@@ -13,7 +12,6 @@ module.exports = {
       jest: true,
     },
     parser: 'babel-eslint',
-
     parserOptions: {
         ecmaFeatures: {
             modules: true,

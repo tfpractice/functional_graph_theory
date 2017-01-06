@@ -12,6 +12,7 @@ export default {
     moduleId: 'graph-curry',
     moduleName: 'graph-curry',
     external: [ 'turmeric' ],
+    exports: 'named',
     sourceMap: true,
     plugins: [
       progress({ clearLine: false, }),

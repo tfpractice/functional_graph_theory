@@ -423,5 +423,5 @@ var src$1 = Object.freeze({
 	Traversals: traversals
 });
 
-export default src$1;
+export { graph as Graph, reducers as Reducers, traversals as Traversals };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map

@@ -4,7 +4,7 @@
     "plugins": [["module-resolver", {
             "root": ["./"],
             "alias": {
-              "graphs": "./src",
+              "graph-curry": "./index",
               "dist":"dist",
               "src": "src",
               "config": "./config",
