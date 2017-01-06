@@ -1,48 +1,12 @@
 import { collections } from 'turmeric';
 
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var addBinMap = collections.addBinMap;
 var mapDiff = collections.mapDiff;
 var spread = collections.spread;
 var addMap = collections.addMap;
-var get$$1 = collections.get;
+var get = collections.get;
 var flatTuple = collections.flatTuple;
 var removeMap = collections.removeMap;
 
@@ -52,40 +16,38 @@ var resetNodeBin = function resetNodeBin(edges, src) {
 };
 
 var addNodeBin = function addNodeBin(edges, src) {
-  return addMap(edges)(src)(new Map(get$$1(edges)(src)));
+  return addMap(edges)(src)(new Map(get(edges)(src)));
 };
 
 var addEdgeBin = function addEdgeBin(edges, _ref) {
-  var _ref2 = slicedToArray(_ref, 3),
+  var _ref2 = _slicedToArray(_ref, 3),
       src = _ref2[0],
       nb = _ref2[1],
       _ref2$ = _ref2[2],
       wt = _ref2$ === undefined ? 0 : _ref2$;
 
-  return [[src, addMap(get$$1(edges)(src))(nb)(wt)], [nb, addMap(get$$1(edges)(nb))(src)(wt)]].reduce(addBinMap, new Map(edges));
+  return [[src, addMap(get(edges)(src))(nb)(wt)], [nb, addMap(get(edges)(nb))(src)(wt)]].reduce(addBinMap, new Map(edges));
 };
 
 var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
-  var _ref4 = slicedToArray(_ref3, 2),
+  var _ref4 = _slicedToArray(_ref3, 2),
       src = _ref4[0],
       nb = _ref4[1];
 
-  return [[src, removeMap(get$$1(edges)(src))(nb)], [nb, removeMap(get$$1(edges)(nb))(src)]].reduce(addBinMap, new Map(edges));
+  return [[src, removeMap(get(edges)(src))(nb)], [nb, removeMap(get(edges)(nb))(src)]].reduce(addBinMap, new Map(edges));
 };
 
 var importEdgeBin = function importEdgeBin(edges, _ref5) {
-  var _ref6 = slicedToArray(_ref5, 2),
+  var _ref6 = _slicedToArray(_ref5, 2),
       src = _ref6[0],
       nbs = _ref6[1];
 
-  return spread(mapDiff(nbs)(get$$1(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
+  return spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
 };
 
 var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
   return spread(new Map(alts)).reduce(importEdgeBin, edges);
 };
-
-
 
 var reducers = Object.freeze({
 	resetNodeBin: resetNodeBin,
@@ -96,9 +58,11 @@ var reducers = Object.freeze({
 	mergeEdgesBin: mergeEdgesBin
 });
 
+var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var triple = collections.triple;
 var tuple = collections.tuple;
-var get$2 = collections.get;
+var get$1 = collections.get;
 var spreadK = collections.spreadK;
 var hasK = collections.hasK;
 var addBinMap$1 = collections.addBinMap;
@@ -122,7 +86,7 @@ var nodes = function nodes(edges) {
 };
 var adj = function adj(edges) {
   return function (src) {
-    return copy(get$2(edges)(src));
+    return copy(get$1(edges)(src));
   };
 };
 var neighbors = function neighbors(edges) {
@@ -217,7 +181,7 @@ var addNeighbor = function addNeighbor(edges) {
 
 var addEntry = function addEntry(nabes) {
   return function (_ref) {
-    var _ref2 = slicedToArray(_ref, 2),
+    var _ref2 = _slicedToArray$1(_ref, 2),
         n = _ref2[0],
         _ref2$ = _ref2[1],
         w = _ref2$ === undefined ? 0 : _ref2$;
@@ -227,8 +191,6 @@ var addEntry = function addEntry(nabes) {
 };
 
 var mergeNeighbors = uniteMap;
-
-
 
 var graph = Object.freeze({
 	spawn: spawn,
@@ -249,6 +211,8 @@ var graph = Object.freeze({
 	addEntry: addEntry,
 	mergeNeighbors: mergeNeighbors
 });
+
+var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var addBinSet = collections.addBinSet;
 var lastK = collections.lastK;
@@ -317,7 +281,7 @@ var nextPath = function nextPath() {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref3 = arguments[1];
 
-  var _ref4 = slicedToArray(_ref3, 2),
+  var _ref4 = _slicedToArray$2(_ref3, 2),
       n = _ref4[0],
       _ref4$ = _ref4[1],
       w = _ref4$ === undefined ? 0 : _ref4$;
@@ -331,7 +295,7 @@ var dfs = function dfs(edges) {
       var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPath(src);
 
       var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK(path), 0],
-          _ref6 = slicedToArray(_ref5, 2),
+          _ref6 = _slicedToArray$2(_ref5, 2),
           n = _ref6[0],
           w = _ref6[1];
 
@@ -380,7 +344,7 @@ var dijkstra = function dijkstra(edges) {
       try {
 
         for (var _iterator = nextNabes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _step$value = slicedToArray(_step.value, 2),
+          var _step$value = _slicedToArray$2(_step.value, 2),
               nabe = _step$value[0],
               nWeight = _step$value[1];
 
@@ -441,8 +405,6 @@ var pathBetween = function pathBetween(edges) {
     };
   };
 };
-
-
 
 var traversals = Object.freeze({
 	dfs: dfs,
