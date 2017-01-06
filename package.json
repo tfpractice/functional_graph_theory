@@ -82,6 +82,7 @@
     "testPathDirs": [
       "spec/"
     ],
+    "testPathIgnorePatterns":["/node_modules/"],
     "unmockedModulePathPatterns": [
       "jasmine-expect"
     ]
