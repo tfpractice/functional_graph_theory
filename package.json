@@ -13,7 +13,7 @@
     "build:dev": "rollup -c rollup.es6.config.js",
     "test": "NODE_ENV=test jest",
     "doc": "jsdoc -c config/conf.json app",
-    "coverage": "yarn test && cat coverage/lcov.info | coveralls",
+    "coverage": "cat coverage/lcov.info | coveralls",
     "build:wpack": "webpack --progress --color --env.prod -p --config ./config/webpack/config.babel.js",
     "dev": "node .",
     "lint": "./node_modules/.bin/eslint  --fix -c .eslintrc.js . --ext .js --ignore-path .gitignore --cache"
