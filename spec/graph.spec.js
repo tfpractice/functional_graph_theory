@@ -1,12 +1,14 @@
 import 'jasmine-expect';
 import { collections, } from 'turmeric';
+import bundle from 'dist/bundle.es6';
+
 import { eFilter, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
-import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'src/graph';
-import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'src/graph';
-import { addEntry, addNeighbor, mergeEdges, removeEdges, resetNodes, } from 'src/graph';
-import { addEdgeBin, } from 'src/reducers';
+const { adj, copy, fromElements, neighbors, nodes, spawn, } = bundle.Graph;
+const { addEdges, addNodes, contains, isAdjacent, removeNodes, } = bundle.Graph;
+const { addEntry, addNeighbor, mergeEdges, removeEdges, resetNodes, } = bundle.Graph;
 
+const { addEdgeBin, } = bundle.Reducers;
 const { tuple } = collections;
 const myGraph = fromElements(...myNodes);
 
@@ -15,6 +17,9 @@ export { n7, };
 export const eGraph = fromElements(...eFilter(myNodes));
 export const oGraph = fromElements(...oFilter(myNodes));
 
+console.log('bundle', bundle);
+
+// console.log('Graph', Graph);
 describe('spawn(nabes)', () => {
   it('returns a new Map', () => {
     expect(spawn() instanceof Map).toBeTrue();

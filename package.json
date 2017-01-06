@@ -73,7 +73,7 @@
   "jest": {
     "collectCoverage": "true",
     "collectCoverageFrom": [
-      "src/**"
+      "src/**", "dist/**"
     ],
     "moduleFileExtensions": [
       "js",

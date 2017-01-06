@@ -5,6 +5,7 @@
             "root": ["./"],
             "alias": {
               "graphs": "./src",
+              "dist":"dist",
               "src": "src",
               "config": "./config",
             }
