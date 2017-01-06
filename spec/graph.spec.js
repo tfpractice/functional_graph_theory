@@ -1,5 +1,6 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric';
+
+// import { collections, } from 'turmeric';
 import bundle from 'dist/bundle.es6';
 
 import { eFilter, myNodes, oFilter, } from './shared';
@@ -9,7 +10,8 @@ const { addEdges, addNodes, contains, isAdjacent, removeNodes, } = bundle.Graph;
 const { addEntry, addNeighbor, mergeEdges, removeEdges, resetNodes, } = bundle.Graph;
 
 const { addEdgeBin, } = bundle.Reducers;
-const { tuple } = collections;
+
+// const { tuple } = collections;
 const myGraph = fromElements(...myNodes);
 
 export { n7, };
@@ -81,7 +83,7 @@ describe('operators', () => {
   describe('addEntry', () => {
     it('appends an [node, weight] pair to the neighbrs', () => {
       const nabes = addNeighbor(myGraph)(n0)(n1, 3);
-      const w0n2 = tuple(0)(n2);
+      const w0n2 = [ n2, 0 ];
       const newNabes = addEntry(nabes)(w0n2);
 
       expect(newNabes.has(n2)).toBeTrue();
