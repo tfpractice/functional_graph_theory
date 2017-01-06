@@ -1,5 +1,5 @@
 import * as Reducers from './reducers';
 import * as Graph from './graph';
-import * as Traversals from './traversals';
+import * as Search from './search';
 
-export { Graph, Reducers, Traversals, };
+export { Graph, Reducers, Search, };

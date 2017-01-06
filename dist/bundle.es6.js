@@ -406,7 +406,7 @@ var pathBetween = function pathBetween(edges) {
   };
 };
 
-var traversals = Object.freeze({
+var search = Object.freeze({
 	dfs: dfs,
 	bfs: bfs,
 	dijkstra: dijkstra,
@@ -420,8 +420,8 @@ var traversals = Object.freeze({
 var src$1 = Object.freeze({
 	Graph: graph,
 	Reducers: reducers,
-	Traversals: traversals
+	Search: search
 });
 
-export { graph as Graph, reducers as Reducers, traversals as Traversals };export default src$1;
+export { graph as Graph, reducers as Reducers, search as Search };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map

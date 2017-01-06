@@ -1,6 +1,5 @@
 import { collections as coll, } from 'turmeric';
-
-const { asMap, addBinMap, mapDiff, spread, addMap, get, flatTuple, removeMap } = coll;
+const { addBinMap, mapDiff, spread, addMap, get, flatTuple, removeMap } = coll;
 
 export const resetNodeBin = (edges, src) => addMap(edges)(src)(new Map);
 

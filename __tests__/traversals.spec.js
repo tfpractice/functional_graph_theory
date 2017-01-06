@@ -5,7 +5,7 @@ import { Graph, Reducers, } from 'graph-curry';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
-import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from 'src/traversals';
+import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from 'src/search';
 
 const { spread, spreadK } = collections;
 
