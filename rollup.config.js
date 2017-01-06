@@ -11,8 +11,8 @@ export default {
   entry: 'index.js',
   format: 'umd',
   dest: 'dist/bundle.umd.js',
-  moduleId: 'functional_graphs',
-  moduleName: 'functional_graphs',
+  moduleId: 'graph-curry',
+  moduleName: 'graph-curry',
   sourceMap: true,
   external: [ 'turmeric' ],
   plugins: [

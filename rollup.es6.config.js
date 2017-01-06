@@ -9,8 +9,8 @@ export default {
     entry: 'index.js',
     dest: 'dist/bundle.es6.js',
     format: 'es',
-    moduleId: 'functional_graphs',
-    moduleName: 'functional_graphs',
+    moduleId: 'graph-curry',
+    moduleName: 'graph-curry',
     external: [ 'turmeric' ],
     sourceMap: true,
     plugins: [

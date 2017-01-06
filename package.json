@@ -93,9 +93,7 @@
     "testPathDirs": [
       "spec/"
     ],
-    "unmockedModulePathPatterns": [
-      "jasmine-expect"
-    ]
+    "unmockedModulePathPatterns": [ "jasmine-expect"]
   },
   "dependencies": {
     "turmeric": "git://github.com/tfpractice/turmeric.git"
