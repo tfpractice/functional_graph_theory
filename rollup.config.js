@@ -20,7 +20,7 @@ export default {
     filesize(),
     nodeResolve(),
     commonjs(),
-    babel(),
+    babel({ exclude: 'node_modules/**' }),
     visualizer({ filename: 'stats.html' }),
     replace({ ENV: JSON.stringify(process.env.NODE_ENV || 'development'), }),
     (process.env.NODE_ENV === 'production' && uglify({ beautify: true, })),
