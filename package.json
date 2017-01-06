@@ -1,5 +1,5 @@
 {
-  "name": "functional_graph_theory",
+  "name": "graph-curry",
   "version": "1.0.0",
   "description": "a Map based implementation of canonical graph data algorithms",
   "main": "dist/bundle.umd.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tfpractice/functional_graph_theory.git"
+    "url": "git+https://github.com/tfpractice/graph-curry.git"
   },
   "keywords": [
     "algorithms",
@@ -31,9 +31,9 @@
   "author": "theory f practice <jackson.brebnor@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tfpractice/functional_graph_theory/issues"
+    "url": "https://github.com/tfpractice/graph-curry/issues"
   },
-  "homepage": "https://github.com/tfpractice/functional_graph_theory#readme",
+  "homepage": "https://github.com/tfpractice/graph-curry#readme",
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-core": "^6.21.0",
