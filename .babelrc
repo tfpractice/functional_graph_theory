@@ -1,7 +1,7 @@
 {
     "presets": [["latest", { "es2015": { "modules": false } }]],
     "env": { "test": { "presets": [["latest"]] } },
-    "plugins": [["module-resolver", {
+    "plugins": ["external-helpers",["module-resolver", {
             "root": ["./"],
             "alias": {
               "graphs": "./src",
