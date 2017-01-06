@@ -1,5 +1,5 @@
 language: node_js
 node_js:
   - 'node'
-script: yarn run build
-after_success: yarn run coverage
+script: yarn build
+after_success: yarn coverage

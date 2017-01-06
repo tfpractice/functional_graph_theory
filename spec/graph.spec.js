@@ -1,8 +1,7 @@
 import 'jasmine-expect';
-jest.unmock('turmeric');
 
 // import { collections, } from 'turmeric';
-import bundle from 'dist/bundle.es6';
+import bundle from 'dist/bundle.umd';
 
 import { eFilter, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';

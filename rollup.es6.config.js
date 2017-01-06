@@ -19,5 +19,5 @@ export default {
       nodeResolve(),
       commonjs(),
       visualizer({ filename: 'stats.es6.html' }),
-      babel({}), ],
+      babel(), ],
 };

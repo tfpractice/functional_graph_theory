@@ -84,9 +84,7 @@
     ],
     "testPathIgnorePatterns":["node_modules/"],
     "testEnvironment":"node",
-    "transformIgnorePatterns": [
-    "/node_modules/", "!/turmeric/"
-  ],
+  
     "unmockedModulePathPatterns": [
       "jasmine-expect", "turmeric"
     ]
