@@ -1,6 +1,6 @@
 import 'jasmine-expect';
 import * as Graph from 'src/graph';
-import * as Str from 'src/utils/strings';
+import * as Str from 'src/strings';
 import { collections, } from 'turmeric';
 import { myNodes, } from './shared';
 const { first } = collections;

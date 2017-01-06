@@ -415,13 +415,90 @@ var search = Object.freeze({
 	pathBetween: pathBetween
 });
 
+var _slicedToArray$3 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var spread$2 = collections.spread;
+var spreadK$2 = collections.spreadK;
+var spreadV$1 = collections.spreadV;
+var spreadKV = collections.spreadKV;
+var last = collections.last;
+
+
+var redStr = function redStr() {
+  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ' ';
+  var val = arguments[1];
+  var id = arguments[2];
+  var coll = arguments[3];
+  return val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
+};
+var collString = function collString(coll) {
+  return spread$2(coll).reduce(redStr, '');
+};
+var kString = function kString(coll) {
+  return spreadK$2(coll).reduce(redStr, '');
+};
+var vString = function vString(coll) {
+  return spreadV$1(coll).reduce(redStr, '');
+};
+var kvString = function kvString(coll) {
+  return spreadKV(coll).reduce(redStr, '');
+};
+
+var pathString = function pathString(path) {
+  return ' { ' + spreadK$2(path).join(' => ') + ' }';
+};
+var edgeString = function edgeString(_ref) {
+  var _ref2 = _slicedToArray$3(_ref, 2),
+      src = _ref2[0],
+      nbs = _ref2[1];
+
+  return '{ Edge ' + src + ' >> [ ' + kString(nbs) + ' ] } ';
+};
+
+var componentString = function componentString(_ref3) {
+  var _ref4 = _slicedToArray$3(_ref3, 2),
+      node = _ref4[0],
+      nbs = _ref4[1];
+
+  return '{ component ' + node + ' >> [ ' + kString(nbs) + ' ] } ';
+};
+
+var graphString = function graphString(edges) {
+  return spreadKV(edges).reduce(function (str, _ref5, id) {
+    var _ref6 = _slicedToArray$3(_ref5, 2),
+        node = _ref6[0],
+        nabes = _ref6[1];
+
+    return str + edgeString([node, nabes]);
+  }, 'Showing Edges\n');
+};
+
+var showGraph = function showGraph(_ref7) {
+  var edges = _ref7.edges;
+  return graphString(edges);
+};
+
+var strings = Object.freeze({
+	redStr: redStr,
+	collString: collString,
+	kString: kString,
+	vString: vString,
+	kvString: kvString,
+	pathString: pathString,
+	edgeString: edgeString,
+	componentString: componentString,
+	graphString: graphString,
+	showGraph: showGraph
+});
+
 
 
 var src$1 = Object.freeze({
 	Graph: graph,
 	Reducers: reducers,
-	Search: search
+	Search: search,
+	Show: strings
 });
 
-export { graph as Graph, reducers as Reducers, search as Search };export default src$1;
+export { graph as Graph, reducers as Reducers, search as Search, strings as Show };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map
