@@ -49,15 +49,6 @@ var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
   return spread(new Map(alts)).reduce(importEdgeBin, edges);
 };
 
-var reducers = Object.freeze({
-	resetNodeBin: resetNodeBin,
-	addNodeBin: addNodeBin,
-	addEdgeBin: addEdgeBin,
-	removeEdgeBin: removeEdgeBin,
-	importEdgeBin: importEdgeBin,
-	mergeEdgesBin: mergeEdgesBin
-});
-
 var _slicedToArray$1 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var triple = collections.triple;
@@ -191,26 +182,6 @@ var addEntry = function addEntry(nabes) {
 };
 
 var mergeNeighbors = uniteMap;
-
-var graph = Object.freeze({
-	spawn: spawn,
-	copy: copy,
-	fromElements: fromElements,
-	nodes: nodes,
-	adj: adj,
-	neighbors: neighbors,
-	contains: contains,
-	isAdjacent: isAdjacent,
-	addNodes: addNodes,
-	removeNodes: removeNodes,
-	resetNodes: resetNodes,
-	addEdges: addEdges,
-	removeEdges: removeEdges,
-	mergeEdges: mergeEdges,
-	addNeighbor: addNeighbor,
-	addEntry: addEntry,
-	mergeNeighbors: mergeNeighbors
-});
 
 var _slicedToArray$2 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -406,15 +377,6 @@ var pathBetween = function pathBetween(edges) {
   };
 };
 
-var search = Object.freeze({
-	dfs: dfs,
-	bfs: bfs,
-	dijkstra: dijkstra,
-	components: components,
-	componentSet: componentSet,
-	pathBetween: pathBetween
-});
-
 var _slicedToArray$3 = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var spread$2 = collections.spread;
@@ -478,18 +440,7 @@ var showGraph = function showGraph(_ref7) {
   return graphString(edges);
 };
 
-var strings = Object.freeze({
-	redStr: redStr,
-	collString: collString,
-	kString: kString,
-	vString: vString,
-	kvString: kvString,
-	pathString: pathString,
-	edgeString: edgeString,
-	componentString: componentString,
-	graphString: graphString,
-	showGraph: showGraph
-});
+// export { Graph, Reducers, Search, Show, };
 
-export { graph as Graph, reducers as Reducers, search as Search, strings as Show, resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+export { resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map
