@@ -1,7 +1,7 @@
 TN:
 SF:/Users/tfpractice/sites/mods/graph-curry/src/graph.js
-FN:8,fromElements
-FN:9,spawn
+FN:8,spawn
+FN:10,fromElements
 FN:11,nodes
 FN:12,adj
 FN:12,adj
@@ -33,8 +33,8 @@ FN:33,addEntry
 FN:33,addEntry
 FNF:31
 FNH:31
-FNDA:12,fromElements
 FNDA:45,spawn
+FNDA:12,fromElements
 FNDA:8,nodes
 FNDA:17,adj
 FNDA:17,adj
@@ -66,9 +66,9 @@ FNDA:2,addEntry
 FNDA:2,addEntry
 DA:5,4
 DA:6,4
-DA:8,12
-DA:9,45
-DA:10,4
+DA:8,45
+DA:9,4
+DA:10,12
 DA:11,8
 DA:12,17
 DA:13,4

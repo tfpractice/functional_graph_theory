@@ -70,6 +70,10 @@ var removeBin = collections.removeBin;
 var uniteMap = collections.uniteMap;
 
 
+var spawn = function spawn(edges) {
+  return new Map(edges);
+};
+var copy = spawn;
 var fromElements = function fromElements() {
   for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
     elems[_key] = arguments[_key];
@@ -77,10 +81,6 @@ var fromElements = function fromElements() {
 
   return elems.reduce(addNodeBin, copy());
 };
-var spawn = function spawn(edges) {
-  return new Map(edges);
-};
-var copy = spawn;
 var nodes = function nodes(edges) {
   return spreadK(copy(edges));
 };
@@ -193,9 +193,9 @@ var addEntry = function addEntry(nabes) {
 var mergeNeighbors = uniteMap;
 
 var graph = Object.freeze({
-	fromElements: fromElements,
 	spawn: spawn,
 	copy: copy,
+	fromElements: fromElements,
 	nodes: nodes,
 	adj: adj,
 	neighbors: neighbors,
@@ -491,5 +491,5 @@ var strings = Object.freeze({
 	showGraph: showGraph
 });
 
-export { graph as Graph, reducers as Reducers, search as Search, strings as Show, resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, fromElements, spawn, copy, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+export { graph as Graph, reducers as Reducers, search as Search, strings as Show, resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map
