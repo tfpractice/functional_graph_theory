@@ -79,7 +79,7 @@
       "js",
       "jsx"
     ],
-    "testPathIgnorePatterns":["/node_modules/"],
+    "testPathIgnorePatterns":["/node_modules/","shared"],
     "testEnvironment":"node",
     "unmockedModulePathPatterns": [
       "jasmine-expect"
