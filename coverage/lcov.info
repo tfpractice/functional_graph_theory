@@ -33,8 +33,8 @@ FN:33,addEntry
 FN:33,addEntry
 FNF:31
 FNH:31
-FNDA:11,fromElements
-FNDA:44,spawn
+FNDA:12,fromElements
+FNDA:45,spawn
 FNDA:8,nodes
 FNDA:17,adj
 FNDA:17,adj
@@ -66,8 +66,8 @@ FNDA:2,addEntry
 FNDA:2,addEntry
 DA:5,4
 DA:6,4
-DA:8,11
-DA:9,44
+DA:8,12
+DA:9,45
 DA:10,4
 DA:11,8
 DA:12,17
@@ -115,7 +115,7 @@ FN:22,mergeEdgesBin
 FNF:6
 FNH:6
 FNDA:5,resetNodeBin
-FNDA:214,addNodeBin
+FNDA:234,addNodeBin
 FNDA:91,addEdgeBin
 FNDA:3,removeEdgeBin
 FNDA:51,importEdgeBin
@@ -123,7 +123,7 @@ FNDA:12,mergeEdgesBin
 DA:3,4
 DA:5,5
 DA:7,4
-DA:8,214
+DA:8,234
 DA:10,91
 DA:14,4
 DA:18,4
