@@ -1,8 +1,9 @@
 import 'jasmine-expect';
-import { nodes, } from 'src/graph';
+import {
+ addEdgeBin, addNodeBin, importEdgeBin, mergeEdgesBin,
+  nodes, removeEdgeBin, resetNodeBin,
+} from 'graph-curry';
 import { eGraph, n7, oGraph, } from './graph.spec';
-import { addEdgeBin, addNodeBin, importEdgeBin,
-  mergeEdgesBin, removeEdgeBin, resetNodeBin, } from 'src/reducers';
 
 const cSet = new Set([ 1, 2, 3, 4, ]);
 const cMap = [[ 8, 1 ], [ 7, 2 ], [ 6, 3 ], [ 5, 4 ]].reduce(addEdgeBin, new Map);

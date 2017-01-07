@@ -70,10 +70,6 @@ var removeBin = collections.removeBin;
 var uniteMap = collections.uniteMap;
 
 
-var spawn = function spawn(edges) {
-  return new Map(edges);
-};
-var copy = spawn;
 var fromElements = function fromElements() {
   for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
     elems[_key] = arguments[_key];
@@ -81,6 +77,10 @@ var fromElements = function fromElements() {
 
   return elems.reduce(addNodeBin, copy());
 };
+var spawn = function spawn(edges) {
+  return new Map(edges);
+};
+var copy = spawn;
 var nodes = function nodes(edges) {
   return spreadK(copy(edges));
 };
@@ -193,9 +193,9 @@ var addEntry = function addEntry(nabes) {
 var mergeNeighbors = uniteMap;
 
 var graph = Object.freeze({
+	fromElements: fromElements,
 	spawn: spawn,
 	copy: copy,
-	fromElements: fromElements,
 	nodes: nodes,
 	adj: adj,
 	neighbors: neighbors,
@@ -497,8 +497,47 @@ var src$1 = Object.freeze({
 	Graph: graph,
 	Reducers: reducers,
 	Search: search,
-	Show: strings
+	Show: strings,
+	resetNodeBin: resetNodeBin,
+	addNodeBin: addNodeBin,
+	addEdgeBin: addEdgeBin,
+	removeEdgeBin: removeEdgeBin,
+	importEdgeBin: importEdgeBin,
+	mergeEdgesBin: mergeEdgesBin,
+	fromElements: fromElements,
+	spawn: spawn,
+	copy: copy,
+	nodes: nodes,
+	adj: adj,
+	neighbors: neighbors,
+	contains: contains,
+	isAdjacent: isAdjacent,
+	addNodes: addNodes,
+	removeNodes: removeNodes,
+	resetNodes: resetNodes,
+	addEdges: addEdges,
+	removeEdges: removeEdges,
+	mergeEdges: mergeEdges,
+	addNeighbor: addNeighbor,
+	addEntry: addEntry,
+	mergeNeighbors: mergeNeighbors,
+	dfs: dfs,
+	bfs: bfs,
+	dijkstra: dijkstra,
+	components: components,
+	componentSet: componentSet,
+	pathBetween: pathBetween,
+	redStr: redStr,
+	collString: collString,
+	kString: kString,
+	vString: vString,
+	kvString: kvString,
+	pathString: pathString,
+	edgeString: edgeString,
+	componentString: componentString,
+	graphString: graphString,
+	showGraph: showGraph
 });
 
-export { graph as Graph, reducers as Reducers, search as Search, strings as Show };export default src$1;
+export { graph as Graph, reducers as Reducers, search as Search, strings as Show, resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, fromElements, spawn, copy, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default src$1;
 //# sourceMappingURL=bundle.es6.js.map

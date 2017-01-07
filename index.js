@@ -1,3 +1,2 @@
-import * as src from './src';
 export * from './src';
-export default src;
+export { fromElements as default, } from './src';

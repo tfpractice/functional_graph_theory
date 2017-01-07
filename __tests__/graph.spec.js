@@ -1,12 +1,11 @@
 import 'jasmine-expect';
-import { Graph, Reducers, } from 'graph-curry';
+import { addEdgeBin, mergeEdges, removeEdges, } from 'graph-curry';
+import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'graph-curry';
+import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'graph-curry';
+import { addEntry, addNeighbor, resetNodes, } from 'graph-curry';
 import { eFilter, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 
-const { addEdgeBin, } = Reducers;
-const { adj, copy, fromElements, neighbors, nodes, spawn, } = Graph;
-const { addEdges, addNodes, contains, isAdjacent, removeNodes, } = Graph;
-const { addEntry, addNeighbor, mergeEdges, removeEdges, resetNodes, } = Graph;
 const myGraph = fromElements(...myNodes);
 
 export { n7, };

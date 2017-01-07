@@ -1,10 +1,10 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
-import replace from 'rollup-plugin-replace';
 import nodeResolve from 'rollup-plugin-node-resolve';
-import uglify from 'rollup-plugin-uglify';
 import progress from 'rollup-plugin-progress';
+import replace from 'rollup-plugin-replace';
+import uglify from 'rollup-plugin-uglify';
 import visualizer from 'rollup-plugin-visualizer';
 
 export default {

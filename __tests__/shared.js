@@ -1,4 +1,4 @@
-import { Graph, } from 'graph-curry';
+import { addEdges, nodes, } from 'graph-curry';
 
 export const Node = (label = '', data = {}) =>
   ({ label, data, toString: () => label, });
@@ -16,9 +16,9 @@ export const [ n10, n11, n12, n13, n14, n15, n16, n17, n18, n19 ] = lastTen;
 
 export const eFilter = coll => coll.filter(({ data: { position: p }}) => p % 2 === 0);
 export const oFilter = coll => coll.filter(({ data: { position: p }}) => p % 2 === 1);
-export const nEdgesR = edges => eFilter(Graph.nodes(edges))
-  .reduce((prv, nxt, id) => Graph.addEdges(edges)(prv, id * 2)(nxt) && nxt);
-export const oEdgesR = edges => oFilter(Graph.nodes(edges))
-  .reduce((prv, nxt, id) => Graph.addEdges(edges)(prv, id * 2)(nxt) && nxt);
+export const nEdgesR = edges => eFilter(nodes(edges))
+  .reduce((prv, nxt, id) => addEdges(edges)(prv, id * 2)(nxt) && nxt);
+export const oEdgesR = edges => oFilter(nodes(edges))
+  .reduce((prv, nxt, id) => addEdges(edges)(prv, id * 2)(nxt) && nxt);
 export const eNodes = eFilter(myNodes);
 export const oNodes = oFilter(myNodes);

@@ -1,13 +1,13 @@
 import { collections, } from 'turmeric';
-import { addEdgeBin, addNodeBin, importEdgeBin, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
+import { addEdgeBin, addNodeBin, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
 from './reducers';
 
 const { triple, tuple, get, spreadK, hasK, } = collections;
 const { addBinMap, removeBin, uniteMap, } = collections;
 
+export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
 export const spawn = edges => new Map(edges);
 export const copy = spawn;
-export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
 export const nodes = edges => spreadK(copy(edges));
 export const adj = edges => src => copy(get(edges)(src));
 export const neighbors = edges => src => nodes(adj(edges)(src));
@@ -28,8 +28,8 @@ export const removeEdges = edges => src => (...nabes) =>
 export const mergeEdges = edges => (...alts) => alts.reduce(mergeEdgesBin, edges);
 
 export const addNeighbor = edges => src => (n, w = 0) =>
-  addBinMap(adj(edges)(src), [ n, w ]);
+  addBinMap(adj(edges)(src), [n, w]);
 
-export const addEntry = nabes => ([ n, w = 0 ]) => addBinMap(nabes, [ n, w ]);
+export const addEntry = nabes => ([n, w = 0]) => addBinMap(nabes, [n, w]);
 
 export const mergeNeighbors = uniteMap;
