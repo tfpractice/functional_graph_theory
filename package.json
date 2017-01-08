@@ -2,7 +2,8 @@
   "name": "graph-curry",
   "version": "1.0.0",
   "description": "a Map based implementation of canonical graph data algorithms",
-  "main": "dist/bundle.umd.js",
+  "main": "dist/bundle.cjs.js",
+  "browser": "dist/bundle.umd.js",
   "module": "dist/bundle.es6.js",
   "modules.root": "src",
   "scripts": {

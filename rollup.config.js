@@ -9,8 +9,10 @@ import visualizer from 'rollup-plugin-visualizer';
 
 export default {
   entry: 'index.js',
-  format: 'umd',
-  dest: 'dist/bundle.umd.js',
+  targets: [
+    { dest: 'dist/bundle.cjs.js', format: 'cjs', },
+    { dest: 'dist/bundle.umd.js', format: 'umd', },
+  ],
   moduleId: 'graph-curry',
   moduleName: 'graph-curry',
   sourceMap: true,
