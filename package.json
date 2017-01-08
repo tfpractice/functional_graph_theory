@@ -64,7 +64,8 @@
     "rollup-plugin-progress": "^0.2.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rollup-plugin-visualizer": "^0.1.5"
+    "rollup-plugin-visualizer": "^0.1.5",
+    "turmeric-utils": "^2.0.0"
   },
   "jest": {
     "collectCoverage": "true",
@@ -83,8 +84,5 @@
     "unmockedModulePathPatterns": [
       "jasmine-expect"
     ]
-  },
-  "dependencies": {
-    "turmeric": "git://github.com/tfpractice/turmeric.git"
   }
 }
