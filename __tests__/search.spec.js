@@ -1,5 +1,5 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric';
+import { collections, } from 'turmeric-utils';
 import { addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements,
 mergeEdgesBin, neighbors, pathBetween, } from 'graph-curry';
 

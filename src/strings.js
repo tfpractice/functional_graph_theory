@@ -1,4 +1,4 @@
-import { collections, } from 'turmeric';
+import { collections, } from 'turmeric-utils';
 
 const { spread, spreadK, spreadV, spreadKV, last } = collections;
 

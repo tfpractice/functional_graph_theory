@@ -1,4 +1,4 @@
-import { collections, } from 'turmeric';
+import { collections, } from 'turmeric-utils';
 
 const { addBinSet, lastK, hasK, mapDiff, diff, addBinMap, } = collections;
 const { spread, spreadK, spreadV, popFirst, tuple, } = collections;

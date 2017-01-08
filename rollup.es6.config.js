@@ -11,7 +11,7 @@ export default {
     format: 'es',
     moduleId: 'graph-curry',
     moduleName: 'graph-curry',
-    external: [ 'turmeric' ],
+    external: [ 'turmeric-utils' ],
     exports: 'named',
     sourceMap: true,
     plugins: [

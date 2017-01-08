@@ -1,4 +1,4 @@
-import { collections as coll, } from 'turmeric';
+import { collections as coll, } from 'turmeric-utils';
 
 const { addBinMap, mapDiff, spread, addMap, get, flatTuple, removeMap } = coll;
 

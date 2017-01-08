@@ -1,4 +1,4 @@
-import { collections, } from 'turmeric';
+import { collections, } from 'turmeric-utils';
 import { addEdgeBin, addNodeBin, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
 from './reducers';
 

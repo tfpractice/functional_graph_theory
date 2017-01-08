@@ -5,9 +5,6 @@
             "root": ["./"],
             "alias": {
               "graph-curry": "./index",
-              "dist":"dist",
-              "src": "src",
-              "config": "./config",
             }
         }],
     ],

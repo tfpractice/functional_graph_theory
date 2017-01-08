@@ -1,5 +1,5 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric';
+import { collections, } from 'turmeric-utils';
 import { collString, edgeString, fromElements,
   kString, kvString, pathString, redStr, vString, } from 'graph-curry';
 
