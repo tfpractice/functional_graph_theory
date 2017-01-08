@@ -1,6 +1,6 @@
 {
   "name": "graph-curry",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "a Map based implementation of canonical graph data algorithms",
   "main": "dist/bundle.cjs.js",
   "browser": "dist/bundle.umd.js",
@@ -65,8 +65,7 @@
     "rollup-plugin-progress": "^0.2.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rollup-plugin-visualizer": "^0.1.5",
-    "turmeric-utils": "^2.0.0"
+    "rollup-plugin-visualizer": "^0.1.5"
   },
   "jest": {
     "collectCoverage": "true",
@@ -85,5 +84,8 @@
     "unmockedModulePathPatterns": [
       "jasmine-expect"
     ]
+  },
+  "dependencies": {
+    "turmeric-utils": "^2.0.0"
   }
 }
