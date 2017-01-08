@@ -6,7 +6,7 @@
   "module": "dist/bundle.es6.js",
   "modules.root": "src",
   "scripts": {
-    "precommit":"yarn test",
+    "precommit": "yarn test",
     "prebuild": "rimraf dist",
     "build": "yarn run build:umd && yarn run build:es6",
     "build:es6": "NODE_ENV=production rollup -c rollup.es6.config.js",
@@ -75,8 +75,11 @@
       "js",
       "jsx"
     ],
-    "testPathIgnorePatterns":["/node_modules/","shared"],
-    "testEnvironment":"node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "shared"
+    ],
+    "testEnvironment": "node",
     "unmockedModulePathPatterns": [
       "jasmine-expect"
     ]
