@@ -13,7 +13,7 @@ export const superNode = src => (nb) => {
   } if (nb instanceof Set) {
     const nb = spread(nb);
   }
-  return new Set([ src, nb ]);
+  return new Set([].concat(src, nb));
 };
 
 export const combineNeighbors = g => src => nb =>
