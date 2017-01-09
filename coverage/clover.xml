@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1483940305694" clover="3.2.0">
-  <project timestamp="1483940305695" name="All files">
-    <metrics statements="134" coveredstatements="130" conditionals="41" coveredconditionals="22" methods="112" coveredmethods="106" elements="287" coveredelements="258" complexity="0" loc="134" ncloc="134" packages="1" files="6" classes="6">
+<coverage generated="1483989733539" clover="3.2.0">
+  <project timestamp="1483989733539" name="All files">
+    <metrics statements="135" coveredstatements="131" conditionals="43" coveredconditionals="22" methods="113" coveredmethods="107" elements="291" coveredelements="260" complexity="0" loc="135" ncloc="135" packages="1" files="6" classes="6">
       <file name="graph.js" path="/Users/tfpractice/sites/mods/graph-curry/src/graph.js">
         <metrics statements="31" coveredstatements="31" conditionals="5" coveredconditionals="1" methods="39" coveredmethods="38"/>
         <line num="5" count="5" type="stmt"/>
         <line num="6" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
-        <line num="9" count="514" type="stmt"/>
+        <line num="9" count="498" type="stmt"/>
         <line num="10" count="5" type="stmt"/>
         <line num="11" count="15" type="stmt"/>
-        <line num="12" count="161" type="stmt"/>
+        <line num="12" count="164" type="stmt"/>
         <line num="13" count="231" type="stmt"/>
         <line num="14" count="135" type="stmt"/>
         <line num="15" count="8" type="stmt"/>
@@ -40,29 +40,30 @@
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
       <file name="operations.js" path="/Users/tfpractice/sites/mods/graph-curry/src/operations.js">
-        <metrics statements="22" coveredstatements="22" conditionals="9" coveredconditionals="8" methods="24" coveredmethods="24"/>
+        <metrics statements="23" coveredstatements="23" conditionals="11" coveredconditionals="8" methods="25" coveredmethods="25"/>
         <line num="8" count="5" type="stmt"/>
-        <line num="10" count="42" type="stmt"/>
-        <line num="11" count="84" type="stmt"/>
-        <line num="13" count="5" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="16" count="41" type="stmt"/>
-        <line num="17" count="41" type="stmt"/>
-        <line num="19" count="41" type="stmt"/>
+        <line num="10" count="10" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="13" type="stmt"/>
+        <line num="15" count="42" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
         <line num="20" count="41" type="stmt"/>
-        <line num="22" count="39" type="stmt"/>
-        <line num="23" count="39" type="stmt"/>
-        <line num="25" count="48" type="stmt"/>
-        <line num="26" count="48" type="stmt"/>
-        <line num="28" count="5" type="stmt"/>
-        <line num="30" count="5" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="33" count="5" type="stmt"/>
-        <line num="34" count="39" type="stmt"/>
-        <line num="36" count="5" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
+        <line num="23" count="41" type="stmt"/>
+        <line num="24" count="41" type="stmt"/>
+        <line num="26" count="39" type="stmt"/>
+        <line num="27" count="39" type="stmt"/>
+        <line num="29" count="48" type="stmt"/>
+        <line num="30" count="48" type="stmt"/>
+        <line num="32" count="5" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
         <line num="37" count="5" type="stmt"/>
-        <line num="38" count="19" type="stmt"/>
-        <line num="39" count="19" type="stmt"/>
+        <line num="38" count="39" type="stmt"/>
+        <line num="40" count="5" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="42" count="19" type="stmt"/>
       </file>
       <file name="reducers.js" path="/Users/tfpractice/sites/mods/graph-curry/src/reducers.js">
         <metrics statements="12" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="6"/>

@@ -10,8 +10,6 @@ export const addNodeBin = (edges, src) =>
 export const removeNodeBin = (edges, src) =>
     addMap(edges)(src)(new Map(get(edges)(src)));
 
-// export const disconnectNode = edges => src =>
-//      removeEdges(edges)(src)(...neighbors(edges)(src));
 export const addEdgeBin = (edges, [ src, nb, wt = 0 ]) => [
   [ src, addMap(get(edges)(src))(nb)(wt) ],
   [ nb, addMap(get(edges)(nb))(src)(wt) ]].reduce(addBinMap, new Map(edges));

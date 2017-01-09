@@ -1,13 +1,13 @@
 import 'jasmine-expect';
 import { collections, } from 'turmeric-utils';
-import { combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin, contractNext,
-contractSrc, superAdj, superEdge, superNode, } from 'src/operations';
+import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
+contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/operations';
 import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements, graphString,
-mergeEdgesBin, neighbors, nodes, pathBetween, } from 'graph-curry';
+mergeEdgesBin, neighbors, nodes, pathBetween, removeEdges, } from 'graph-curry';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
-const { spread, spreadK } = collections;
+const { spread, spreadK, first, last } = collections;
 const myGraph = [ addEdges()(n0, 2)(n1, n2),
   addEdges()(n1, 4)(n4, n2),
   addEdges()(n1, 6)(n6),
@@ -24,7 +24,7 @@ const nabes1 = neighbors(myGraph)(n1);
 
 const connGraph = [ myNodes.map((e, id, arr) =>
     [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, new Map), myNodes.map((e, id, arr) =>
-        [ e, arr[((id + 18) % arr.length)], id, ]).reduce(addEdgeBin, new Map) ]
+        [ e, arr[((id + 18) % arr.length)], id, ]).reduce(addEdgeBin, new Map), ]
         .reduce(mergeEdgesBin, myGraph);
 
 const isomorphism = contractMin(connGraph, 2);
@@ -90,5 +90,14 @@ describe('contractAuto', () => {
     const newLength = contractAuto(myGraph).size;
 
     expect(newLength).toBeLessThan(oldlength);
+  });
+});
+describe('contractMin', () => {
+  it('contracts the graph down to a minimum of 2 elements', () => {
+    console.log('(isomorphism)', isomorphism.get(first(nodes(isomorphism))));
+    console.log('autoSpread', autoSpread(last(nodes(isomorphism.get(first(nodes(isomorphism)))))));
+    console.log('get37', connGraph.get(n9));
+
+    expect(isomorphism.size).toEqual(2);
   });
 });
