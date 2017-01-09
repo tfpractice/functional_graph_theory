@@ -8,6 +8,16 @@ import { eFilter, myNodes, oFilter, } from './shared';
 import { firstTen, n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 
 const myGraph = fromElements(...myNodes);
+const nabeGraph = [ addEdges()(n0, 2)(n1, n2),
+  addEdges()(n1, 4)(n4, n2),
+  addEdges()(n1, 6)(n6),
+  addEdges()(n2, 3)(n3),
+  addEdges()(n5, 4)(n4),
+  addEdges()(n3, 8)(n4),
+  addEdges()(n5, 7)(n6),
+  addEdges()(n7, 7)(n8),
+  addEdges()(n0, 11)(n1), ]
+  .reduce(mergeEdgesBin, fromElements(...firstTen));
 
 export { n7, };
 
@@ -47,17 +57,6 @@ describe('accessors', () => {
   });
   describe('nodeNeighbor', () => {
     it('returns an array of tuples of a node and each neighbor', () => {
-      const nabeGraph = [ addEdges()(n0, 2)(n1, n2),
-        addEdges()(n1, 4)(n4, n2),
-        addEdges()(n1, 6)(n6),
-        addEdges()(n2, 3)(n3),
-        addEdges()(n5, 4)(n4),
-        addEdges()(n3, 8)(n4),
-        addEdges()(n5, 7)(n6),
-        addEdges()(n7, 7)(n8),
-        addEdges()(n0, 11)(n1), ]
-        .reduce(mergeEdgesBin, fromElements(...firstTen));
-
       expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n1 ]);
       expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n2 ]);
     });
@@ -81,7 +80,7 @@ describe('operators', () => {
   });
   describe('removeNodes', () => {
     it('removes the nodes from the edges', () => {
-      expect((removeNodes(myGraph)(n0, n2)).has(n0)).toBeFalse();
+      expect((removeNodes(nabeGraph)(n0, n2)).has(n0)).toBeFalse();
     });
   });
   describe('addEdges', () => {
