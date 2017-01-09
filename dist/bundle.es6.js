@@ -81,11 +81,6 @@ var removeNodeBin = function removeNodeBin(edges, src) {
   return addMap(edges)(src)(new Map(get$$1(edges)(src)));
 };
 
-var disconnectNode = function disconnectNode(edges) {
-  return function (src) {
-    return removeEdges(edges)(src).apply(undefined, toConsumableArray(neighbors(edges)(src)));
-  };
-};
 var addEdgeBin = function addEdgeBin(edges, _ref) {
   var _ref2 = slicedToArray(_ref, 3),
       src = _ref2[0],
@@ -144,7 +139,7 @@ var adj = function adj(edges) {
     return copy(get$2(edges)(src));
   };
 };
-var neighbors$1 = function neighbors(edges) {
+var neighbors = function neighbors(edges) {
   return function (src) {
     return nodes(adj(edges)(src));
   };
@@ -170,7 +165,7 @@ var kvPair = function kvPair(k) {
 
 var nodeNeighbors = function nodeNeighbors(edges) {
   return function (src) {
-    return neighbors$1(edges)(src).map(kvPair(src));
+    return neighbors(edges)(src).map(kvPair(src));
   };
 };
 var addNodes = function addNodes(edges) {
@@ -209,7 +204,7 @@ var addEdges = function addEdges(edges) {
   };
 };
 
-var removeEdges$1 = function removeEdges(edges) {
+var removeEdges = function removeEdges(edges) {
   return function (src) {
     return function () {
       for (var _len5 = arguments.length, nabes = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
@@ -222,7 +217,7 @@ var removeEdges$1 = function removeEdges(edges) {
 };
 
 var disconnectNodeBin = function disconnectNodeBin(edges, src) {
-  return removeEdges$1(edges)(src).apply(undefined, toConsumableArray(neighbors$1(edges)(src)));
+  return removeEdges(edges)(src).apply(undefined, toConsumableArray(neighbors(edges)(src)));
 };
 
 var disconnectNodes = function disconnectNodes(edges) {
@@ -537,18 +532,26 @@ var removeBin$1 = collections.removeBin;
 var addMap$1 = collections.addMap;
 
 
+var flattenBin$1 = function flattenBin() {
+  var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  return flatten$1(a)(b);
+};
+
+var autoSpread = function autoSpread(el) {
+  return el[Symbol.iterator] ? spread$3(el).reduce(flattenBin$1, []).map(autoSpread) : el;
+};
+
 var superNode = function superNode(src) {
   return function (nb) {
-    return new Set([src, nb].map(function (el) {
-      return el instanceof Set ? spread$3(el) : el;
-    }));
+    return new Set([src, nb]);
   };
 };
 
 var combineNeighbors = function combineNeighbors(g) {
   return function (src) {
     return function (nb) {
-      return new Set(flatten$1(neighbors$1(g)(src))(neighbors$1(g)(nb)));
+      return new Set(flatten$1(neighbors(g)(src))(neighbors(g)(nb)));
     };
   };
 };
@@ -580,7 +583,7 @@ var superEdge = function superEdge(g) {
 var contract = function contract(g) {
   return function (src) {
     return function () {
-      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors$1(g)(src));
+      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors(g)(src));
       return nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
     };
   };
@@ -610,14 +613,13 @@ var contractAuto = function contractAuto(g) {
 };
 var contractMin = function contractMin(g) {
   var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-
-  console.log('g', g);
-  return copy(g).size > min ? contractMin(contractNext(g), min) : copy(g);
+  return g.size > min ? contractMin(contractNext(g), min) : copy(g);
 };
 
 
 
 var operations = Object.freeze({
+	autoSpread: autoSpread,
 	superNode: superNode,
 	combineNeighbors: combineNeighbors,
 	combineAdj: combineAdj,
@@ -631,5 +633,5 @@ var operations = Object.freeze({
 	contractMin: contractMin
 });
 
-export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, disconnectNode, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors$1 as neighbors, contains, isAdjacent, kvPair, nodeNeighbors, addNodes, resetNodes, addEdges, removeEdges$1 as removeEdges, disconnectNodeBin, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, kvPair, nodeNeighbors, addNodes, resetNodes, addEdges, removeEdges, disconnectNodeBin, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map
