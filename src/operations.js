@@ -7,14 +7,8 @@ import * as reducers from './reducers';
 
 const { flatten, spread, first, removeBin, get, addMap } = collections;
 
-export const superNode = src => (nb) => {
-  if (src instanceof Set) {
-    const src = spread(src);
-  } if (nb instanceof Set) {
-    const nb = spread(nb);
-  }
-  return new Set([].concat(src, nb));
-};
+export const superNode = src => nb =>
+  new Set([ src, nb ].map(el => el instanceof Set ? spread(el) : el));
 
 export const combineNeighbors = g => src => nb =>
   new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));
@@ -42,6 +36,5 @@ export const contractNext = (g, n = (first(nodes(g)))) =>
 export const contractAuto = g => nodes(g).reduce(contractNext, g);
 export const contractMin = (g, min = 2) => {
   console.log('g', (g));
-  console.log('min', min);
   return copy(g).size > min ? contractMin(contractNext(g), min) : copy(g);
 };
