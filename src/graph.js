@@ -19,10 +19,11 @@ export const kvPair = k => v => [ k, v ];
 
 export const nodeNeighbors = edges => src => neighbors(edges)(src).map(kvPair(src));
 export const addNodes = edges => (...srcs) => srcs.reduce(addNodeBin, edges);
-export const removeNodes = edges => (...srcs) => srcs.reduce(removeBin, copy(edges));
 
-// export const removeNodes = edges => (...srcs) =>
-// srcs.map(tuple(neighbors(edges)))
+// export const removeNodes = edges => (...srcs) => srcs.reduce(removeBin, copy(edges));
+
+export const removeNodes = edges => (...srcs) =>
+srcs.map(nodeNeighbors(edges)).reduce(removeEdgeBin, copy(edges));
 export const resetNodes = edges => (...srcs) => srcs.reduce(resetNodeBin, edges);
 
 export const addEdges = edges => (src, w = 0) => (...nabes) =>
