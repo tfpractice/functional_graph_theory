@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.82% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/22</span>
+        <span class='fraction'>11/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>0/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">63.64% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>7/11</span>
+        <span class='fraction'>0/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80% </span>
+        <span class="strong">73.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/15</span>
+        <span class='fraction'>11/15</span>
       </div>
     </div>
   </div>
-  <div class='status-line high'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -68,40 +68,40 @@
 23
 24</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { collections, } from 'turmeric-utils';
 &nbsp;
 const { spread, spreadK, spreadV, spreadKV, last } = collections;
 &nbsp;
-export const redStr = (str = <span class="branch-0 cbranch-no" title="branch not covered" >' ',</span> val, id, coll) =&gt;
-  val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
-export const collString = coll =&gt; spread(coll).reduce(redStr, '');
-export const kString = coll =&gt; spreadK(coll).reduce(redStr, '');
-export const vString = coll =&gt; spreadV(coll).reduce(redStr, '');
-export const kvString = coll =&gt; spreadKV(coll).reduce(redStr, '');
+export const redStr = <span class="fstat-no" title="function not covered" >(s</span>tr = <span class="branch-0 cbranch-no" title="branch not covered" >' ',</span> val, id, coll) =&gt;
+<span class="cstat-no" title="statement not covered" >  val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');</span>
+export const collString = <span class="fstat-no" title="function not covered" >co</span>ll =&gt; <span class="cstat-no" title="statement not covered" >spread(coll).reduce(redStr, '');</span>
+export const kString = <span class="fstat-no" title="function not covered" >co</span>ll =&gt; <span class="cstat-no" title="statement not covered" >spreadK(coll).reduce(redStr, '');</span>
+export const vString = <span class="fstat-no" title="function not covered" >co</span>ll =&gt; <span class="cstat-no" title="statement not covered" >spreadV(coll).reduce(redStr, '');</span>
+export const kvString = <span class="fstat-no" title="function not covered" >co</span>ll =&gt; <span class="cstat-no" title="statement not covered" >spreadKV(coll).reduce(redStr, '');</span>
 &nbsp;
-export const pathString = path =&gt; ` { ${spreadK(path).join(' =&gt; ')} }`;
-export const edgeString = ([ src, nbs ]) =&gt; `{ Edge ${src} &gt;&gt; [ ${kString(nbs)} ] } `;
+export const pathString = <span class="fstat-no" title="function not covered" >pa</span>th =&gt; <span class="cstat-no" title="statement not covered" >` { ${spreadK(path).join(' =&gt; ')} }`;</span>
+export const edgeString = <span class="fstat-no" title="function not covered" >([</span> src, nbs ]) =&gt; <span class="cstat-no" title="statement not covered" >`{ Edge ${src} &gt;&gt; [ ${kString(nbs)} ] } `;</span>
 &nbsp;
 export const componentString = <span class="fstat-no" title="function not covered" >([</span> node, nbs ]) =&gt;
 <span class="cstat-no" title="statement not covered" >  `{ component ${node} &gt;&gt; [ ${kString(nbs)} ] } `;</span>
@@ -118,7 +118,7 @@ export const showGraph = <span class="fstat-no" title="function not covered" >({
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 08 2017 21:19:15 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 08 2017 21:41:36 GMT-0500 (EST)
 </div>
 </div>
 <script src="prettify.js"></script>
