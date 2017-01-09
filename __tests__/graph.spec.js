@@ -58,7 +58,8 @@ describe('accessors', () => {
         addEdges()(n0, 11)(n1), ]
         .reduce(mergeEdgesBin, fromElements(...firstTen));
 
-      console.log('nodeNeighbors(myGraph)', nodeNeighbors(nabeGraph)(n0));
+      expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n1 ]);
+      expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n2 ]);
     });
   });
   describe('contains', () => {
