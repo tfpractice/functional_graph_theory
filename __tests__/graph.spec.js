@@ -1,10 +1,11 @@
 import 'jasmine-expect';
-import { addEdgeBin, mergeEdges, removeEdges, } from 'graph-curry';
+import { nodeNeighbors, } from 'src/graph';
+import { addEdgeBin, mergeEdges, mergeEdgesBin, removeEdges, } from 'graph-curry';
 import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'graph-curry';
 import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'graph-curry';
 import { addEntry, addNeighbor, resetNodes, } from 'graph-curry';
 import { eFilter, myNodes, oFilter, } from './shared';
-import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
+import { firstTen, n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 
 const myGraph = fromElements(...myNodes);
 
@@ -42,6 +43,22 @@ describe('accessors', () => {
   describe('neighbors(edge)(node)', () => {
     it('returns a map entry of that nodes neighbors ', () => {
       expect(neighbors(myGraph)(n0) instanceof Array).toBeTrue();
+    });
+  });
+  describe('nodeNeighbor', () => {
+    it('returns an array of tuples of a node and each neighbor', () => {
+      const nabeGraph = [ addEdges()(n0, 2)(n1, n2),
+        addEdges()(n1, 4)(n4, n2),
+        addEdges()(n1, 6)(n6),
+        addEdges()(n2, 3)(n3),
+        addEdges()(n5, 4)(n4),
+        addEdges()(n3, 8)(n4),
+        addEdges()(n5, 7)(n6),
+        addEdges()(n7, 7)(n8),
+        addEdges()(n0, 11)(n1), ]
+        .reduce(mergeEdgesBin, fromElements(...firstTen));
+
+      console.log('nodeNeighbors(myGraph)', nodeNeighbors(nabeGraph)(n0));
     });
   });
   describe('contains', () => {
