@@ -38,6 +38,28 @@ var slicedToArray = function () {
   };
 }();
 
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 var addBinMap = collections.addBinMap;
 var mapDiff = collections.mapDiff;
 var spread = collections.spread;
@@ -55,6 +77,15 @@ var addNodeBin = function addNodeBin(edges, src) {
   return addMap(edges)(src)(new Map(get$$1(edges)(src)));
 };
 
+var removeNodeBin = function removeNodeBin(edges, src) {
+  return addMap(edges)(src)(new Map(get$$1(edges)(src)));
+};
+
+var disconnectNode = function disconnectNode(edges) {
+  return function (src) {
+    return removeEdges(edges)(src).apply(undefined, toConsumableArray(neighbors(edges)(src)));
+  };
+};
 var addEdgeBin = function addEdgeBin(edges, _ref) {
   var _ref2 = slicedToArray(_ref, 3),
       src = _ref2[0],
@@ -94,7 +125,6 @@ var addBinMap$1 = collections.addBinMap;
 var removeBin = collections.removeBin;
 var uniteMap = collections.uniteMap;
 
-
 var spawn = function spawn(edges) {
   return new Map(edges);
 };
@@ -114,7 +144,7 @@ var adj = function adj(edges) {
     return copy(get$2(edges)(src));
   };
 };
-var neighbors = function neighbors(edges) {
+var neighbors$1 = function neighbors(edges) {
   return function (src) {
     return nodes(adj(edges)(src));
   };
@@ -132,6 +162,17 @@ var isAdjacent = function isAdjacent(edges) {
   };
 };
 
+var kvPair = function kvPair(k) {
+  return function (v) {
+    return [k, v];
+  };
+};
+
+var nodeNeighbors = function nodeNeighbors(edges) {
+  return function (src) {
+    return neighbors$1(edges)(src).map(kvPair(src));
+  };
+};
 var addNodes = function addNodes(edges) {
   return function () {
     for (var _len2 = arguments.length, srcs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
@@ -141,19 +182,14 @@ var addNodes = function addNodes(edges) {
     return srcs.reduce(addNodeBin, edges);
   };
 };
-var removeNodes = function removeNodes(edges) {
+
+//  srcs.map(nodeNeighbors(edges))
+//    .reduce(flattenBin, [])
+//    .reduce(removeEdgeBin, copy(edges));
+var resetNodes = function resetNodes(edges) {
   return function () {
     for (var _len3 = arguments.length, srcs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       srcs[_key3] = arguments[_key3];
-    }
-
-    return srcs.reduce(removeBin, copy(edges));
-  };
-};
-var resetNodes = function resetNodes(edges) {
-  return function () {
-    for (var _len4 = arguments.length, srcs = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      srcs[_key4] = arguments[_key4];
     }
 
     return srcs.reduce(resetNodeBin, edges);
@@ -164,8 +200,8 @@ var addEdges = function addEdges(edges) {
   return function (src) {
     var w = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     return function () {
-      for (var _len5 = arguments.length, nabes = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-        nabes[_key5] = arguments[_key5];
+      for (var _len4 = arguments.length, nabes = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        nabes[_key4] = arguments[_key4];
       }
 
       return nabes.map(triple(w)(src)).reduce(addEdgeBin, edges);
@@ -173,11 +209,11 @@ var addEdges = function addEdges(edges) {
   };
 };
 
-var removeEdges = function removeEdges(edges) {
+var removeEdges$1 = function removeEdges(edges) {
   return function (src) {
     return function () {
-      for (var _len6 = arguments.length, nabes = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-        nabes[_key6] = arguments[_key6];
+      for (var _len5 = arguments.length, nabes = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        nabes[_key5] = arguments[_key5];
       }
 
       return nabes.map(tuple(src)).reduce(removeEdgeBin, edges);
@@ -185,10 +221,34 @@ var removeEdges = function removeEdges(edges) {
   };
 };
 
+var disconnectNodeBin = function disconnectNodeBin(edges, src) {
+  return removeEdges$1(edges)(src).apply(undefined, toConsumableArray(neighbors$1(edges)(src)));
+};
+
+var disconnectNodes = function disconnectNodes(edges) {
+  return function () {
+    for (var _len6 = arguments.length, srcs = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      srcs[_key6] = arguments[_key6];
+    }
+
+    return srcs.reduce(disconnectNodeBin, copy(edges));
+  };
+};
+
+var removeNodes = function removeNodes(edges) {
+  return function () {
+    for (var _len7 = arguments.length, srcs = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+      srcs[_key7] = arguments[_key7];
+    }
+
+    return srcs.reduce(removeBin, disconnectNodes(edges).apply(undefined, srcs));
+  };
+};
+
 var mergeEdges = function mergeEdges(edges) {
   return function () {
-    for (var _len7 = arguments.length, alts = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-      alts[_key7] = arguments[_key7];
+    for (var _len8 = arguments.length, alts = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+      alts[_key8] = arguments[_key8];
     }
 
     return alts.reduce(mergeEdgesBin, edges);
@@ -470,7 +530,106 @@ var showGraph = function showGraph(_ref7) {
   return graphString(edges);
 };
 
-// export { Graph, Reducers, Search, Show, };
+var flatten$1 = collections.flatten;
+var spread$3 = collections.spread;
+var first = collections.first;
+var removeBin$1 = collections.removeBin;
+var addMap$1 = collections.addMap;
 
-export { resetNodeBin, addNodeBin, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, removeNodes, resetNodes, addEdges, removeEdges, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+
+var superNode = function superNode(src) {
+  return function (nb) {
+    return new Set([src, nb].map(function (el) {
+      return el instanceof Set ? spread$3(el) : el;
+    }));
+  };
+};
+
+var combineNeighbors = function combineNeighbors(g) {
+  return function (src) {
+    return function (nb) {
+      return new Set(flatten$1(neighbors$1(g)(src))(neighbors$1(g)(nb)));
+    };
+  };
+};
+
+var combineAdj = function combineAdj(g) {
+  return function (src) {
+    return function (nb) {
+      return new Map(flatten$1(adj(g)(src))(adj(g)(nb)));
+    };
+  };
+};
+
+var superAdj = function superAdj(g) {
+  return function (src) {
+    return function (nb) {
+      return [src, nb].reduce(removeBin$1, combineAdj(g)(src)(nb));
+    };
+  };
+};
+
+var superEdge = function superEdge(g) {
+  return function (src) {
+    return function (nb) {
+      return addMap$1()(superNode(src)(nb))(superAdj(g)(src)(nb));
+    };
+  };
+};
+
+var contract = function contract(g) {
+  return function (src) {
+    return function () {
+      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors$1(g)(src));
+      return nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
+    };
+  };
+};
+
+var contractBin = function contractBin(g, _ref) {
+  var _ref2 = slicedToArray(_ref, 2),
+      src = _ref2[0],
+      nb = _ref2[1];
+
+  return contract(g)(src)(nb);
+};
+
+var contractSrc = function contractSrc(g) {
+  return function (src) {
+    return nodeNeighbors(g)(src).reduce(contractBin, copy(g));
+  };
+};
+
+var contractNext = function contractNext(g) {
+  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : first(nodes(g));
+  return contract(copy(g))(n)();
+};
+
+var contractAuto = function contractAuto(g) {
+  return nodes(g).reduce(contractNext, g);
+};
+var contractMin = function contractMin(g) {
+  var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
+  console.log('g', g);
+  return copy(g).size > min ? contractMin(contractNext(g), min) : copy(g);
+};
+
+
+
+var operations = Object.freeze({
+	superNode: superNode,
+	combineNeighbors: combineNeighbors,
+	combineAdj: combineAdj,
+	superAdj: superAdj,
+	superEdge: superEdge,
+	contract: contract,
+	contractBin: contractBin,
+	contractSrc: contractSrc,
+	contractNext: contractNext,
+	contractAuto: contractAuto,
+	contractMin: contractMin
+});
+
+export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, disconnectNode, addEdgeBin, removeEdgeBin, importEdgeBin, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors$1 as neighbors, contains, isAdjacent, kvPair, nodeNeighbors, addNodes, resetNodes, addEdges, removeEdges$1 as removeEdges, disconnectNodeBin, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, mergeNeighbors, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map
