@@ -22,8 +22,16 @@ const myGraph = [ addEdges()(n0, 1)(n1, n3),
 const nabes0 = neighbors(myGraph)(n0);
 const nabes1 = neighbors(myGraph)(n1);
 
-describe('myGraph', () => {
+describe('connecting corner nodes in a 3x3grid', () => {
   it('has 9nodes', () => {
     expect(nodes(myGraph).length).toEqual(9);
   });
+});
+
+describe('components after a single contraction', () => {
+  console.log('components(myGraph)', componentSet(myGraph).size);
+  const con41 = contract(myGraph)(n4)(n1);
+
+  console.log('con41', con41);
+  console.log('components(myGraph)', componentSet(con41).size);
 });

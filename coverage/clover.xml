@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1484196603711" clover="3.2.0">
-  <project timestamp="1484196603711" name="All files">
+<coverage generated="1484196930154" clover="3.2.0">
+  <project timestamp="1484196930154" name="All files">
     <metrics statements="135" coveredstatements="130" conditionals="43" coveredconditionals="20" methods="113" coveredmethods="105" elements="291" coveredelements="255" complexity="0" loc="135" ncloc="135" packages="1" files="7" classes="7">
       <file name="cut.js" path="/Users/tfpractice/sites/mods/graph-curry/src/cut.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -10,12 +10,12 @@
         <line num="5" count="6" type="stmt"/>
         <line num="6" count="6" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
-        <line num="9" count="500" type="stmt"/>
+        <line num="9" count="507" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
         <line num="11" count="15" type="stmt"/>
-        <line num="12" count="164" type="stmt"/>
-        <line num="13" count="233" type="stmt"/>
-        <line num="14" count="137" type="stmt"/>
+        <line num="12" count="166" type="stmt"/>
+        <line num="13" count="237" type="stmt"/>
+        <line num="14" count="139" type="stmt"/>
         <line num="15" count="8" type="stmt"/>
         <line num="16" count="6" type="stmt"/>
         <line num="17" count="6" type="stmt"/>
@@ -25,15 +25,15 @@
         <line num="27" count="6" type="stmt"/>
         <line num="29" count="62" type="stmt"/>
         <line num="30" count="62" type="stmt"/>
-        <line num="32" count="82" type="stmt"/>
-        <line num="33" count="82" type="stmt"/>
+        <line num="32" count="84" type="stmt"/>
+        <line num="33" count="84" type="stmt"/>
         <line num="35" count="6" type="stmt"/>
-        <line num="36" count="80" type="stmt"/>
-        <line num="38" count="40" type="stmt"/>
-        <line num="39" count="40" type="stmt"/>
-        <line num="41" count="40" type="stmt"/>
-        <line num="42" count="40" type="stmt"/>
-        <line num="44" count="40" type="stmt"/>
+        <line num="36" count="82" type="stmt"/>
+        <line num="38" count="41" type="stmt"/>
+        <line num="39" count="41" type="stmt"/>
+        <line num="41" count="41" type="stmt"/>
+        <line num="42" count="41" type="stmt"/>
+        <line num="44" count="41" type="stmt"/>
         <line num="46" count="6" type="stmt"/>
         <line num="47" count="4" type="stmt"/>
         <line num="49" count="6" type="stmt"/>
@@ -48,17 +48,17 @@
         <line num="10" count="6" type="stmt"/>
         <line num="12" count="6" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="15" count="42" type="stmt"/>
+        <line num="15" count="43" type="stmt"/>
         <line num="17" count="6" type="stmt"/>
         <line num="18" count="2" type="stmt"/>
-        <line num="20" count="41" type="stmt"/>
-        <line num="21" count="41" type="stmt"/>
-        <line num="23" count="41" type="stmt"/>
-        <line num="24" count="41" type="stmt"/>
-        <line num="26" count="39" type="stmt"/>
-        <line num="27" count="39" type="stmt"/>
-        <line num="29" count="48" type="stmt"/>
-        <line num="30" count="48" type="stmt"/>
+        <line num="20" count="42" type="stmt"/>
+        <line num="21" count="42" type="stmt"/>
+        <line num="23" count="42" type="stmt"/>
+        <line num="24" count="42" type="stmt"/>
+        <line num="26" count="40" type="stmt"/>
+        <line num="27" count="40" type="stmt"/>
+        <line num="29" count="49" type="stmt"/>
+        <line num="30" count="49" type="stmt"/>
         <line num="32" count="6" type="stmt"/>
         <line num="34" count="6" type="stmt"/>
         <line num="35" count="2" type="stmt"/>
@@ -73,15 +73,15 @@
         <line num="3" count="6" type="stmt"/>
         <line num="5" count="6" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
-        <line num="8" count="435" type="stmt"/>
+        <line num="8" count="436" type="stmt"/>
         <line num="10" count="6" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
-        <line num="13" count="360" type="stmt"/>
-        <line num="17" count="180" type="stmt"/>
+        <line num="13" count="365" type="stmt"/>
+        <line num="17" count="186" type="stmt"/>
         <line num="21" count="6" type="stmt"/>
-        <line num="22" count="222" type="stmt"/>
+        <line num="22" count="223" type="stmt"/>
         <line num="25" count="6" type="stmt"/>
-        <line num="26" count="88" type="stmt"/>
+        <line num="26" count="89" type="stmt"/>
       </file>
       <file name="search.js" path="/Users/tfpractice/sites/mods/graph-curry/src/search.js">
         <metrics statements="54" coveredstatements="54" conditionals="23" coveredconditionals="10" methods="31" coveredmethods="31"/>
@@ -131,11 +131,11 @@
         <line num="62" count="6" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
         <line num="70" count="6" type="stmt"/>
-        <line num="71" count="4" type="stmt"/>
-        <line num="72" count="820" type="stmt"/>
-        <line num="73" count="4" type="stmt"/>
-        <line num="74" count="40" type="stmt"/>
-        <line num="77" count="4" type="stmt"/>
+        <line num="71" count="6" type="stmt"/>
+        <line num="72" count="1246" type="stmt"/>
+        <line num="73" count="6" type="stmt"/>
+        <line num="74" count="57" type="stmt"/>
+        <line num="77" count="6" type="stmt"/>
         <line num="80" count="6" type="stmt"/>
         <line num="81" count="6" type="stmt"/>
         <line num="82" count="1" type="stmt"/>
