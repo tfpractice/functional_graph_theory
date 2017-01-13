@@ -27,7 +27,11 @@ describe('connecting corner nodes in a 3x3grid', () => {
     expect(nodes(myGraph).length).toEqual(9);
   });
 });
-
+describe('pre-contraction', () => {
+  it('has paths for each pair', () => {
+    console.log('pathBetween(myGraph)(n0)(n1))', pathBetween(myGraph)(n0)(n1));
+  });
+});
 describe('components after a single contraction', () => {
   console.log('components(myGraph)', componentSet(myGraph).size);
   const con41 = contract(myGraph)(n4)(n1);

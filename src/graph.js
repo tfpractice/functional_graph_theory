@@ -16,14 +16,11 @@ export const contains = edges => node => hasK(edges)(node);
 export const isAdjacent = edges => src => nabe =>
   contains(adj(edges)(src))(nabe);
 
-export const kvPair = k => v => [k, v];
+export const kvPair = k => v => [ k, v ];
 
 export const nodeNeighbors = edges => src => neighbors(edges)(src).map(kvPair(src));
 export const addNodes = edges => (...srcs) => srcs.reduce(addNodeBin, edges);
 
-  //  srcs.map(nodeNeighbors(edges))
-  //    .reduce(flattenBin, [])
-  //    .reduce(removeEdgeBin, copy(edges));
 export const resetNodes = edges => (...srcs) => srcs.reduce(resetNodeBin, edges);
 
 export const addEdges = edges => (src, w = 0) => (...nabes) =>
@@ -44,8 +41,8 @@ export const removeNodes = edges => (...srcs) =>
 export const mergeEdges = edges => (...alts) => alts.reduce(mergeEdgesBin, edges);
 
 export const addNeighbor = edges => src => (n, w = 0) =>
-  addBinMap(adj(edges)(src), [n, w]);
+  addBinMap(adj(edges)(src), [ n, w ]);
 
-export const addEntry = nabes => ([n, w = 0]) => addBinMap(nabes, [n, w]);
+export const addEntry = nabes => ([ n, w = 0 ]) => addBinMap(nabes, [ n, w ]);
 
 export const mergeNeighbors = uniteMap;

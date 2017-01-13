@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1484196930154" clover="3.2.0">
-  <project timestamp="1484196930154" name="All files">
+<coverage generated="1484237162442" clover="3.2.0">
+  <project timestamp="1484237162442" name="All files">
     <metrics statements="135" coveredstatements="130" conditionals="43" coveredconditionals="20" methods="113" coveredmethods="105" elements="291" coveredelements="255" complexity="0" loc="135" ncloc="135" packages="1" files="7" classes="7">
       <file name="cut.js" path="/Users/tfpractice/sites/mods/graph-curry/src/cut.js">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -131,14 +131,14 @@
         <line num="62" count="6" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
         <line num="70" count="6" type="stmt"/>
-        <line num="71" count="6" type="stmt"/>
-        <line num="72" count="1246" type="stmt"/>
-        <line num="73" count="6" type="stmt"/>
-        <line num="74" count="57" type="stmt"/>
-        <line num="77" count="6" type="stmt"/>
+        <line num="71" count="7" type="stmt"/>
+        <line num="72" count="1480" type="stmt"/>
+        <line num="73" count="7" type="stmt"/>
+        <line num="74" count="66" type="stmt"/>
+        <line num="77" count="7" type="stmt"/>
         <line num="80" count="6" type="stmt"/>
         <line num="81" count="6" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
+        <line num="82" count="2" type="stmt"/>
       </file>
       <file name="strings.js" path="/Users/tfpractice/sites/mods/graph-curry/src/strings.js">
         <metrics statements="15" coveredstatements="12" conditionals="3" coveredconditionals="2" methods="11" coveredmethods="7"/>
