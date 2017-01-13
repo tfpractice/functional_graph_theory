@@ -94,9 +94,9 @@ describe('contractAuto', () => {
 });
 describe('contractMin', () => {
   it('contracts the graph down to a minimum of 2 elements', () => {
-    console.log('(isomorphism)', isomorphism.get(first(nodes(isomorphism))));
-    console.log('autoSpread', autoSpread(last(nodes(isomorphism.get(first(nodes(isomorphism)))))));
-    console.log('get37', connGraph.get(n9));
+    // console.log('(isomorphism)', isomorphism.get(first(nodes(isomorphism))));
+    // console.log('autoSpread', autoSpread(last(nodes(isomorphism.get(first(nodes(isomorphism)))))));
+    // console.log('get37', connGraph.get(n9));
 
     expect(isomorphism.size).toEqual(2);
   });
