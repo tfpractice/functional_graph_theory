@@ -1,5 +1,5 @@
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/graph.js
+SF:/Users/tfpractice/sites/graph-curry/src/graph.js
 FN:7,flattenBin
 FN:9,spawn
 FN:11,fromElements
@@ -122,7 +122,7 @@ BRF:5
 BRH:1
 end_of_record
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/index.js
+SF:/Users/tfpractice/sites/graph-curry/src/index.js
 FNF:0
 FNH:0
 LF:0
@@ -131,7 +131,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/operations.js
+SF:/Users/tfpractice/sites/graph-curry/src/operations.js
 FN:10,flattenBin
 FN:12,autoSpread
 FN:15,superNode
@@ -224,7 +224,7 @@ BRF:11
 BRH:8
 end_of_record
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/reducers.js
+SF:/Users/tfpractice/sites/graph-curry/src/reducers.js
 FN:5,resetNodeBin
 FN:7,addNodeBin
 FN:10,removeNodeBin
@@ -260,7 +260,7 @@ BRF:1
 BRH:1
 end_of_record
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/search.js
+SF:/Users/tfpractice/sites/graph-curry/src/search.js
 FN:6,pathVal
 FN:6,pathVal
 FN:6,pathVal
@@ -408,7 +408,7 @@ BRF:23
 BRH:10
 end_of_record
 TN:
-SF:/Users/tfpractice/sites/mods/graph-curry/src/strings.js
+SF:/Users/tfpractice/sites/graph-curry/src/strings.js
 FN:5,redStr
 FN:7,collString
 FN:8,kString
