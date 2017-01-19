@@ -6,11 +6,21 @@ import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto,
 import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra,
   fromElements, graphString, mergeEdgesBin, neighbors, nodes, pathBetween, pathString,
    removeEdges, } from 'graph-curry';
-import { countComponents, selectNeighbor, selectNeighborBin, } from 'src/tree';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
 const { spread, spreadK, first, last } = collections;
+
+import { compSize,
+countComponents,
+safeNabes,
+safeReduce,
+safeReduceBin,
+safeSearch,
+sameComps,
+selectNeighbor,
+selectNeighborBin,
+uncut, uncutKey, } from 'src/tree';
 const myGraph = [
   addEdges()(n0, 1)(n1, n3),
   addEdges()(n1, 1)(n0, n2, n4),
@@ -39,9 +49,20 @@ describe('bst', () => {
 });
 
 describe('selectNeighbor', () => {
-  console.log('stepped', graphString(stepped));
-  console.log('stepped', countComponents(stepped));
-  console.log(graphString(spread(myDepth).map(([ k, v ]) => [ k, v.pred ]).reduce(selectNeighborBin)));
+  // console.log('stepped', graphString(stepped));
+  // console.log('stepped', countComponents(stepped));
+  // console.log(graphString(spread(myDepth).map(([ k, v ]) => [ k, v.pred ]).reduce(selectNeighborBin)));
+  const ss0 = safeSearch(myGraph)(n0);
+  const ss7 = safeSearch(myGraph)(n7);
+  const ss2 = safeSearch(myGraph)(n2);
+  const ss6 = safeSearch(myGraph)(n6);
+
+  // const ss0 = safeSearch(myGraph)(n0);
+
+  // console.log('safeSearch(myGraph)', pathString(safeSearch(myGraph)(n4)));
+  // console.log('safeReduce', pathString(safeReduce(myGraph)(n4)));
+  // console.log('safeReduce', pathString(safeReduceBin(myGraph, n4)));
+  // nodes(myGraph).map(safeSearch(myGraph)).map(pathString).map(console.log);
 
   // console.log(allSearch(selectNeighbor(myGraph)(n4)(n5)).map(pathString));
   // console.log(graphString(selectNeighbor(myGraph)(n4)(n5)));

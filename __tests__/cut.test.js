@@ -29,13 +29,13 @@ describe('connecting corner nodes in a 3x3grid', () => {
 });
 describe('pre-contraction', () => {
   it('has paths for each pair', () => {
-    console.log('pathBetween(myGraph)(n0)(n1))', pathBetween(myGraph)(n0)(n1));
+    // console\.log('pathBetween(myGraph)(n0)(n1))', pathBetween(myGraph)(n0)(n1));
   });
 });
 describe('components after a single contraction', () => {
-  console.log('components(myGraph)', componentSet(myGraph).size);
+  // console\.log('components(myGraph)', componentSet(myGraph).size);
   const con41 = contract(myGraph)(n4)(n1);
 
-  console.log('con41', con41);
-  console.log('components(myGraph)', componentSet(con41).size);
+  // console\.log('con41', con41);
+  // console\.log('components(myGraph)', componentSet(con41).size);
 });

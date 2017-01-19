@@ -9,16 +9,16 @@ const pathVal = (pred = null) => (length = 1) => (weight = 0) =>
 const addSrc = (path = new Map) => src =>
   path.set(src, { pred: lastK(path), weight: 0, length: 1 });
 
-const initPath = node => addSrc()(node);
-const ptW = ({ weight = 0 }) => weight;
-const ptL = ({ length = 1 }) => length;
-const lastVal = path => path.get(lastK(path));
-const lastW = path => ptW(lastVal(path));
-const lastL = path => ptL(lastVal(path));
-const nextW = path => (w = 0) => lastW(path) + w;
-const nextL = path => lastL(path) ? lastL(path) + 1 : 1;
+export const initPath = node => addSrc()(node);
+export const ptW = ({ weight = 0 }) => weight;
+export const ptL = ({ length = 1 }) => length;
+export const lastVal = path => path.get(lastK(path));
+export const lastW = path => ptW(lastVal(path));
+export const lastL = path => ptL(lastVal(path));
+export const nextW = path => (w = 0) => lastW(path) + w;
+export const nextL = path => lastL(path) ? lastL(path) + 1 : 1;
 
-const nextPath = (path = new Map, [ n, w = 0 ]) =>
+export const nextPath = (path = new Map, [ n, w = 0 ]) =>
   path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
 
 export const dfs = edges => (src) => {
