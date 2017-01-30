@@ -1,13 +1,11 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric-utils';
+import { spreadK, } from 'fenugreek-collections';
 import { addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements,
 mergeEdgesBin, neighbors, pathBetween, } from 'graph-curry';
 
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
-
-const { spread, spreadK } = collections;
 
 const myGraph = [ addEdges()(n0, 2)(n1, n2),
   addEdges()(n1, 4)(n4, n2),

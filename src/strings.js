@@ -1,6 +1,4 @@
-import { collections, } from 'turmeric-utils';
-
-const { spread, spreadK, spreadV, spreadKV, last } = collections;
+import { last, spread, spreadK, spreadKV, spreadV, } from 'fenugreek-collections';
 
 export const redStr = (str = ' ', val, id, coll) =>
   val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');

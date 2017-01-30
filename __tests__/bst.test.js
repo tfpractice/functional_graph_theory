@@ -1,5 +1,5 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric-utils';
+import { first, last, spread, spreadK, } from 'fenugreek-collections';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto,
    contractBin, contractMin, contractNext, contractSrc, superAdj, superEdge,
     superNode, } from 'src/operations';
@@ -9,7 +9,6 @@ import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra,
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
-const { spread, spreadK, first, last } = collections;
 
 import { compSize,
 countComponents,

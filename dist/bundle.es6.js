@@ -1,5 +1,3 @@
-import { collections } from 'turmeric-utils';
-
 // **isIterable** `:: obj -> bool`  
 // checks if an object is iterable
 var isIterable = function isIterable(o) {
@@ -111,6 +109,13 @@ var spreadK = function spreadK() {
   return spread(iterify(coll).keys());
 };
 
+// **spreadV** `:: Iterable<a> -> Iterable<a>`  
+// returns an Iterable<a> of the collections values
+var spreadV = function spreadV() {
+  var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return spread(iterify(coll).values());
+};
+
 // **spreadE** `:: Iterable<a> -> Iterable<a>`  
 // returns an Iterable<a> of the collections entries
 var spreadE = function spreadE() {
@@ -121,6 +126,41 @@ var spreadE = function spreadE() {
 // **spreadKV** `:: Iterable<a> -> Iterable<a>`  
 // returns an Iterable<a> of the collections entries
 var spreadKV = spreadE;
+
+// export default spread;
+
+// requires [iterify](iterable.html)
+// **tuple** `:: a -> a -> [a]`  
+// returns a [val, key] Iterable<a>
+var tuple = function tuple(val) {
+  return function (key) {
+    return [key, val];
+  };
+};
+
+// **triple** `:: a -> a -> a -> [a]`  
+// returns a [val, key0, key1] Iterable<a>
+var triple = function triple(val) {
+  return function (key0) {
+    return function (key1) {
+      return [key0, key1, val];
+    };
+  };
+};
+
+// **flatten** `:: Iterable<a> -> Iterable<a> -> [a]`  
+// returns an Iterable<a> of the contents of two iterables
+var flatten = function flatten(c0) {
+  return function (c1) {
+    return [].concat(toConsumableArray(iterify(c0)), toConsumableArray(iterify(c1)));
+  };
+};
+
+// **flattenBin** `:: (Iterable<a>, Iterable<a>) -> [a]`  
+// returns an Iterable<a> of the contents of two iterables
+var flattenBin = function flattenBin(c0, c1) {
+  return flatten(c0)(c1);
+};
 
 // **flatTuple** `:: a -> [a] -> [a]`  
 // concatenates an object and an iterable
@@ -155,6 +195,14 @@ var hasK = function hasK(coll) {
   };
 };
 
+// **xhasK** `:: Iterable<a> -> a -> bool`  
+// checks if an iterables keys does not contain an element
+var xhasK = function xhasK(coll) {
+  return function (k) {
+    return !hasK(coll)(k);
+  };
+};
+
 // **hasKV** `:: Iterable<a> -> [k,v] -> bool`  
 // checks if an iterables keys contain the key of a [k,v] pair
 var hasKV = function hasKV(coll) {
@@ -185,6 +233,12 @@ var asMap = function asMap(c) {
   return new Map(spreadKV(c));
 };
 
+// **addBinSet** `:: a -> a -> Set[a]`  
+// adds an element to a Set;
+var addBinSet = function addBinSet(c, el) {
+  return new Set(append(c)(el));
+};
+
 // **addBinMap** `:: a -> a -> Map[a]`  
 // adds an element to a Map;
 var addBinMap = function addBinMap(c, el) {
@@ -197,11 +251,27 @@ var removeBin = function removeBin(c, el) {
   return removify(c).delete(el) ? c : c;
 };
 
+// **diff** `:: Iterable<a> -> Iterable<a> -> [a]`  
+// returns elements of the first iterable absent from the second iterable
+var diff = function diff(c0) {
+  return function (c1) {
+    return spread(c0).filter(xhasK(c1));
+  };
+};
+
 // **mapDiff** `:: Map[{k:v}] -> Map[{k:v}] -> Map[{k:v}]`  
 // returns elements of the first map absent from the second map
 var mapDiff = function mapDiff(c0) {
   return function (c1) {
     return spread(c0).filter(xhasKV(c1)).reduce(addBinMap, new Map());
+  };
+};
+
+// **mapUnion** `:: Map[{k:v}] -> Map[{k:v}] -> Map[{k:v}]`  
+// returns elements of both maps
+var uniteMap = function uniteMap(c0) {
+  return function (c1) {
+    return spread(mapDiff(c1)(c0)).reduce(addBinMap, c0);
   };
 };
 
@@ -228,6 +298,20 @@ var removeMap = function removeMap(c) {
   };
 };
 
+// **popElem** `:: Iterable<a> -> a -> Iterable<a>`  
+// removes the last element from an iterable;
+var popElem = function popElem(c) {
+  return function (el) {
+    return removeBin(c, el) && el;
+  };
+};
+
+// **popFirst** `:: Iterable<a> -> a -> Iterable<a>`  
+// removes the first element from an iterable;
+var popFirst = function popFirst(c) {
+  return popElem(c)(spread(c).shift());
+};
+
 // requires [cast](cast.html), and [spread](spread.html)
 // **get** `:: Iterable<{k:v}> -> k -> v`  
 // retrieves a value stored at a key from a collection
@@ -235,6 +319,27 @@ var get$1 = function get(c) {
   return function (k) {
     return asMap(c).get(k);
   };
+};
+
+// **first** `:: Iterable<a> -> a`  
+// returns the first element of an iterable
+var first = function first() {
+  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return spread(c).shift();
+};
+
+// **last** `:: Iterable<a> -> a`  
+// returns the last element of an iterable
+var last = function last() {
+  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return spread(c).pop();
+};
+
+// **lastK** `:: Iterable<{k:v}>  -> k`  
+// returns the last key of an iterable
+var lastK = function lastK() {
+  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  return last(spreadK(c));
 };
 
 var slicedToArray$1 = function () {
@@ -275,30 +380,8 @@ var slicedToArray$1 = function () {
   };
 }();
 
-
-
-
-
-
-
-
-
-
-
-
-
-var toConsumableArray$1 = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
-
 var resetNodeBin = function resetNodeBin(edges, src) {
-  return addMap(edges)(src)(new Map());
+  return addMap(edges)(src)(asMap());
 };
 
 var addNodeBin = function addNodeBin(edges, src) {
@@ -306,7 +389,7 @@ var addNodeBin = function addNodeBin(edges, src) {
 };
 
 var removeNodeBin = function removeNodeBin(edges, src) {
-  return addMap(edges)(src)(new Map(get$1(edges)(src)));
+  return addMap(edges)(src)(get$1(edges)(src));
 };
 
 var neighborPairs = function neighborPairs(edges) {
@@ -322,7 +405,7 @@ var addEdgeBin = function addEdgeBin(edges, _ref) {
       _ref2$ = _ref2[2],
       wt = _ref2$ === undefined ? 0 : _ref2$;
 
-  return [[src, addMap(get$1(edges)(src))(nb)(wt)], [nb, addMap(get$1(edges)(nb))(src)(wt)]].reduce(addBinMap, new Map(edges));
+  return [[src, addMap(get$1(edges)(src))(nb)(wt)], [nb, addMap(get$1(edges)(nb))(src)(wt)]].reduce(addBinMap, asMap(edges));
 };
 
 var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
@@ -330,7 +413,11 @@ var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
       src = _ref4[0],
       nb = _ref4[1];
 
-  return [[src, removeMap(get$1(edges)(src))(nb)], [nb, removeMap(get$1(edges)(nb))(src)]].reduce(addBinMap, new Map(edges));
+  return [[src, removeMap(get$1(edges)(src))(nb)], [nb, removeMap(get$1(edges)(nb))(src)]].reduce(addBinMap, asMap(edges));
+};
+
+var disconnectNodeBin = function disconnectNodeBin(edges, src) {
+  return neighborPairs(edges)(src).reduce(removeEdgeBin, asMap(edges));
 };
 
 var importEdgeBin = function importEdgeBin(edges, _ref5) {
@@ -341,25 +428,14 @@ var importEdgeBin = function importEdgeBin(edges, _ref5) {
   return spread(mapDiff(nbs)(get$1(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
 };
 
-var disconnectNodeBin2 = function disconnectNodeBin2(edges, src) {
-  return neighborPairs(edges)(src).reduce(removeEdgeBin, asMap(edges));
-};
-
 var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
-  return spread(new Map(alts)).reduce(importEdgeBin, edges);
+  return spread(asMap(alts)).reduce(importEdgeBin, edges);
 };
 
-var triple$1 = collections.triple;
-var tuple$1 = collections.tuple;
-var get$1$1 = collections.get;
-var spreadK$1 = collections.spreadK;
-var hasK$1 = collections.hasK;
-var addBinMap$1 = collections.addBinMap;
-var removeBin$1 = collections.removeBin;
-var uniteMap$1 = collections.uniteMap;
+var mergeNeighbors = uniteMap;
 
 var spawn = function spawn(edges) {
-  return new Map(edges);
+  return asMap(edges);
 };
 var copy = spawn;
 var fromElements = function fromElements() {
@@ -370,11 +446,11 @@ var fromElements = function fromElements() {
   return elems.reduce(addNodeBin, copy());
 };
 var nodes = function nodes(edges) {
-  return spreadK$1(copy(edges));
+  return spreadK(copy(edges));
 };
 var adj = function adj(edges) {
   return function (src) {
-    return copy(get$1$1(edges)(src));
+    return asMap(get$1(edges)(src));
   };
 };
 var neighbors = function neighbors(edges) {
@@ -384,7 +460,7 @@ var neighbors = function neighbors(edges) {
 };
 var contains = function contains(edges) {
   return function (node) {
-    return hasK$1(edges)(node);
+    return hasK(edges)(node);
   };
 };
 var isAdjacent = function isAdjacent(edges) {
@@ -395,17 +471,6 @@ var isAdjacent = function isAdjacent(edges) {
   };
 };
 
-var kvPair = function kvPair(k) {
-  return function (v) {
-    return [k, v];
-  };
-};
-
-var nodeNeighbors = function nodeNeighbors(edges) {
-  return function (src) {
-    return neighbors(edges)(src).map(kvPair(src));
-  };
-};
 var addNodes = function addNodes(edges) {
   return function () {
     for (var _len2 = arguments.length, srcs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
@@ -434,7 +499,7 @@ var addEdges = function addEdges(edges) {
         nabes[_key4] = arguments[_key4];
       }
 
-      return nabes.map(triple$1(w)(src)).reduce(addEdgeBin, edges);
+      return nabes.map(triple(w)(src)).reduce(addEdgeBin, edges);
     };
   };
 };
@@ -446,14 +511,13 @@ var removeEdges = function removeEdges(edges) {
         nabes[_key5] = arguments[_key5];
       }
 
-      return nabes.map(tuple$1(src)).reduce(removeEdgeBin, edges);
+      return nabes.map(tuple(src)).reduce(removeEdgeBin, edges);
     };
   };
 };
 
-var disconnectNodeBin = function disconnectNodeBin(edges, src) {
-  return removeEdges(edges)(src).apply(undefined, toConsumableArray$1(neighbors(edges)(src)));
-};
+// export const disconnectNodeBin = (edges, src) =>
+//       removeEdges(edges)(src)(...neighbors(edges)(src));
 
 var disconnectNodes = function disconnectNodes(edges) {
   return function () {
@@ -471,7 +535,7 @@ var removeNodes = function removeNodes(edges) {
       srcs[_key7] = arguments[_key7];
     }
 
-    return srcs.reduce(removeBin$1, disconnectNodes(edges).apply(undefined, srcs));
+    return srcs.reduce(removeBin, disconnectNodes(edges).apply(undefined, srcs));
   };
 };
 
@@ -489,7 +553,7 @@ var addNeighbor = function addNeighbor(edges) {
   return function (src) {
     return function (n) {
       var w = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      return addBinMap$1(adj(edges)(src), [n, w]);
+      return addBinMap(adj(edges)(src), [n, w]);
     };
   };
 };
@@ -501,24 +565,9 @@ var addEntry = function addEntry(nabes) {
         _ref2$ = _ref2[1],
         w = _ref2$ === undefined ? 0 : _ref2$;
 
-    return addBinMap$1(nabes, [n, w]);
+    return addBinMap(nabes, [n, w]);
   };
 };
-
-var mergeNeighbors = uniteMap$1;
-
-var addBinSet$1 = collections.addBinSet;
-var lastK$1 = collections.lastK;
-var hasK$2 = collections.hasK;
-var mapDiff$1 = collections.mapDiff;
-var diff$1 = collections.diff;
-var addBinMap$2 = collections.addBinMap;
-var spread$1 = collections.spread;
-var spreadK$2 = collections.spreadK;
-var spreadV$1 = collections.spreadV;
-var popFirst$1 = collections.popFirst;
-var tuple$2 = collections.tuple;
-
 
 var pathVal = function pathVal() {
   var pred = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -534,7 +583,7 @@ var pathVal = function pathVal() {
 var addSrc = function addSrc() {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   return function (src) {
-    return path.set(src, { pred: lastK$1(path), weight: 0, length: 1 });
+    return path.set(src, { pred: lastK(path), weight: 0, length: 1 });
   };
 };
 
@@ -552,7 +601,7 @@ var ptL = function ptL(_ref2) {
   return length;
 };
 var lastVal = function lastVal(path) {
-  return path.get(lastK$1(path));
+  return path.get(lastK(path));
 };
 var lastW = function lastW(path) {
   return ptW(lastVal(path));
@@ -579,7 +628,7 @@ var nextPath = function nextPath() {
       _ref4$ = _ref4[1],
       w = _ref4$ === undefined ? 0 : _ref4$;
 
-  return path.set(n, pathVal(lastK$1(path))(nextL(path))(nextW(path)(w)));
+  return path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
 };
 
 var dfs = function dfs(edges) {
@@ -587,12 +636,12 @@ var dfs = function dfs(edges) {
     var trav = function trav() {
       var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPath(src);
 
-      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK$1(path), 0],
+      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK(path), 0],
           _ref6 = slicedToArray$1(_ref5, 2),
           n = _ref6[0],
           w = _ref6[1];
 
-      return spread$1(mapDiff$1(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
+      return spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
     };
 
     return trav(initPath(src));
@@ -603,11 +652,11 @@ var bfs = function bfs(edges) {
   return function (iNode) {
     var bVisit = function bVisit(bPath) {
       return function (bQueue) {
-        var pred = popFirst$1(bQueue);
-        var nextNabes = mapDiff$1(edges.get(pred))(bPath);
+        var pred = popFirst(bQueue);
+        var nextNabes = mapDiff(edges.get(pred))(bPath);
 
-        spread$1(nextNabes).reduce(nextPath, bPath);
-        spreadK$2(nextNabes).reduce(addBinSet$1, bQueue);
+        spread(nextNabes).reduce(nextPath, bPath);
+        spreadK(nextNabes).reduce(addBinSet, bQueue);
         return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
       };
     };
@@ -623,7 +672,7 @@ var dijkstra = function dijkstra(edges) {
     var solutionSet = initPath(iNode);
 
     while (inspectQueue.size > 0) {
-      var pred = popFirst$1(inspectQueue);
+      var pred = popFirst(inspectQueue);
       var nextNabes = edges.get(pred);
 
       var _solutionSet$get = solutionSet.get(pred),
@@ -677,57 +726,50 @@ var components = function components(edges) {
   var trav = function trav() {
     var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
     var node = arguments[1];
-    return diff$1(spreadK$2(edges.get(node)))(comp).reduce(trav, comp.add(node));
+    return diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
   };
   var visitMap = function visitMap() {
     var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
     var node = arguments[1];
-    return diff$1(trav(new Set(), node))(mMap).map(tuple$2(trav(new Set(), node))).reduce(addBinMap$2, mMap);
+    return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap, mMap);
   };
 
-  return spreadK$2(edges).reduce(visitMap, new Map());
+  return spreadK(edges).reduce(visitMap, new Map());
 };
 
 var componentSet = function componentSet(edges) {
-  return new Set(spreadV$1(components(edges)));
+  return new Set(spreadV(components(edges)));
 };
 var pathBetween = function pathBetween(edges) {
   return function (n0) {
     return function (n1) {
-      return hasK$2(components(edges).get(n1))(n0);
+      return hasK(components(edges).get(n1))(n0);
     };
   };
 };
-
-var spread$2 = collections.spread;
-var spreadK$3 = collections.spreadK;
-var spreadV$2 = collections.spreadV;
-var spreadKV$1 = collections.spreadKV;
-var last$1 = collections.last;
-
 
 var redStr = function redStr() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ' ';
   var val = arguments[1];
   var id = arguments[2];
   var coll = arguments[3];
-  return val === last$1(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
+  return val === last(coll) ? str.concat(val, ' ') : str.concat(val, ' , ');
 };
 var collString = function collString(coll) {
-  return spread$2(coll).reduce(redStr, '');
+  return spread(coll).reduce(redStr, '');
 };
 var kString = function kString(coll) {
-  return spreadK$3(coll).reduce(redStr, '');
+  return spreadK(coll).reduce(redStr, '');
 };
 var vString = function vString(coll) {
-  return spreadV$2(coll).reduce(redStr, '');
+  return spreadV(coll).reduce(redStr, '');
 };
 var kvString = function kvString(coll) {
-  return spreadKV$1(coll).reduce(redStr, '');
+  return spreadKV(coll).reduce(redStr, '');
 };
 
 var pathString = function pathString(path) {
-  return ' { ' + spreadK$3(path).join(' => ') + ' }';
+  return ' { ' + spreadK(path).join(' => ') + ' }';
 };
 var edgeString = function edgeString(_ref) {
   var _ref2 = slicedToArray$1(_ref, 2),
@@ -746,7 +788,7 @@ var componentString = function componentString(_ref3) {
 };
 
 var graphString = function graphString(edges) {
-  return spreadKV$1(edges).reduce(function (str, _ref5, id) {
+  return spreadKV(edges).reduce(function (str, _ref5, id) {
     var _ref6 = slicedToArray$1(_ref5, 2),
         node = _ref6[0],
         nabes = _ref6[1];
@@ -760,21 +802,8 @@ var showGraph = function showGraph(_ref7) {
   return graphString(edges);
 };
 
-var flatten$2 = collections.flatten;
-var spread$3 = collections.spread;
-var first$1 = collections.first;
-var removeBin$2 = collections.removeBin;
-var addMap$1 = collections.addMap;
-
-
-var flattenBin$2 = function flattenBin() {
-  var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  return flatten$2(a)(b);
-};
-
 var autoSpread = function autoSpread(el) {
-  return el[Symbol.iterator] ? spread$3(el).reduce(flattenBin$2, []).map(autoSpread) : el;
+  return el[Symbol.iterator] ? spread(el).reduce(flattenBin, []).map(autoSpread) : el;
 };
 
 var superNode = function superNode(src) {
@@ -786,7 +815,7 @@ var superNode = function superNode(src) {
 var combineNeighbors = function combineNeighbors(g) {
   return function (src) {
     return function (nb) {
-      return new Set(flatten$2(neighbors(g)(src))(neighbors(g)(nb)));
+      return new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));
     };
   };
 };
@@ -794,7 +823,7 @@ var combineNeighbors = function combineNeighbors(g) {
 var combineAdj = function combineAdj(g) {
   return function (src) {
     return function (nb) {
-      return new Map(flatten$2(adj(g)(src))(adj(g)(nb)));
+      return new Map(flatten(adj(g)(src))(adj(g)(nb)));
     };
   };
 };
@@ -802,7 +831,7 @@ var combineAdj = function combineAdj(g) {
 var superAdj = function superAdj(g) {
   return function (src) {
     return function (nb) {
-      return [src, nb].reduce(removeBin$2, combineAdj(g)(src)(nb));
+      return [src, nb].reduce(removeBin, combineAdj(g)(src)(nb));
     };
   };
 };
@@ -810,7 +839,7 @@ var superAdj = function superAdj(g) {
 var superEdge = function superEdge(g) {
   return function (src) {
     return function (nb) {
-      return addMap$1()(superNode(src)(nb))(superAdj(g)(src)(nb));
+      return addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));
     };
   };
 };
@@ -818,7 +847,7 @@ var superEdge = function superEdge(g) {
 var contract = function contract(g) {
   return function (src) {
     return function () {
-      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first$1(neighbors(g)(src));
+      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors(g)(src));
       return nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
     };
   };
@@ -834,12 +863,12 @@ var contractBin = function contractBin(g, _ref) {
 
 var contractSrc = function contractSrc(g) {
   return function (src) {
-    return nodeNeighbors(g)(src).reduce(contractBin, copy(g));
+    return neighborPairs(g)(src).reduce(contractBin, copy(g));
   };
 };
 
 var contractNext = function contractNext(g) {
-  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : first$1(nodes(g));
+  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : first(nodes(g));
   return contract(copy(g))(n)();
 };
 
@@ -868,5 +897,5 @@ var operations = Object.freeze({
 	contractMin: contractMin
 });
 
-export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, neighborPairs, addEdgeBin, removeEdgeBin, importEdgeBin, disconnectNodeBin2, mergeEdgesBin, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, kvPair, nodeNeighbors, addNodes, resetNodes, addEdges, removeEdges, disconnectNodeBin, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, mergeNeighbors, initPath, ptW, ptL, lastVal, lastW, lastL, nextW, nextL, nextPath, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, neighborPairs, addEdgeBin, removeEdgeBin, disconnectNodeBin, importEdgeBin, mergeEdgesBin, mergeNeighbors, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, resetNodes, addEdges, removeEdges, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, initPath, ptW, ptL, lastVal, lastW, lastL, nextW, nextL, nextPath, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map

@@ -1,7 +1,5 @@
-import { collections, } from 'turmeric-utils';
-
-const { addBinSet, lastK, hasK, mapDiff, diff, addBinMap, } = collections;
-const { spread, spreadK, spreadV, popFirst, tuple, } = collections;
+import { addBinMap, addBinSet, diff, hasK, lastK, mapDiff, popFirst,
+   spread, spreadK, spreadV, tuple, } from 'fenugreek-collections';
 
 const pathVal = (pred = null) => (length = 1) => (weight = 0) =>
   ({ pred, length, weight });

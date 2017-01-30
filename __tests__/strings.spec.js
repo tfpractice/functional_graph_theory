@@ -1,10 +1,9 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric-utils';
+import { first, } from 'fenugreek-collections';
 import { collString, edgeString, fromElements,
   kString, kvString, pathString, redStr, vString, } from 'graph-curry';
 
 import { myNodes, } from './shared';
-const { first } = collections;
 
 describe('strings', () => {
   describe('redStr', () => {

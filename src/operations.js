@@ -1,16 +1,9 @@
-import { collections, } from 'turmeric-utils';
+import { addMap, first, flatten, flattenBin, removeBin, spread, } from 'fenugreek-collections';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';
-
-// const disconnectNodeBin = (edges, src) =>
-//       removeEdges(edges)(src)(...neighbors(edges)(src));
-
-const { flatten, spread, first, removeBin, get, addMap } = collections;
-
-const flattenBin = (a = [], b = []) => flatten(a)(b);
 
 export const autoSpread = el =>
 el[Symbol.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;

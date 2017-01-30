@@ -1,7 +1,5 @@
-import { collections, } from 'turmeric-utils';
 
-const { addBinSet, lastK, hasK, spread, mapDiff, diff, addBinMap, } = collections;
-
+import { lastK, mapDiff, spread, } from 'fenugreek-collections';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';

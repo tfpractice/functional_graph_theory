@@ -1,5 +1,4 @@
 import 'jasmine-expect';
-import { collections, } from 'turmeric-utils';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
 contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/operations';
 import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements, graphString,
@@ -7,7 +6,7 @@ mergeEdgesBin, neighbors, nodes, pathBetween, removeEdges, } from 'graph-curry';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
-const { spread, spreadK, first, last } = collections;
+
 const myGraph = [ addEdges()(n0, 1)(n1, n3),
   addEdges()(n1, 1)(n0, n2, n4),
   addEdges()(n2, 1)(n1, n5),
