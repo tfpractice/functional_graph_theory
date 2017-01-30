@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>search.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="cut.html">
+                  cut.js
+                </a>
+              
+                
+                <a class="source" href="graph.html">
+                  graph.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="operations.html">
+                  operations.js
+                </a>
+              
+                
+                <a class="source" href="reducers.html">
+                  reducers.js
+                </a>
+              
+                
+                <a class="source" href="search.html">
+                  search.js
+                </a>
+              
+                
+                <a class="source" href="strings.html">
+                  strings.js
+                </a>
+              
+                
+                <a class="source" href="tree.html">
+                  tree.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>search.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinMap, addBinSet, diff, hasK, lastK, mapDiff, popFirst,
+   spread, spreadK, spreadV, tuple, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+
+<span class="hljs-keyword">const</span> pathVal = <span class="hljs-function">(<span class="hljs-params">pred = <span class="hljs-literal">null</span></span>) =&gt;</span> (length = <span class="hljs-number">1</span>) =&gt; <span class="hljs-function">(<span class="hljs-params">weight = <span class="hljs-number">0</span></span>) =&gt;</span>
+  ({ pred, length, weight });
+
+<span class="hljs-keyword">const</span> addSrc = <span class="hljs-function">(<span class="hljs-params">path = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span></span>) =&gt;</span> src =&gt;
+  path.set(src, { <span class="hljs-attr">pred</span>: lastK(path), <span class="hljs-attr">weight</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">length</span>: <span class="hljs-number">1</span> });
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> initPath = <span class="hljs-function"><span class="hljs-params">node</span> =&gt;</span> addSrc()(node);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ptW = <span class="hljs-function">(<span class="hljs-params">{ weight = <span class="hljs-number">0</span> }</span>) =&gt;</span> weight;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> ptL = <span class="hljs-function">(<span class="hljs-params">{ length = <span class="hljs-number">1</span> }</span>) =&gt;</span> length;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> lastVal = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> path.get(lastK(path));
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> lastW = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> ptW(lastVal(path));
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> lastL = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> ptL(lastVal(path));
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> nextW = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> (w = <span class="hljs-number">0</span>) =&gt; lastW(path) + w;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> nextL = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> lastL(path) ? lastL(path) + <span class="hljs-number">1</span> : <span class="hljs-number">1</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> nextPath = <span class="hljs-function">(<span class="hljs-params">path = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>, [ n, w = <span class="hljs-number">0</span> ]</span>) =&gt;</span>
+  path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (src) =&gt; {
+  <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">path = initPath(src</span>), [ <span class="hljs-params">n</span>, <span class="hljs-params">w</span> ] = [ <span class="hljs-params">lastK</span>(<span class="hljs-params">path</span>), 0 ]) =&gt;</span>
+    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [ n, w ]));
+
+  <span class="hljs-keyword">return</span> trav(initPath(src));
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> bfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
+  <span class="hljs-keyword">const</span> bVisit = <span class="hljs-function"><span class="hljs-params">bPath</span> =&gt;</span> (bQueue) =&gt; {
+    <span class="hljs-keyword">const</span> pred = popFirst(bQueue);
+    <span class="hljs-keyword">const</span> nextNabes = mapDiff(edges.get(pred))(bPath);
+
+    spread(nextNabes).reduce(nextPath, bPath);
+    spreadK(nextNabes).reduce(addBinSet, bQueue);
+    <span class="hljs-keyword">return</span> bQueue.size &gt; <span class="hljs-number">0</span> ? bVisit(bPath)(bQueue) : bPath;
+  };
+
+  <span class="hljs-keyword">return</span> bVisit(initPath(iNode))(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([ iNode ]));
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dijkstra = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
+  <span class="hljs-keyword">const</span> reachables = bfs(edges)(iNode);
+  <span class="hljs-keyword">const</span> inspectQueue = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([ iNode ]);
+  <span class="hljs-keyword">const</span> solutionSet = initPath(iNode);
+
+  <span class="hljs-keyword">while</span> (inspectQueue.size &gt; <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">const</span> pred = popFirst(inspectQueue);
+    <span class="hljs-keyword">const</span> nextNabes = edges.get(pred);
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">length</span>: dCount, <span class="hljs-attr">weight</span>: dWeight } = solutionSet.get(pred);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [ nabe, nWeight ] <span class="hljs-keyword">of</span> nextNabes) {
+      <span class="hljs-keyword">const</span> prevMap = reachables.get(nabe) || { <span class="hljs-attr">length</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">weight</span>: <span class="hljs-number">0</span> };
+      <span class="hljs-keyword">const</span> { <span class="hljs-attr">length</span>: rCount, <span class="hljs-attr">weight</span>: rWeight } = prevMap;
+      <span class="hljs-keyword">const</span> dMap = { pred, <span class="hljs-attr">length</span>: dCount + <span class="hljs-number">1</span>, <span class="hljs-attr">weight</span>: dWeight + nWeight, };
+      <span class="hljs-keyword">const</span> sMap = ((dWeight + nWeight) &lt; rWeight) ? dMap : prevMap;
+
+      <span class="hljs-keyword">if</span> (!solutionSet.has(nabe)) {
+        inspectQueue.add(nabe);
+        solutionSet.set(nabe, sMap);
+      }
+    }
+  }
+
+  <span class="hljs-keyword">return</span> solutionSet;
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> components = <span class="hljs-function">(<span class="hljs-params">edges</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">comp = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node</span>) =&gt;</span>
+     diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
+  <span class="hljs-keyword">const</span> visitMap = <span class="hljs-function">(<span class="hljs-params">mMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>, node</span>) =&gt;</span>
+     diff(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node))(mMap).map(tuple(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node)))
+       .reduce(addBinMap, mMap);
+
+  <span class="hljs-keyword">return</span> spreadK(edges).reduce(visitMap, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>);
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> componentSet = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>(spreadV(components(edges)));
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> pathBetween = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> n0 =&gt; <span class="hljs-function"><span class="hljs-params">n1</span> =&gt;</span>
+  hasK(components(edges).get(n1))(n0);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>strings.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="cut.html">
+                  cut.js
+                </a>
+              
+                
+                <a class="source" href="graph.html">
+                  graph.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="operations.html">
+                  operations.js
+                </a>
+              
+                
+                <a class="source" href="reducers.html">
+                  reducers.js
+                </a>
+              
+                
+                <a class="source" href="search.html">
+                  search.js
+                </a>
+              
+                
+                <a class="source" href="strings.html">
+                  strings.js
+                </a>
+              
+                
+                <a class="source" href="tree.html">
+                  tree.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>strings.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { last, spread, spreadK, spreadKV, spreadV, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> redStr = <span class="hljs-function">(<span class="hljs-params">str = <span class="hljs-string">' '</span>, val, id, coll</span>) =&gt;</span>
+  val === last(coll) ? str.concat(val, <span class="hljs-string">' '</span>) : str.concat(val, <span class="hljs-string">' , '</span>);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> collString = <span class="hljs-function"><span class="hljs-params">coll</span> =&gt;</span> spread(coll).reduce(redStr, <span class="hljs-string">''</span>);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> kString = <span class="hljs-function"><span class="hljs-params">coll</span> =&gt;</span> spreadK(coll).reduce(redStr, <span class="hljs-string">''</span>);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> vString = <span class="hljs-function"><span class="hljs-params">coll</span> =&gt;</span> spreadV(coll).reduce(redStr, <span class="hljs-string">''</span>);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> kvString = <span class="hljs-function"><span class="hljs-params">coll</span> =&gt;</span> spreadKV(coll).reduce(redStr, <span class="hljs-string">''</span>);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> pathString = <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> <span class="hljs-string">` { <span class="hljs-subst">${spreadK(path).join(<span class="hljs-string">' =&gt; '</span>)}</span> }`</span>;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> edgeString = <span class="hljs-function">(<span class="hljs-params">[ src, nbs ]</span>) =&gt;</span> <span class="hljs-string">`{ Edge <span class="hljs-subst">${src}</span> &gt;&gt; [ <span class="hljs-subst">${kString(nbs)}</span> ] } `</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> componentString = <span class="hljs-function">(<span class="hljs-params">[ node, nbs ]</span>) =&gt;</span>
+  <span class="hljs-string">`{ component <span class="hljs-subst">${node}</span> &gt;&gt; [ <span class="hljs-subst">${kString(nbs)}</span> ] } `</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> graphString = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span>
+  spreadKV(edges).reduce(<span class="hljs-function">(<span class="hljs-params">str, [ node, nabes ], id</span>) =&gt;</span>
+    str + edgeString([ node, nabes ]),
+    <span class="hljs-string">'Showing Edges\n'</span>);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> showGraph = <span class="hljs-function">(<span class="hljs-params">{ edges }</span>) =&gt;</span> (graphString(edges));</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

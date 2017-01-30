@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>operations.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="cut.html">
+                  cut.js
+                </a>
+              
+                
+                <a class="source" href="graph.html">
+                  graph.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="operations.html">
+                  operations.js
+                </a>
+              
+                
+                <a class="source" href="reducers.html">
+                  reducers.js
+                </a>
+              
+                
+                <a class="source" href="search.html">
+                  search.js
+                </a>
+              
+                
+                <a class="source" href="strings.html">
+                  strings.js
+                </a>
+              
+                
+                <a class="source" href="tree.html">
+                  tree.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>operations.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addMap, first, flatten, flattenBin, removeBin, spread, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+<span class="hljs-keyword">import</span> { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
+  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
+  nodes, removeEdges, removeNodes, resetNodes, spawn, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./graph'</span>;
+<span class="hljs-keyword">import</span> { graphString, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./strings'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">'./reducers'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> autoSpread = <span class="hljs-function"><span class="hljs-params">el</span> =&gt;</span>
+el[<span class="hljs-built_in">Symbol</span>.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> superNode = <span class="hljs-function"><span class="hljs-params">src</span> =&gt;</span> nb =&gt; <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([ src, nb ]);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> combineNeighbors = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function"><span class="hljs-params">nb</span> =&gt;</span>
+  <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>(flatten(neighbors(g)(src))(neighbors(g)(nb)));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> combineAdj = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function"><span class="hljs-params">nb</span> =&gt;</span>
+  <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(flatten(adj(g)(src))(adj(g)(nb)));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> superAdj = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function"><span class="hljs-params">nb</span> =&gt;</span>
+ [ src, nb ].reduce(removeBin, combineAdj(g)(src)(nb));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> superEdge = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function"><span class="hljs-params">nb</span> =&gt;</span>
+  addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contract = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function">(<span class="hljs-params">nb = first(neighbors(g</span>)(<span class="hljs-params">src</span>))) =&gt;</span>
+nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contractBin = <span class="hljs-function">(<span class="hljs-params">g, [ src, nb ]</span>) =&gt;</span> contract(g)(src)(nb);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contractSrc = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt;
+reducers.neighborPairs(g)(src).reduce(contractBin, copy(g));
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contractNext = <span class="hljs-function">(<span class="hljs-params">g, n = (first(nodes(g</span>)))) =&gt;</span>
+  contract(copy(g))(n)();
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contractAuto = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> nodes(g).reduce(contractNext, g);
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> contractMin = <span class="hljs-function">(<span class="hljs-params">g, min = <span class="hljs-number">2</span></span>) =&gt;</span>
+ g.size &gt; min ? contractMin(contractNext(g), min) : copy(g);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
