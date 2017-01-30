@@ -45,6 +45,7 @@
     "babel-plugin-module-resolver": "^2.4.0",
     "babel-preset-latest": "^6.16.0",
     "coveralls": "^2.11.15",
+    "docco": "^0.7.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-import-resolver-babel-module": "^2.2.1",
@@ -65,7 +66,8 @@
     "rollup-plugin-progress": "^0.2.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^1.0.1",
-    "rollup-plugin-visualizer": "^0.1.5"
+    "rollup-plugin-visualizer": "^0.1.5",
+    "surge": "^0.18.0"
   },
   "jest": {
     "collectCoverage": "true",
@@ -86,6 +88,7 @@
     ]
   },
   "dependencies": {
+    "fenugreek-collections": "^1.1.0",
     "turmeric-utils": "^2.0.0"
   }
 }
