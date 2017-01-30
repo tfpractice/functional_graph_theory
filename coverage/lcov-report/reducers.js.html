@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">93.33% </span>
+        <span class="strong">94.12% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>14/15</span>
+        <span class='fraction'>16/17</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">88.89% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>6/7</span>
+        <span class='fraction'>8/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.67% </span>
+        <span class="strong">92.31% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>11/12</span>
+        <span class='fraction'>12/13</span>
       </div>
     </div>
   </div>
@@ -69,55 +69,70 @@
 24
 25
 26
-27</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+27
+28
+29
+30
+31
+32</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">505x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">465x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">336x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">292x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { collections as coll, } from 'turmeric-utils';
-&nbsp;
-const { addBinMap, mapDiff, spread, addMap, get, flatTuple, removeMap } = coll;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { asMap, get, } from 'fenugreek-collections';
+import { addBinMap, addMap, append, flatTuple, mapDiff, removeMap, spread, spreadK, } from 'fenugreek-collections';
 &nbsp;
 export const resetNodeBin = (edges, src) =&gt; addMap(edges)(src)(new Map);
 &nbsp;
 export const addNodeBin = (edges, src) =&gt;
-  addMap(edges)(src)(new Map(get(edges)(src)));
+  addMap(edges)(src)(get(edges)(src));
 &nbsp;
 export const removeNodeBin = <span class="fstat-no" title="function not covered" >(e</span>dges, src) =&gt;
 <span class="cstat-no" title="statement not covered" >    addMap(edges)(src)(new Map(get(edges)(src)));</span>
+  
+export const neighborTuples = edges =&gt; src =&gt;
+spreadK(get(edges)(src)).map(append(src));
 &nbsp;
 export const addEdgeBin = (edges, [ src, nb, wt = 0 ]) =&gt; [
   [ src, addMap(get(edges)(src))(nb)(wt) ],
-  [ nb, addMap(get(edges)(nb))(src)(wt) ]].reduce(addBinMap, new Map(edges));
+  [ nb, addMap(get(edges)(nb))(src)(wt) ],].reduce(addBinMap, new Map(edges));
 &nbsp;
 export const removeEdgeBin = (edges, [ src, nb, ]) =&gt; [
   [ src, removeMap(get(edges)(src))(nb) ],
-  [ nb, removeMap(get(edges)(nb))(src) ]].reduce(addBinMap, new Map(edges));
+  [ nb, removeMap(get(edges)(nb))(src) ],].reduce(addBinMap, new Map(edges));
 &nbsp;
 export const importEdgeBin = (edges, [ src, nbs ]) =&gt;
 spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src))
   .reduce(addEdgeBin, addNodeBin(edges, src));
+&nbsp;
+// export const disconnectNodeBin = (edges, src) =&gt;
+//   removeEdges(edges)(src)(...neighbors(edges)(src));
 &nbsp;
 export const mergeEdgesBin = (edges, alts) =&gt;
  spread(new Map(alts)).reduce(importEdgeBin, edges);
@@ -127,7 +142,7 @@ export const mergeEdgesBin = (edges, alts) =&gt;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 15:00:26 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 16:25:26 GMT-0500 (EST)
 </div>
 </div>
 <script src="prettify.js"></script>

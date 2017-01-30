@@ -14,9 +14,10 @@
     "build:umd": "NODE_ENV=production rollup -c rollup.config.js",
     "build:dev": "rollup -c rollup.es6.config.js",
     "test": "NODE_ENV=test jest",
-    "doc": "jsdoc -c config/conf.json app",
+    "doc": "docco src/*",
     "coverage": "yarn test && cat coverage/lcov.info | coveralls",
     "dev": "node .",
+    "prepublish": "yarn build",
     "lint": "./node_modules/.bin/eslint  --fix -c .eslintrc.js . --ext .js --ignore-path .gitignore --cache"
   },
   "repository": {

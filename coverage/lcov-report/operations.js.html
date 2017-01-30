@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.87% </span>
+        <span class="strong">35.9% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>37/39</span>
+        <span class='fraction'>14/39</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.55% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>6/11</span>
+        <span class='fraction'>0/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>23/25</span>
+        <span class='fraction'>0/25</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">95.65% </span>
+        <span class="strong">60.87% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>22/23</span>
+        <span class='fraction'>14/23</span>
       </div>
     </div>
   </div>
-  <div class='status-line high'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -92,41 +92,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
-<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
-<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">49x</span>
-<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { collections, } from 'turmeric-utils';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors, nodeNeighbors,
@@ -141,41 +141,41 @@ const flattenBin = <span class="fstat-no" title="function not covered" >(a</span
 export const autoSpread = <span class="fstat-no" title="function not covered" >el</span> =&gt;
 <span class="cstat-no" title="statement not covered" >el[Symbol.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;</span>
 &nbsp;
-export const superNode = src =&gt; nb =&gt; new Set([ src, nb ]);
+export const superNode = <span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nb</span> =&gt; <span class="cstat-no" title="statement not covered" >new Set([ src, nb ]);</span></span>
 &nbsp;
-export const combineNeighbors = g =&gt; src =&gt; nb =&gt;
-  new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));
+export const combineNeighbors = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nb</span> =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" >  new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));</span>
 &nbsp;
-export const combineAdj = g =&gt; src =&gt; nb =&gt;
-  new Map(flatten(adj(g)(src))(adj(g)(nb)));
+export const combineAdj = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nb</span> =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" >  new Map(flatten(adj(g)(src))(adj(g)(nb)));</span>
 &nbsp;
-export const superAdj = g =&gt; src =&gt; nb =&gt;
- [ src, nb ].reduce(removeBin, combineAdj(g)(src)(nb));
+export const superAdj = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nb</span> =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" > [ src, nb ].reduce(removeBin, combineAdj(g)(src)(nb));</span>
 &nbsp;
-export const superEdge = g =&gt; src =&gt; nb =&gt;
-  addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));
+export const superEdge = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nb</span> =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" >  addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));</span>
 &nbsp;
-export const contract = g =&gt; src =&gt; (nb = first(neighbors(g)(src))) =&gt;
-nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
+export const contract = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>b = <span class="branch-0 cbranch-no" title="branch not covered" >first(neighbors(g)(src)))</span> =&gt;</span></span>
+<span class="cstat-no" title="statement not covered" >nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;</span>
 &nbsp;
-export const contractBin = (g, [ src, nb ]) =&gt; contract(g)(src)(nb);
+export const contractBin = <span class="fstat-no" title="function not covered" >(g</span>, [ src, nb ]) =&gt; <span class="cstat-no" title="statement not covered" >contract(g)(src)(nb);</span>
 &nbsp;
-export const contractSrc = g =&gt; src =&gt;
-nodeNeighbors(g)(src).reduce(contractBin, copy(g));
+export const contractSrc = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >sr</span>c =&gt;</span>
+<span class="cstat-no" title="statement not covered" >nodeNeighbors(g)(src).reduce(contractBin, copy(g));</span>
 &nbsp;
-export const contractNext = (g, n = (first(nodes(g)))) =&gt;
-  contract(copy(g))(n)();
+export const contractNext = <span class="fstat-no" title="function not covered" >(g</span>, n = (<span class="branch-0 cbranch-no" title="branch not covered" >first(nodes(g)))</span>) =&gt;
+<span class="cstat-no" title="statement not covered" >  contract(copy(g))(n)();</span>
 &nbsp;
-export const contractAuto = g =&gt; nodes(g).reduce(contractNext, g);
-export const contractMin = (g, min = <span class="branch-0 cbranch-no" title="branch not covered" >2)</span> =&gt;
- g.size &gt; min ? contractMin(contractNext(g), min) : copy(g);
+export const contractAuto = <span class="fstat-no" title="function not covered" >g </span>=&gt; <span class="cstat-no" title="statement not covered" >nodes(g).reduce(contractNext, g);</span>
+export const contractMin = <span class="fstat-no" title="function not covered" >(g</span>, min = <span class="branch-0 cbranch-no" title="branch not covered" >2)</span> =&gt;
+<span class="cstat-no" title="statement not covered" > g.size &gt; min ? contractMin(contractNext(g), min) : copy(g);</span>
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 15:00:26 GMT-0500 (EST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 16:25:26 GMT-0500 (EST)
 </div>
 </div>
 <script src="prettify.js"></script>

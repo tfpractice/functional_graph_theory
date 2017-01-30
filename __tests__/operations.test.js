@@ -60,7 +60,7 @@ describe('superEdge', () => {
 describe('contract', () => {
   it('creates a minor isomorphism of a graph by contracting on an edge', () => {
     const gMinor = contract(myGraph)(n0)();
-
+    
     expect(contract(myGraph)(n0)(n1).has(n0)).toBeFalse();
     expect(contract(myGraph)(n0)(n1).has(n1)).toBeFalse();
     expect(contract(myGraph)(n0)(n1).size).toEqual(9);
@@ -74,7 +74,7 @@ describe('contractBin', () => {
 describe('contractSrc', () => {
   it('contracts a graph on a source and all its neighbors', () => {
     const n0dis = contractSrc(myGraph)(n0);
-
+    
     expect(contractSrc(myGraph)(n0).has(n0)).toBeFalse();
   });
 });
@@ -88,7 +88,7 @@ describe('contractAuto', () => {
   it('contracts the graph once on every node', () => {
     const oldlength = myGraph.size;
     const newLength = contractAuto(myGraph).size;
-
+    
     expect(newLength).toBeLessThan(oldlength);
   });
 });
@@ -97,7 +97,7 @@ describe('contractMin', () => {
     // console.log('(isomorphism)', isomorphism.get(first(nodes(isomorphism))));
     // console.log('autoSpread', autoSpread(last(nodes(isomorphism.get(first(nodes(isomorphism)))))));
     // console.log('get37', connGraph.get(n9));
-
+    
     expect(isomorphism.size).toEqual(2);
   });
 });
