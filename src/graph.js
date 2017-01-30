@@ -1,10 +1,8 @@
 import { addBinMap, append, asMap, flatten, flattenBin, get, hasK, removeBin,
    spreadK, triple, tuple, uniteMap, } from 'fenugreek-collections';
-import { addEdgeBin, addNodeBin, disconnectNodeBin2, mergeEdgesBin, neighborPairs, removeEdgeBin, resetNodeBin, }
+import { addEdgeBin, addNodeBin, disconnectNodeBin, mergeEdgesBin, neighborPairs, removeEdgeBin, resetNodeBin, }
 from './reducers';
 
-export const disconnectNodeBin = disconnectNodeBin2;
-export const kvPair = append;
 export const mergeNeighbors = uniteMap;
 
 export const spawn = edges => asMap(edges);
@@ -17,7 +15,7 @@ export const contains = edges => node => hasK(edges)(node);
 export const isAdjacent = edges => src => nabe =>
   contains(adj(edges)(src))(nabe);
 
-export const nodeNeighbors = neighborPairs;
+// export const nodeNeighbors = neighborPairs;
 export const addNodes = edges => (...srcs) => srcs.reduce(addNodeBin, edges);
 
 export const resetNodes = edges => (...srcs) => srcs.reduce(resetNodeBin, edges);

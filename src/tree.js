@@ -3,7 +3,7 @@ import { collections, } from 'turmeric-utils';
 const { addBinSet, lastK, hasK, spread, mapDiff, diff, addBinMap, } = collections;
 
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
-  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors, nodeNeighbors,
+  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';

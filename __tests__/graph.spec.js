@@ -1,5 +1,4 @@
 import 'jasmine-expect';
-import { nodeNeighbors, } from 'src/graph';
 import { addEdgeBin, mergeEdges, mergeEdgesBin, removeEdges, } from 'graph-curry';
 import { adj, copy, fromElements, neighbors, nodes, spawn, } from 'graph-curry';
 import { addEdges, addNodes, contains, isAdjacent, removeNodes, } from 'graph-curry';
@@ -55,12 +54,7 @@ describe('accessors', () => {
       expect(neighbors(myGraph)(n0) instanceof Array).toBeTrue();
     });
   });
-  describe('nodeNeighbor', () => {
-    it('returns an array of tuples of a node and each neighbor', () => {
-      expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n1 ]);
-      expect(nodeNeighbors(nabeGraph)(n0)).toContainEqual([ n0, n2 ]);
-    });
-  });
+  
   describe('contains', () => {
     it('checks if a graph has a node', () => {
       expect(contains(myGraph)(n4)).toBeTrue();

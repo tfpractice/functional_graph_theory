@@ -1,11 +1,12 @@
 import { collections, } from 'turmeric-utils';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
-  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors, nodeNeighbors,
+  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';
-const disconnectNodeBin = (edges, src) =>
-      removeEdges(edges)(src)(...neighbors(edges)(src));
+
+// const disconnectNodeBin = (edges, src) =>
+//       removeEdges(edges)(src)(...neighbors(edges)(src));
 
 const { flatten, spread, first, removeBin, get, addMap } = collections;
 
@@ -34,7 +35,7 @@ nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
 export const contractBin = (g, [ src, nb ]) => contract(g)(src)(nb);
 
 export const contractSrc = g => src =>
-nodeNeighbors(g)(src).reduce(contractBin, copy(g));
+reducers.neighborPairs(g)(src).reduce(contractBin, copy(g));
 
 export const contractNext = (g, n = (first(nodes(g)))) =>
   contract(copy(g))(n)();

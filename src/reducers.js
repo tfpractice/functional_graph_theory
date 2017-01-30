@@ -18,7 +18,7 @@ export const removeEdgeBin = (edges, [ src, nb, ]) => [
   [ src, removeMap(get(edges)(src))(nb) ],
   [ nb, removeMap(get(edges)(nb))(src) ]].reduce(addBinMap, asMap(edges));
 
-export const disconnectNodeBin2 = (edges, src) =>
+export const disconnectNodeBin = (edges, src) =>
   neighborPairs(edges)(src).reduce(removeEdgeBin, asMap(edges));
 
 export const importEdgeBin = (edges, [ src, nbs ]) =>
