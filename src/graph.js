@@ -1,7 +1,8 @@
 import { collections, } from 'turmeric-utils';
-import { addEdgeBin, addNodeBin, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
+import { addEdgeBin, addNodeBin, disconnectNodeBin2, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
 from './reducers';
 
+export const disconnectNodeBin = disconnectNodeBin2;
 const { triple, tuple, get, flatten, spreadK, hasK, } = collections;
 const { addBinMap, removeBin, uniteMap, } = collections;
 const flattenBin = (a = [], b = []) => flatten(a)(b);
@@ -29,8 +30,8 @@ export const addEdges = edges => (src, w = 0) => (...nabes) =>
 export const removeEdges = edges => src => (...nabes) =>
   nabes.map(tuple(src)).reduce(removeEdgeBin, edges);
 
-export const disconnectNodeBin = (edges, src) =>
-      removeEdges(edges)(src)(...neighbors(edges)(src));
+// export const disconnectNodeBin = (edges, src) =>
+//       removeEdges(edges)(src)(...neighbors(edges)(src));
 
 export const disconnectNodes = edges => (...srcs) =>
      srcs.reduce(disconnectNodeBin, copy(edges));

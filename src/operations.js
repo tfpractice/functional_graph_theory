@@ -4,6 +4,8 @@ import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';
+const disconnectNodeBin = (edges, src) =>
+      removeEdges(edges)(src)(...neighbors(edges)(src));
 
 const { flatten, spread, first, removeBin, get, addMap } = collections;
 

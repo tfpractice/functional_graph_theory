@@ -1,9 +1,8 @@
 import 'jasmine-expect';
-import { addEdgeBin,
- addNodeBin, importEdgeBin, mergeEdgesBin, neighborPairs,
-  nodes, removeEdgeBin, resetNodeBin,
-} from 'graph-curry';
-import { disconnectNodeBin2, } from 'src/reducers';
+import { nodes, } from 'graph-curry';
+import { addEdgeBin, addNodeBin,
+ disconnectNodeBin2, importEdgeBin, mergeEdgesBin, neighborPairs,
+   removeEdgeBin, resetNodeBin, } from 'src/reducers';
 import { n0, n2, n7, } from './shared';
 import { eGraph, oGraph, } from './graph.spec';
 
