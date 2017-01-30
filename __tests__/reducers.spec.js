@@ -1,8 +1,9 @@
 import 'jasmine-expect';
 import { addEdgeBin,
- addNodeBin, importEdgeBin, mergeEdgesBin, neighborTuples,
+ addNodeBin, importEdgeBin, mergeEdgesBin, neighborPairs,
   nodes, removeEdgeBin, resetNodeBin,
 } from 'graph-curry';
+import { disconnectNodeBin2, } from 'src/reducers';
 import { n0, n2, n7, } from './shared';
 import { eGraph, oGraph, } from './graph.spec';
 
@@ -34,9 +35,15 @@ describe('resetNodeBin', () => {
     expect(resetNodeBin(cMap, 8).get(8).has(1)).toBeFalse();
   });
 });
-describe('neighborTuples', () => {
+describe('neighborPairs', () => {
   it('assembles a src node and its neighbors into [src, nb] pairs', () => {
-    expect(neighborTuples(connGraph)(n2)).toBeArray();
+    expect(neighborPairs(connGraph)(n2)).toBeArray();
+  });
+});
+describe('disconnectNodeBin2', () => {
+  it('isolates a node from all its neighbors', () => {
+    console.log('isconnectNodeBin2(connGraph)(n2)', disconnectNodeBin2(connGraph, n2));
+    expect(neighborPairs(disconnectNodeBin2(connGraph, n2))(n2).length).toEqual(0);
   });
 });
 describe('importEdgeBin', () => {

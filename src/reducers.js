@@ -9,7 +9,7 @@ export const addNodeBin = (edges, src) =>
 export const removeNodeBin = (edges, src) =>
     addMap(edges)(src)(new Map(get(edges)(src)));
   
-export const neighborTuples = edges => src =>
+export const neighborPairs = edges => src =>
 spreadK(get(edges)(src)).map(append(src));
 
 export const addEdgeBin = (edges, [ src, nb, wt = 0 ]) => [
@@ -24,8 +24,8 @@ export const importEdgeBin = (edges, [ src, nbs ]) =>
 spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src))
   .reduce(addEdgeBin, addNodeBin(edges, src));
 
-// export const disconnectNodeBin = (edges, src) =>
-//   removeEdges(edges)(src)(...neighbors(edges)(src));
+export const disconnectNodeBin2 = (edges, src) =>
+neighborPairs(edges)(src).reduce(removeEdgeBin, asMap(edges));
 
 export const mergeEdgesBin = (edges, alts) =>
  spread(new Map(alts)).reduce(importEdgeBin, edges);
