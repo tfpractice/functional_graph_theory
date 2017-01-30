@@ -1,11 +1,12 @@
-import { collections, } from 'turmeric-utils';
+import { addBinMap, flatten, flattenBin, get, hasK, removeBin, spreadK, triple, tuple, uniteMap, } from 'fenugreek-collections';
 import { addEdgeBin, addNodeBin, disconnectNodeBin2, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
 from './reducers';
 
 export const disconnectNodeBin = disconnectNodeBin2;
-const { triple, tuple, get, flatten, spreadK, hasK, } = collections;
-const { addBinMap, removeBin, uniteMap, } = collections;
-const flattenBin = (a = [], b = []) => flatten(a)(b);
+
+// const { addBinMap, removeBin, uniteMap, } = collections;
+
+// const flattenBin = (a = [], b = []) => flatten(a)(b);
 
 export const spawn = edges => new Map(edges);
 export const copy = spawn;
