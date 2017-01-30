@@ -42,7 +42,6 @@ describe('neighborPairs', () => {
 });
 describe('disconnectNodeBin2', () => {
   it('isolates a node from all its neighbors', () => {
-    console.log('isconnectNodeBin2(connGraph)(n2)', disconnectNodeBin2(connGraph, n2));
     expect(neighborPairs(disconnectNodeBin2(connGraph, n2))(n2).length).toEqual(0);
   });
 });
