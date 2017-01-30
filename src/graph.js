@@ -1,26 +1,22 @@
-import { addBinMap, flatten, flattenBin, get, hasK, removeBin, spreadK, triple, tuple, uniteMap, } from 'fenugreek-collections';
-import { addEdgeBin, addNodeBin, disconnectNodeBin2, mergeEdgesBin, removeEdgeBin, resetNodeBin, }
+import { addBinMap, append, asMap, flatten, flattenBin, get, hasK, removeBin,
+   spreadK, triple, tuple, uniteMap, } from 'fenugreek-collections';
+import { addEdgeBin, addNodeBin, disconnectNodeBin2, mergeEdgesBin, neighborPairs, removeEdgeBin, resetNodeBin, }
 from './reducers';
 
 export const disconnectNodeBin = disconnectNodeBin2;
+export const kvPair = append;
 
-// const { addBinMap, removeBin, uniteMap, } = collections;
-
-// const flattenBin = (a = [], b = []) => flatten(a)(b);
-
-export const spawn = edges => new Map(edges);
+export const spawn = edges => asMap(edges);
 export const copy = spawn;
 export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
 export const nodes = edges => spreadK(copy(edges));
-export const adj = edges => src => copy(get(edges)(src));
+export const adj = edges => src => asMap(get(edges)(src));
 export const neighbors = edges => src => nodes(adj(edges)(src));
 export const contains = edges => node => hasK(edges)(node);
 export const isAdjacent = edges => src => nabe =>
   contains(adj(edges)(src))(nabe);
 
-export const kvPair = k => v => [ k, v ];
-
-export const nodeNeighbors = edges => src => neighbors(edges)(src).map(kvPair(src));
+export const nodeNeighbors = neighborPairs;
 export const addNodes = edges => (...srcs) => srcs.reduce(addNodeBin, edges);
 
 export const resetNodes = edges => (...srcs) => srcs.reduce(resetNodeBin, edges);
