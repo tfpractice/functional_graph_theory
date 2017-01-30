@@ -5,6 +5,7 @@ from './reducers';
 
 export const disconnectNodeBin = disconnectNodeBin2;
 export const kvPair = append;
+export const mergeNeighbors = uniteMap;
 
 export const spawn = edges => asMap(edges);
 export const copy = spawn;
@@ -42,5 +43,3 @@ export const addNeighbor = edges => src => (n, w = 0) =>
   addBinMap(adj(edges)(src), [ n, w ]);
 
 export const addEntry = nabes => ([ n, w = 0 ]) => addBinMap(nabes, [ n, w ]);
-
-export const mergeNeighbors = uniteMap;
