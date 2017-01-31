@@ -1,5 +1,4 @@
-import { addBinMap, addBinSet, addMap, asMap, lastK, popFirst,
-   spread, spreadK, spreadV, tuple, } from 'fenugreek-collections';
+import { addMap, lastK, } from 'fenugreek-collections';
 
 // **pathEntry** `:: ( node, Number, Number ) -> {pred, length, weight}`
 // returns an object with pred, weight, and length properties

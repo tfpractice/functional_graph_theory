@@ -1,12 +1,10 @@
 import { addMap, asMap, asSet, first, flatten, flattenBin, isIterable,
    removeBin, spread, } from 'fenugreek-collections';
-import { adj, copy, mergeEdges, neighbors,
-  nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
-import { graphString, } from './strings';
+import { adj, copy, mergeEdges, neighbors, nodes, removeNodes, } from './graph';
 import * as reducers from './reducers';
 
 export const autoSpread = el =>
-el[Symbol.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
+isIterable(el) ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
 
 export const superNode = src => nb => asSet([ src, nb ]);
 
