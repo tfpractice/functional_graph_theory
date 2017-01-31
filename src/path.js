@@ -15,35 +15,35 @@ export const appendPath = path => src => addMap(path)(src)(pathEntry(lastK(path)
 // initializes a new path given a source node
 export const initPath = node => appendPath()(node);
 
-// **ptW** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **getWeight** `:: {weight:Number} -> Number`
 // returns an object with pred, weight, and length properties
 export const getWeight = ({ weight = 0 }) => weight;
 
-// **ptL** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **getLength** `:: {length:Number} -> Number`
 // returns an object with pred, weight, and length properties
 export const getLength = ({ length = 1 }) => length;
 
-// **lastVal** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **lastVal** `:: Map<pathEntry> -> {pred, length, weight}`
 // returns the last entry in the path
 export const lastVal = path => path.get(lastK(path));
 
-// **lastW** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **lastWeight** `:: Map<pathEntry> -> Number`
 // returns the last weight in the path
 export const lastWeight = path => getWeight(lastVal(path));
 
-// **lastL** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **lastLength** `:: Map<pathEntry> -> Number`
 // returns the last length in the path
 export const lastLength = path => getLength(lastVal(path));
 
-// **nextW** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **nextWeight** `:: Map<pathEntry> -> Number -> Number`
 // returns an object with pred, weight, and length properties
 export const nextWeight = path => (w = 0) => lastWeight(path) + w;
 
-// **nextL** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **nextLength** `:: Map<pathEntry> -> Number -> Number`
 // returns an object with pred, weight, and length properties
 export const nextLength = path => lastLength(path) ? lastLength(path) + 1 : 1;
 
-// **nextPath** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// **nextPath** `:: (Map<pathEntry>, [node, Number]) -> Map<pathEntry> `
 // returns an object with pred, weight, and length properties
 export const nextPath = (path = new Map, [ n, w = 0 ]) =>
   path.set(n, pathVal(lastK(path))(nextLength(path))(nextWeight(path)(w)));
