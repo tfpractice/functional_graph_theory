@@ -14,4 +14,6 @@ export const components = (edges) => {
   return spreadK(edges).reduce(visitMap, new Map);
 };
 
+// **componentSet** `::  Map<edge> -> Set<component>`
+// partitions an edgelist into sets of connected nodes
 export const componentSet = edges => new Set(spreadV(components(edges)));

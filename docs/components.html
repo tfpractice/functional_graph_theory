@@ -93,20 +93,49 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinMap, diff, spreadK, spreadV, tuple, }
- <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinMap, addSet, diff, spreadK, spreadV, tuple, }
+ <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>components</strong> <code>::  Map&lt;edge&gt; -&gt; Map&lt;component&gt;</code>
+maps each node to a set of connected nodes</p>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> components = <span class="hljs-function">(<span class="hljs-params">edges</span>) =&gt;</span> {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> components = <span class="hljs-function">(<span class="hljs-params">edges</span>) =&gt;</span> {
   <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">comp = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node</span>) =&gt;</span>
-     diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
+     diff(spreadK(edges.get(node)))(comp).reduce(trav, addSet(comp)(node));
+     
   <span class="hljs-keyword">const</span> visitMap = <span class="hljs-function">(<span class="hljs-params">mMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>, node</span>) =&gt;</span>
      diff(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node))(mMap).map(tuple(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node)))
        .reduce(addBinMap, mMap);
   
   <span class="hljs-keyword">return</span> spreadK(edges).reduce(visitMap, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>);
-};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>componentSet</strong> <code>::  Map&lt;edge&gt; -&gt; Set&lt;component&gt;</code>
+partitions an edgelist into sets of connected nodes</p>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> componentSet = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>(spreadV(components(edges)));</pre></div></div>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> componentSet = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>(spreadV(components(edges)));</pre></div></div>
             
         </li>
         
