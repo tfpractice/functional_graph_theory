@@ -1,6 +1,6 @@
-import { addMap, first, flatten, flattenBin, removeBin, spread, } from 'fenugreek-collections';
-import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
-  fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
+import { addMap, asMap, asSet, first, flatten, flattenBin, iterable,
+   removeBin, spread, } from 'fenugreek-collections';
+import { adj, copy, mergeEdges, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';
@@ -8,13 +8,13 @@ import * as reducers from './reducers';
 export const autoSpread = el =>
 el[Symbol.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
 
-export const superNode = src => nb => new Set([ src, nb ]);
+export const superNode = src => nb => asSet([ src, nb ]);
 
 export const combineNeighbors = g => src => nb =>
-  new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));
+  asSet(flatten(neighbors(g)(src))(neighbors(g)(nb)));
 
 export const combineAdj = g => src => nb =>
-  new Map(flatten(adj(g)(src))(adj(g)(nb)));
+  asMap(flatten(adj(g)(src))(adj(g)(nb)));
 
 export const superAdj = g => src => nb =>
  [ src, nb ].reduce(removeBin, combineAdj(g)(src)(nb));

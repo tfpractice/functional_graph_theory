@@ -93,18 +93,63 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinMap, addBinSet, diff, get, hasK, lastK, mapDiff, popFirst,
-   spread, spreadK, spreadV, tuple, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
-<span class="hljs-keyword">import</span> { appendPath, initPath, nextPath, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./path'</span>;
-<span class="hljs-keyword">import</span> { components, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components'</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (src) =&gt; {
-  <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">path = initPath(src</span>), [ <span class="hljs-params">n</span>, <span class="hljs-params">w</span> ] = [ <span class="hljs-params">lastK</span>(<span class="hljs-params">path</span>), 0 ]) =&gt;</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinSet, get, hasK, lastK, mapDiff, popFirst, spread, spreadK, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+<span class="hljs-keyword">import</span> { initPath, nextPath, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./path'</span>;
+<span class="hljs-keyword">import</span> { components, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><strong>dfs</strong> <code>:: Map&lt;edge&gt; -&gt; node -&gt; Map&lt;pathEntry&gt;</code>
+depth first traversal</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (src) =&gt; {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <blockquote>
+<p><strong>dfs.trav</strong> <code>:: Map&lt;pathEntry&gt; -&gt; [node, w] -&gt; Map&lt;pathEntry&gt;</code>
+depth first traversal</p>
+</blockquote>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">path = initPath(src</span>), [ <span class="hljs-params">n</span>, <span class="hljs-params">w</span> ] = [ <span class="hljs-params">lastK</span>(<span class="hljs-params">path</span>), 0 ]) =&gt;</span>
     spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [ n, w ]));
   
   <span class="hljs-keyword">return</span> trav(initPath(src));
-};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><strong>bfs</strong> <code>:: Map&lt;edge&gt; -&gt; node -&gt; Map&lt;pathEntry&gt;</code>
+breadth first traversal</p>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> bfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> bfs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
   <span class="hljs-keyword">const</span> bVisit = <span class="hljs-function"><span class="hljs-params">bPath</span> =&gt;</span> (bQueue) =&gt; {
     <span class="hljs-keyword">const</span> pred = popFirst(bQueue);
     <span class="hljs-keyword">const</span> nextNabes = mapDiff(edges.get(pred))(bPath);
@@ -114,12 +159,26 @@
     <span class="hljs-keyword">return</span> bQueue.size &gt; <span class="hljs-number">0</span> ? bVisit(bPath)(bQueue) : bPath;
   };
   
-  <span class="hljs-keyword">return</span> bVisit(initPath(iNode))(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([ iNode ]));
-};
+  <span class="hljs-keyword">return</span> bVisit(initPath(iNode))(asSet([ iNode ]));
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><strong>dijkstra</strong> <code>:: Map&lt;edge&gt; -&gt; node -&gt; Map&lt;pathEntry&gt;</code>
+finds shortest paths from a source node to all node reachable from that node</p>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dijkstra = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dijkstra = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> (iNode) =&gt; {
   <span class="hljs-keyword">const</span> reachables = bfs(edges)(iNode);
-  <span class="hljs-keyword">const</span> inspectQueue = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([ iNode ]);
+  <span class="hljs-keyword">const</span> inspectQueue = asSet([ iNode ]);
   <span class="hljs-keyword">const</span> solutionSet = initPath(iNode);
   
   <span class="hljs-keyword">while</span> (inspectQueue.size &gt; <span class="hljs-number">0</span>) {
@@ -139,24 +198,24 @@
       }
     }
   }
-  
   <span class="hljs-keyword">return</span> solutionSet;
-};
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> pathBetween = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> n0 =&gt; <span class="hljs-function"><span class="hljs-params">n1</span> =&gt;</span> hasK(get(components(edges))(n0))(n1);</pre></div></div>
+};</pre></div></div>
             
         </li>
         
         
-        <li id="section-2">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>hasK(components(edges).get(n1))(n0);</p>
+              <p><strong>pathBetween</strong> <code>:: Map&lt;edge&gt; -&gt; node -&gt; node -&gt; Boolean</code>
+checks for a path between two nodes</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> pathBetween = <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> n0 =&gt; <span class="hljs-function"><span class="hljs-params">n1</span> =&gt;</span> hasK(get(components(e))(n0))(n1);</pre></div></div>
             
         </li>
         
