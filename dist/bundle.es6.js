@@ -928,7 +928,7 @@ var showGraph = function showGraph(_ref7) {
 };
 
 var autoSpread = function autoSpread(el) {
-  return el[Symbol.iterator] ? spread(el).reduce(flattenBin, []).map(autoSpread) : el;
+  return isIterable(el) ? spread(el).reduce(flattenBin, []).map(autoSpread) : el;
 };
 
 var superNode = function superNode(src) {

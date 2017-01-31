@@ -95,13 +95,11 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addMap, asMap, asSet, first, flatten, flattenBin, isIterable,
    removeBin, spread, } <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
-<span class="hljs-keyword">import</span> { adj, copy, mergeEdges, neighbors,
-  nodes, removeEdges, removeNodes, resetNodes, spawn, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./graph'</span>;
-<span class="hljs-keyword">import</span> { graphString, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./strings'</span>;
+<span class="hljs-keyword">import</span> { adj, copy, mergeEdges, neighbors, nodes, removeNodes, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./graph'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">'./reducers'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> autoSpread = <span class="hljs-function"><span class="hljs-params">el</span> =&gt;</span>
-el[<span class="hljs-built_in">Symbol</span>.iterator] ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
+isIterable(el) ? (spread(el).reduce(flattenBin, []).map(autoSpread)) : el;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> superNode = <span class="hljs-function"><span class="hljs-params">src</span> =&gt;</span> nb =&gt; asSet([ src, nb ]);
 
