@@ -5,10 +5,11 @@ import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
 import { graphString, } from './strings';
 import * as reducers from './reducers';
-import { bfs, components, componentSet, dfs, dijkstra, pathBetween, } from './search';
+import { bfs, dfs, dijkstra, pathBetween, } from './search';
 import { disconnectNodes, } from './';
+import { components, componentSet, } from './components';
 import { superNode, } from './operations';
-import { initPath, nextPath, } from './search';
+import { initPath, nextPath, } from './path';
 export const countComponents = g => componentSet(g).size;
 
 export const selectNeighbor = g => src => nb => nb ?

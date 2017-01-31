@@ -1,7 +1,10 @@
 import 'jasmine-expect';
 import { spreadK, } from 'fenugreek-collections';
-import { addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements,
-mergeEdgesBin, neighbors, pathBetween, } from 'graph-curry';
+
+// import { addEdges, mergeEdgesBin, } from 'src';
+import { components, componentSet, } from 'src/components';
+import { addEdges, bfs, dfs, dijkstra, fromElements,
+mergeEdgesBin, neighbors, pathBetween, } from 'src';
 
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
@@ -27,31 +30,17 @@ odds = addEdges(odds)(n11, 0)(n1, n5);
 const myBreadth = bfs(myGraph)(n0);
 const myDepth = dfs(myGraph)(n0);
 
-describe('dfs', () => {
-  it('returns a map of nodes and neighbors', () => {
-    expect(myDepth instanceof Map).toBeTrue();
-    expect((myDepth).has(n3)).toBeTrue();
+describe('components', () => {
+  describe('components', () => {
+    it('retuns a map of nodes and paths', () => {
+      expect((components(myGraph) instanceof Map)).toBeTrue();
+    });
   });
-});
 
-describe('bfs', () => {
-  it('returns a map of nodes and neighbors', () => {
-    expect(myBreadth instanceof Map).toBeTrue();
-    expect(myBreadth.has(n2)).toBeTrue();
-    expect(neighbors(myGraph)(n2)).not.toContain(n5);
-  });
-});
-
-describe('dijkstra', () => {
-  it('retuns the shortest path from a node to its neighbors', () => {
-    const myDijk = dijkstra(myGraph)(n0);
-
-    expect(myDijk instanceof Map).toBeTrue();
-  });
-});
-
-describe('pathBetween', () => {
-  it('returns a true if nodes are in same component', () => {
-    expect(pathBetween(myGraph)(n7)(n8)).toBeTrue();
+  describe('componentSet', () => {
+    it('returns a set of all the components', () => {
+      expect(componentSet(odds) instanceof Set).toBeTrue();
+      expect(componentSet(odds).size).toBe(1);
+    });
   });
 });

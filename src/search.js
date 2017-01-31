@@ -1,10 +1,10 @@
-import { addBinMap, addBinSet, diff, hasK, lastK, mapDiff, popFirst,
+import { addBinMap, addBinSet, diff, get, hasK, lastK, mapDiff, popFirst,
    spread, spreadK, spreadV, tuple, } from 'fenugreek-collections';
 import { appendPath, initPath, nextPath, } from './path';
-
+import { components, } from './components';
 export const dfs = edges => (src) => {
-  const trav = (path = initPath(src), [n, w] = [lastK(path), 0]) =>
-    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
+  const trav = (path = initPath(src), [ n, w ] = [ lastK(path), 0 ]) =>
+    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [ n, w ]));
   
   return trav(initPath(src));
 };
@@ -19,12 +19,12 @@ export const bfs = edges => (iNode) => {
     return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
   };
   
-  return bVisit(initPath(iNode))(new Set([iNode]));
+  return bVisit(initPath(iNode))(new Set([ iNode ]));
 };
 
 export const dijkstra = edges => (iNode) => {
   const reachables = bfs(edges)(iNode);
-  const inspectQueue = new Set([iNode]);
+  const inspectQueue = new Set([ iNode ]);
   const solutionSet = initPath(iNode);
   
   while (inspectQueue.size > 0) {
@@ -32,7 +32,7 @@ export const dijkstra = edges => (iNode) => {
     const nextNabes = edges.get(pred);
     const { length: dCount, weight: dWeight } = solutionSet.get(pred);
     
-    for (const [nabe, nWeight] of nextNabes) {
+    for (const [ nabe, nWeight ] of nextNabes) {
       const prevMap = reachables.get(nabe) || { length: 1, weight: 0 };
       const { length: rCount, weight: rWeight } = prevMap;
       const dMap = { pred, length: dCount + 1, weight: dWeight + nWeight, };
@@ -48,16 +48,6 @@ export const dijkstra = edges => (iNode) => {
   return solutionSet;
 };
 
-export const components = (edges) => {
-  const trav = (comp = new Set, node) =>
-     diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
-  const visitMap = (mMap = new Map, node) =>
-     diff(trav(new Set, node))(mMap).map(tuple(trav(new Set, node)))
-       .reduce(addBinMap, mMap);
-  
-  return spreadK(edges).reduce(visitMap, new Map);
-};
+export const pathBetween = edges => n0 => n1 => hasK(get(components(edges))(n0))(n1);
 
-export const componentSet = edges => new Set(spreadV(components(edges)));
-export const pathBetween = edges => n0 => n1 =>
-  hasK(components(edges).get(n1))(n0);
+// hasK(components(edges).get(n1))(n0);
