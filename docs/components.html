@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>index.js</title>
+  <title>components.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -78,7 +78,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>index.js</h1>
+                  <h1>components.js</h1>
               </div>
           </li>
         
@@ -93,14 +93,20 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./reducers'</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./graph'</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./search'</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./strings'</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./components'</span>;
-<span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">'./path'</span>;
-<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Operations <span class="hljs-keyword">from</span> <span class="hljs-string">'./operations'</span>;
-<span class="hljs-keyword">export</span> { Operations, };</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { addBinMap, diff, spreadK, spreadV, tuple, }
+ <span class="hljs-keyword">from</span> <span class="hljs-string">'fenugreek-collections'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> components = <span class="hljs-function">(<span class="hljs-params">edges</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> trav = <span class="hljs-function">(<span class="hljs-params">comp = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node</span>) =&gt;</span>
+     diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
+  <span class="hljs-keyword">const</span> visitMap = <span class="hljs-function">(<span class="hljs-params">mMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>, node</span>) =&gt;</span>
+     diff(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node))(mMap).map(tuple(trav(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>, node)))
+       .reduce(addBinMap, mMap);
+  
+  <span class="hljs-keyword">return</span> spreadK(edges).reduce(visitMap, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>);
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> componentSet = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>(spreadV(components(edges)));</pre></div></div>
             
         </li>
         

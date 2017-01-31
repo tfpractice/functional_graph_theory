@@ -20,6 +20,11 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="components.html">
+                  components.js
+                </a>
+              
+                
                 <a class="source" href="cut.html">
                   cut.js
                 </a>
@@ -95,10 +100,11 @@
   nodes, removeEdges, removeNodes, resetNodes, spawn, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./graph'</span>;
 <span class="hljs-keyword">import</span> { graphString, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./strings'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> reducers <span class="hljs-keyword">from</span> <span class="hljs-string">'./reducers'</span>;
-<span class="hljs-keyword">import</span> { bfs, components, componentSet, dfs, dijkstra, pathBetween, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./search'</span>;
+<span class="hljs-keyword">import</span> { bfs, dfs, dijkstra, pathBetween, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./search'</span>;
 <span class="hljs-keyword">import</span> { disconnectNodes, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./'</span>;
+<span class="hljs-keyword">import</span> { components, componentSet, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components'</span>;
 <span class="hljs-keyword">import</span> { superNode, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./operations'</span>;
-<span class="hljs-keyword">import</span> { initPath, nextPath, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./search'</span>;
+<span class="hljs-keyword">import</span> { initPath, nextPath, } <span class="hljs-keyword">from</span> <span class="hljs-string">'./path'</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> countComponents = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> componentSet(g).size;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> selectNeighbor = <span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> src =&gt; <span class="hljs-function"><span class="hljs-params">nb</span> =&gt;</span> nb ?
