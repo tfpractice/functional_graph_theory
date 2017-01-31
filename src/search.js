@@ -1,23 +1,21 @@
 import { addBinMap, addBinSet, diff, hasK, lastK, mapDiff, popFirst,
    spread, spreadK, spreadV, tuple, } from 'fenugreek-collections';
-
+import { appendPath, getLength, getWeight, initPath, lastLength, lastVal,
+lastWeight, nextLength, nextPath, nextWeight, pathEntry, } from './path';
 const pathVal = (pred = null) => (length = 1) => (weight = 0) =>
   ({ pred, length, weight });
 
-const addSrc = (path = new Map) => src =>
-  path.set(src, { pred: lastK(path), weight: 0, length: 1 });
+//
+// export const getWeight = ({ weight = 0 }) => weight;
+// export const getLength = ({ length = 1 }) => length;
+// export const lastVal = path => path.get(lastK(path));
+// export const lastWeight = path => getWeight(lastVal(path));
+// export const lastLength = path => getLength(lastVal(path));
+// export const nextWeight = path => (w = 0) => lastWeight(path) + w;
+// export const nextLength = path => lastLength(path) ? lastLength(path) + 1 : 1;
 
-export const initPath = node => addSrc()(node);
-export const ptW = ({ weight = 0 }) => weight;
-export const ptL = ({ length = 1 }) => length;
-export const lastVal = path => path.get(lastK(path));
-export const lastW = path => ptW(lastVal(path));
-export const lastL = path => ptL(lastVal(path));
-export const nextW = path => (w = 0) => lastW(path) + w;
-export const nextL = path => lastL(path) ? lastL(path) + 1 : 1;
-
-export const nextPath = (path = new Map, [ n, w = 0 ]) =>
-  path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
+// export const nextPath = (path = new Map, [ n, w = 0 ]) =>
+//   path.set(n, pathVal(lastK(path))(nextLength(path))(nextWeight(path)(w)));
 
 export const dfs = edges => (src) => {
   const trav = (path = initPath(src), [ n, w ] = [ lastK(path), 0 ]) =>

@@ -73,8 +73,8 @@ export const mergeEdges = edges => (...alt) => alt.reduce(mergeEdgesBin, edges);
 // **addNeighbor** `::  Map<edge> -> ...{node:adjacency} -> Map<edge>`
 // resets the nodes adjacency list to an empty map
 export const addNeighbor = edges => src => (n, w = 0) =>
-addBinMap(adj(edges)(src), [n, w]);
+addBinMap(adj(edges)(src), [ n, w ]);
 
 // **addEntry** `::  Map<{node:Number}> ->  [node, Number]  -> Map<edge>`
 // resets the nodes adjacency list to an empty map
-export const addEntry = nabes => ([n, w = 0]) => addBinMap(nabes, [n, w]);
+export const addEntry = nabes => ([ n, w = 0 ]) => addBinMap(nabes, [ n, w ]);
