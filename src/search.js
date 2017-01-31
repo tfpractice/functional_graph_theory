@@ -1,11 +1,10 @@
 import { addBinMap, addBinSet, diff, hasK, lastK, mapDiff, popFirst,
    spread, spreadK, spreadV, tuple, } from 'fenugreek-collections';
-import { appendPath, getLength, getWeight, initPath, lastLength, lastVal,
-lastWeight, nextLength, nextPath, nextWeight, pathEntry, } from './path';
+import { appendPath, initPath, nextPath, } from './path';
 
 export const dfs = edges => (src) => {
-  const trav = (path = initPath(src), [ n, w ] = [ lastK(path), 0 ]) =>
-    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [ n, w ]));
+  const trav = (path = initPath(src), [n, w] = [lastK(path), 0]) =>
+    spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
   
   return trav(initPath(src));
 };
@@ -20,12 +19,12 @@ export const bfs = edges => (iNode) => {
     return bQueue.size > 0 ? bVisit(bPath)(bQueue) : bPath;
   };
   
-  return bVisit(initPath(iNode))(new Set([ iNode ]));
+  return bVisit(initPath(iNode))(new Set([iNode]));
 };
 
 export const dijkstra = edges => (iNode) => {
   const reachables = bfs(edges)(iNode);
-  const inspectQueue = new Set([ iNode ]);
+  const inspectQueue = new Set([iNode]);
   const solutionSet = initPath(iNode);
   
   while (inspectQueue.size > 0) {
@@ -33,7 +32,7 @@ export const dijkstra = edges => (iNode) => {
     const nextNabes = edges.get(pred);
     const { length: dCount, weight: dWeight } = solutionSet.get(pred);
     
-    for (const [ nabe, nWeight ] of nextNabes) {
+    for (const [nabe, nWeight] of nextNabes) {
       const prevMap = reachables.get(nabe) || { length: 1, weight: 0 };
       const { length: rCount, weight: rWeight } = prevMap;
       const dMap = { pred, length: dCount + 1, weight: dWeight + nWeight, };
