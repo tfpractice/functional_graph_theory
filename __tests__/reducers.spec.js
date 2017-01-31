@@ -3,15 +3,13 @@ import { nodes, } from 'graph-curry';
 import { addEdgeBin, addNodeBin,
  disconnectNodeBin, importEdgeBin, mergeEdgesBin, neighborPairs,
    removeEdgeBin, removeNodeBin, resetNodeBin, } from 'src/reducers';
-import { n0, n2, n7, } from './shared';
+import { connGraph, n0, n2, n7, } from './shared';
 import { eGraph, oGraph, } from './graph.spec';
 
 const cSet = new Set([ 1, 2, 3, 4, ]);
 const cMap = [[ 8, 1 ], [ 7, 2 ], [ 6, 3 ], [ 5, 4 ]].reduce(addEdgeBin, new Map);
 const dMap = [[ 8, 19, 2 ], [ 7, 17, 2 ], [ 6, 16, 2 ], [ 5, 15, 2 ]].reduce(addEdgeBin, new Map);
 const cArr = [ 0, 11, 22, 33, 44, ];
-const connGraph = nodes(eGraph).map((e, id, arr) =>
-    [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
 
 describe('addNodeBin', () => {
   it('adds a [key, Map] pair to a map', () => {
