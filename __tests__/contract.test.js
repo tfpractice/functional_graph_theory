@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { first, last, spread, spreadK, } from 'fenugreek-collections';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
-contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/operations';
+contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
 import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements, graphString,
 mergeEdgesBin, neighbors, nodes, pathBetween, removeEdges, } from 'graph-curry';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';

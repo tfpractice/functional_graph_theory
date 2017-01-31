@@ -8,7 +8,7 @@ import * as reducers from './reducers';
 import { bfs, dfs, dijkstra, pathBetween, } from './search';
 import { disconnectNodes, } from './';
 import { components, componentSet, } from './components';
-import { superNode, } from './operations';
+import { superNode, } from './contract';
 import { initPath, nextPath, } from './path';
 export const countComponents = g => componentSet(g).size;
 
