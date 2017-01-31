@@ -227,6 +227,12 @@ var xhasKV = function xhasKV(coll) {
   };
 };
 
+// **asSet** `:: Iterable<a> -> Set[a]`  
+// returns an Iterable<a> of the collections default iterator
+var asSet = function asSet(c) {
+  return new Set(spread(c));
+};
+
 // **asMap** `:: Iterable<a> -> Map[a]`  
 // returns an Iterable<a> of the collections default iterator
 var asMap = function asMap(c) {
@@ -283,6 +289,18 @@ var addMap = function addMap(c) {
     return function (v) {
       return asMap(c).set(k, v);
     };
+  };
+};
+
+// **addSet** `:: Set[a] -> (...a) -> Set[a]`  
+// adds multiple elements to a Set;
+var addSet = function addSet(c) {
+  return function () {
+    for (var _len2 = arguments.length, els = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      els[_key2] = arguments[_key2];
+    }
+
+    return els.reduce(addBinSet, c);
   };
 };
 
@@ -380,24 +398,28 @@ var slicedToArray$1 = function () {
   };
 }();
 
+// **resetNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var resetNodeBin = function resetNodeBin(edges, src) {
   return addMap(edges)(src)(asMap());
 };
 
+// **addNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
+// adds a node:adjacency list pair to an edgelist
 var addNodeBin = function addNodeBin(edges, src) {
   return addMap(edges)(src)(get$1(edges)(src));
 };
 
-var removeNodeBin = function removeNodeBin(edges, src) {
-  return addMap(edges)(src)(get$1(edges)(src));
-};
-
+// **neighborPairs** `:: ( Map<edge>, node ) -> [ [node, node] ]`
+// returns an array of [node, neigbor] pairs from an edgelist
 var neighborPairs = function neighborPairs(edges) {
   return function (src) {
     return spreadK(get$1(edges)(src)).map(append(src));
   };
 };
 
+// **addEdgeBin** `:: ( Map<edge>, [node, node, Number] ) -> Map<edge>`
+// add a node:Map<{node: Number}> entry to an edgelist
 var addEdgeBin = function addEdgeBin(edges, _ref) {
   var _ref2 = slicedToArray$1(_ref, 3),
       src = _ref2[0],
@@ -408,6 +430,8 @@ var addEdgeBin = function addEdgeBin(edges, _ref) {
   return [[src, addMap(get$1(edges)(src))(nb)(wt)], [nb, addMap(get$1(edges)(nb))(src)(wt)]].reduce(addBinMap, asMap(edges));
 };
 
+// **removeEdgeBin** `:: ( Map<edge>, [node, node] ) -> Map<edge>`
+// removes a {node:Map<{node: Number}>} entry from an edgelist
 var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
   var _ref4 = slicedToArray$1(_ref3, 2),
       src = _ref4[0],
@@ -416,10 +440,20 @@ var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
   return [[src, removeMap(get$1(edges)(src))(nb)], [nb, removeMap(get$1(edges)(nb))(src)]].reduce(addBinMap, asMap(edges));
 };
 
+// **disconnectNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
+// removes all edges connected to a node
 var disconnectNodeBin = function disconnectNodeBin(edges, src) {
   return neighborPairs(edges)(src).reduce(removeEdgeBin, asMap(edges));
 };
 
+// **removeNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
+// isolates a node and removes it from edgelist
+var removeNodeBin = function removeNodeBin(edges, src) {
+  return removeMap(disconnectNodeBin(edges, src))(src);
+};
+
+// **importEdgeBin** `:: ( Map<edge>, [node, [node: Number]] ) -> Map<edge>`
+// appends a node and all of its neighbors to an edgelist
 var importEdgeBin = function importEdgeBin(edges, _ref5) {
   var _ref6 = slicedToArray$1(_ref5, 2),
       src = _ref6[0],
@@ -428,16 +462,28 @@ var importEdgeBin = function importEdgeBin(edges, _ref5) {
   return spread(mapDiff(nbs)(get$1(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
 };
 
+// **mergeEdgesBin** `:: ( Map<edge>, Map<edge>, ) -> Map<edge>`
+// combines two Edge maps
 var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
   return spread(asMap(alts)).reduce(importEdgeBin, edges);
 };
 
+// **mergeNeighbors** `::  Map<edge> ->  node  -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var mergeNeighbors = uniteMap;
 
+// **spawn** `::  Map<edge> -> Map<edge>`
+// returns a new Edgelist
 var spawn = function spawn(edges) {
   return asMap(edges);
 };
+
+// **copy** `::  Map<edge> -> Map<edge>`
+// creates a copy of a Edgelist
 var copy = spawn;
+
+// **fromElements** `::  Map<edge> -> ...node  -> Map<edge>`
+// adds  {node: adjacencyList} pairs ot an Edgelist
 var fromElements = function fromElements() {
   for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
     elems[_key] = arguments[_key];
@@ -445,32 +491,49 @@ var fromElements = function fromElements() {
 
   return elems.reduce(addNodeBin, copy());
 };
+
+// **nodes** `::  Map<edge> ->  [node]
+// returns an array of the nodes
 var nodes = function nodes(edges) {
   return spreadK(copy(edges));
 };
+
+// **adj** `::  Map<edge> ->  node  -> Map<{node: Number}>`
+// returns the nodes adjacency list
 var adj = function adj(edges) {
   return function (src) {
     return asMap(get$1(edges)(src));
   };
 };
+
+// **neighbors** `::  Map<edge> ->  node  -> [node]`
+// returns the nodes neighbors
 var neighbors = function neighbors(edges) {
   return function (src) {
     return nodes(adj(edges)(src));
   };
 };
+
+// **contains** `::  Map<edge> ->  node  -> Boolean`
+// checks for the presence of a node in an edgelist
 var contains = function contains(edges) {
   return function (node) {
     return hasK(edges)(node);
   };
 };
+
+// **isAdjacent** `::  Map<edge> ->  node  -> Map<edge>`
+// checks for the presence of a neighbor in a node's adjacency list
 var isAdjacent = function isAdjacent(edges) {
   return function (src) {
-    return function (nabe) {
-      return contains(adj(edges)(src))(nabe);
+    return function (nb) {
+      return contains(adj(edges)(src))(nb);
     };
   };
 };
 
+// **addNodes** `::  Map<edge> ->  ...node  -> Map<edge>`
+// adds nodes to an Edgelist
 var addNodes = function addNodes(edges) {
   return function () {
     for (var _len2 = arguments.length, srcs = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
@@ -481,16 +544,20 @@ var addNodes = function addNodes(edges) {
   };
 };
 
+// **resetNodes** `::  Map<edge> ->  ...node  -> Map<edge>`
+// resets the adjacency lists of given nodes to an empty map
 var resetNodes = function resetNodes(edges) {
   return function () {
-    for (var _len3 = arguments.length, srcs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      srcs[_key3] = arguments[_key3];
+    for (var _len3 = arguments.length, src = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      src[_key3] = arguments[_key3];
     }
 
-    return srcs.reduce(resetNodeBin, edges);
+    return src.reduce(resetNodeBin, edges);
   };
 };
 
+// **addEdges** `::  Map<edge> ->  (node, Number) -> ...node  -> Map<edge>`
+// creates edges between a node and multiple other nodes
 var addEdges = function addEdges(edges) {
   return function (src) {
     var w = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -504,6 +571,8 @@ var addEdges = function addEdges(edges) {
   };
 };
 
+// **removeEdges** `::  Map<edge> ->  node -> ...node  -> Map<edge>`
+// removes edges between a node and select other nodes
 var removeEdges = function removeEdges(edges) {
   return function (src) {
     return function () {
@@ -516,9 +585,8 @@ var removeEdges = function removeEdges(edges) {
   };
 };
 
-// export const disconnectNodeBin = (edges, src) =>
-//       removeEdges(edges)(src)(...neighbors(edges)(src));
-
+// **disconnectNodes** `:: Map<edge> ->  ...node  -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var disconnectNodes = function disconnectNodes(edges) {
   return function () {
     for (var _len6 = arguments.length, srcs = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
@@ -529,6 +597,8 @@ var disconnectNodes = function disconnectNodes(edges) {
   };
 };
 
+// **removeNodes** `::  Map<edge> ->  ...node  -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var removeNodes = function removeNodes(edges) {
   return function () {
     for (var _len7 = arguments.length, srcs = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
@@ -539,16 +609,20 @@ var removeNodes = function removeNodes(edges) {
   };
 };
 
+// **mergeEdges** `::  Map<edge> -> ...{node:adjacency} -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var mergeEdges = function mergeEdges(edges) {
   return function () {
-    for (var _len8 = arguments.length, alts = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-      alts[_key8] = arguments[_key8];
+    for (var _len8 = arguments.length, alt = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+      alt[_key8] = arguments[_key8];
     }
 
-    return alts.reduce(mergeEdgesBin, edges);
+    return alt.reduce(mergeEdgesBin, edges);
   };
 };
 
+// **addNeighbor** `::  Map<edge> -> ...{node:adjacency} -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var addNeighbor = function addNeighbor(edges) {
   return function (src) {
     return function (n) {
@@ -558,6 +632,8 @@ var addNeighbor = function addNeighbor(edges) {
   };
 };
 
+// **addEntry** `::  Map<{node:Number}> ->  [node, Number]  -> Map<edge>`
+// resets the nodes adjacency list to an empty map
 var addEntry = function addEntry(nabes) {
   return function (_ref) {
     var _ref2 = slicedToArray$1(_ref, 2),
@@ -569,6 +645,14 @@ var addEntry = function addEntry(nabes) {
   };
 };
 
+// **pathEntry** `:: ( node, Number, Number ) -> {pred, length, weight}`
+// returns an object with pred, weight, and length properties
+var pathEntry = function pathEntry() {
+  var pred = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var weight = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  return { pred: pred, length: length, weight: weight };
+};
 var pathVal = function pathVal() {
   var pred = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   return function () {
@@ -580,45 +664,71 @@ var pathVal = function pathVal() {
   };
 };
 
-var addSrc = function addSrc() {
-  var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+// **addSrc** `:: Map<pathEntry> -> node ->  Map<pathEntry>`
+// adds a {node:{pred, weight, length}} entry to a  path
+var appendPath = function appendPath(path) {
   return function (src) {
-    return path.set(src, { pred: lastK(path), weight: 0, length: 1 });
+    return addMap(path)(src)(pathEntry(lastK(path), 1, 0));
   };
 };
 
+// **initPath** `:: node -> Map<pathEntry>`
+// initializes a new path given a source node
 var initPath = function initPath(node) {
-  return addSrc()(node);
+  return appendPath()(node);
 };
-var ptW = function ptW(_ref) {
+
+// **getWeight** `:: {weight:Number} -> Number`
+// returns an object with pred, weight, and length properties
+var getWeight = function getWeight(_ref) {
   var _ref$weight = _ref.weight,
       weight = _ref$weight === undefined ? 0 : _ref$weight;
   return weight;
 };
-var ptL = function ptL(_ref2) {
+
+// **getLength** `:: {length:Number} -> Number`
+// returns an object with pred, weight, and length properties
+var getLength = function getLength(_ref2) {
   var _ref2$length = _ref2.length,
       length = _ref2$length === undefined ? 1 : _ref2$length;
   return length;
 };
+
+// **lastVal** `:: Map<pathEntry> -> {pred, length, weight}`
+// returns the last entry in the path
 var lastVal = function lastVal(path) {
   return path.get(lastK(path));
 };
-var lastW = function lastW(path) {
-  return ptW(lastVal(path));
-};
-var lastL = function lastL(path) {
-  return ptL(lastVal(path));
-};
-var nextW = function nextW(path) {
-  return function () {
-    var w = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    return lastW(path) + w;
-  };
-};
-var nextL = function nextL(path) {
-  return lastL(path) ? lastL(path) + 1 : 1;
+
+// **lastWeight** `:: Map<pathEntry> -> Number`
+// returns the last weight in the path
+var lastWeight = function lastWeight(path) {
+  return getWeight(lastVal(path));
 };
 
+// **lastLength** `:: Map<pathEntry> -> Number`
+// returns the last length in the path
+var lastLength = function lastLength(path) {
+  return getLength(lastVal(path));
+};
+
+// **nextWeight** `:: Map<pathEntry> -> Number -> Number`
+// returns an object with pred, weight, and length properties
+var nextWeight = function nextWeight(path) {
+  return function () {
+    var w = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    return lastWeight(path) + w;
+  };
+};
+
+// **nextLength** `:: Map<pathEntry> -> Number -> Number`
+// returns an object with pred, weight, and length properties
+var nextLength = function nextLength(path) {
+  return lastLength(path) ? lastLength(path) + 1 : 1;
+};
+
+// **nextPath** `:: (Map<pathEntry>, [node, Number]) -> Map<pathEntry> `
+// returns an object with pred, weight, and length properties
 var nextPath = function nextPath() {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref3 = arguments[1];
@@ -628,18 +738,46 @@ var nextPath = function nextPath() {
       _ref4$ = _ref4[1],
       w = _ref4$ === undefined ? 0 : _ref4$;
 
-  return path.set(n, pathVal(lastK(path))(nextL(path))(nextW(path)(w)));
+  return path.set(n, pathVal(lastK(path))(nextLength(path))(nextWeight(path)(w)));
 };
 
+// **components** `::  Map<edge> -> Map<component>`
+// maps each node to a set of connected nodes
+var components = function components(edges) {
+   var trav = function trav() {
+      var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
+      var node = arguments[1];
+      return diff(spreadK(edges.get(node)))(comp).reduce(trav, addSet(comp)(node));
+   };
+
+   var visitMap = function visitMap() {
+      var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+      var node = arguments[1];
+      return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap, mMap);
+   };
+
+   return spreadK(edges).reduce(visitMap, new Map());
+};
+
+// **componentSet** `::  Map<edge> -> Set<component>`
+// partitions an edgelist into sets of connected nodes
+var componentSet = function componentSet(edges) {
+   return new Set(spreadV(components(edges)));
+};
+
+// **dfs** `:: Map<edge> -> node -> Map<pathEntry>`
+// depth first traversal
 var dfs = function dfs(edges) {
   return function (src) {
+    // >**dfs.trav** `:: Map<pathEntry> -> [node, w] -> Map<pathEntry>`
+    // >depth first traversal
     var trav = function trav() {
       var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPath(src);
 
-      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK(path), 0],
-          _ref6 = slicedToArray$1(_ref5, 2),
-          n = _ref6[0],
-          w = _ref6[1];
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK(path), 0],
+          _ref2 = slicedToArray$1(_ref, 2),
+          n = _ref2[0],
+          w = _ref2[1];
 
       return spread(mapDiff(edges.get(n))(path)).reduce(trav, nextPath(path, [n, w]));
     };
@@ -648,6 +786,8 @@ var dfs = function dfs(edges) {
   };
 };
 
+// **bfs** `:: Map<edge> -> node -> Map<pathEntry>`
+// breadth first traversal
 var bfs = function bfs(edges) {
   return function (iNode) {
     var bVisit = function bVisit(bPath) {
@@ -661,14 +801,16 @@ var bfs = function bfs(edges) {
       };
     };
 
-    return bVisit(initPath(iNode))(new Set([iNode]));
+    return bVisit(initPath(iNode))(asSet([iNode]));
   };
 };
 
+// **dijkstra** `:: Map<edge> -> node -> Map<pathEntry>`
+// finds shortest paths from a source node to all node reachable from that node
 var dijkstra = function dijkstra(edges) {
   return function (iNode) {
     var reachables = bfs(edges)(iNode);
-    var inspectQueue = new Set([iNode]);
+    var inspectQueue = asSet([iNode]);
     var solutionSet = initPath(iNode);
 
     while (inspectQueue.size > 0) {
@@ -717,33 +859,16 @@ var dijkstra = function dijkstra(edges) {
         }
       }
     }
-
     return solutionSet;
   };
 };
 
-var components = function components(edges) {
-  var trav = function trav() {
-    var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
-    var node = arguments[1];
-    return diff(spreadK(edges.get(node)))(comp).reduce(trav, comp.add(node));
-  };
-  var visitMap = function visitMap() {
-    var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-    var node = arguments[1];
-    return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap, mMap);
-  };
-
-  return spreadK(edges).reduce(visitMap, new Map());
-};
-
-var componentSet = function componentSet(edges) {
-  return new Set(spreadV(components(edges)));
-};
-var pathBetween = function pathBetween(edges) {
+// **pathBetween** `:: Map<edge> -> node -> node -> Boolean`
+// checks for a path between two nodes
+var pathBetween = function pathBetween(e) {
   return function (n0) {
     return function (n1) {
-      return hasK(components(edges).get(n1))(n0);
+      return hasK(get$1(components(e))(n0))(n1);
     };
   };
 };
@@ -808,14 +933,14 @@ var autoSpread = function autoSpread(el) {
 
 var superNode = function superNode(src) {
   return function (nb) {
-    return new Set([src, nb]);
+    return asSet([src, nb]);
   };
 };
 
 var combineNeighbors = function combineNeighbors(g) {
   return function (src) {
     return function (nb) {
-      return new Set(flatten(neighbors(g)(src))(neighbors(g)(nb)));
+      return asSet(flatten(neighbors(g)(src))(neighbors(g)(nb)));
     };
   };
 };
@@ -823,7 +948,7 @@ var combineNeighbors = function combineNeighbors(g) {
 var combineAdj = function combineAdj(g) {
   return function (src) {
     return function (nb) {
-      return new Map(flatten(adj(g)(src))(adj(g)(nb)));
+      return asMap(flatten(adj(g)(src))(adj(g)(nb)));
     };
   };
 };
@@ -882,7 +1007,7 @@ var contractMin = function contractMin(g) {
 
 
 
-var operations = Object.freeze({
+var contract$1 = Object.freeze({
 	autoSpread: autoSpread,
 	superNode: superNode,
 	combineNeighbors: combineNeighbors,
@@ -897,5 +1022,5 @@ var operations = Object.freeze({
 	contractMin: contractMin
 });
 
-export { operations as Operations, resetNodeBin, addNodeBin, removeNodeBin, neighborPairs, addEdgeBin, removeEdgeBin, disconnectNodeBin, importEdgeBin, mergeEdgesBin, mergeNeighbors, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, resetNodes, addEdges, removeEdges, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, initPath, ptW, ptL, lastVal, lastW, lastL, nextW, nextL, nextPath, dfs, bfs, dijkstra, components, componentSet, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph };export default fromElements;
+export { contract$1 as Operations, resetNodeBin, addNodeBin, neighborPairs, addEdgeBin, removeEdgeBin, disconnectNodeBin, removeNodeBin, importEdgeBin, mergeEdgesBin, mergeNeighbors, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, resetNodes, addEdges, removeEdges, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, dfs, bfs, dijkstra, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph, components, componentSet, pathEntry, appendPath, initPath, getWeight, getLength, lastVal, lastWeight, lastLength, nextWeight, nextLength, nextPath };export default fromElements;
 //# sourceMappingURL=bundle.es6.js.map

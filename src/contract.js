@@ -1,4 +1,4 @@
-import { addMap, asMap, asSet, first, flatten, flattenBin, iterable,
+import { addMap, asMap, asSet, first, flatten, flattenBin, isIterable,
    removeBin, spread, } from 'fenugreek-collections';
 import { adj, copy, mergeEdges, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';

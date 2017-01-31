@@ -17,7 +17,7 @@ export default {
   moduleName: 'graph-curry',
   sourceMap: true,
   exports: 'named',
-  external: [ 'turmeric-utils' ],
+  external: [ 'fenugreek-colllections' ],
   plugins: [
     progress({ clearLine: false, }),
     filesize(),
