@@ -6,12 +6,12 @@ import progress from 'rollup-plugin-progress';
 import visualizer from 'rollup-plugin-visualizer';
 
 export default {
-    entry: 'index.js',
+    entry: 'src/index.js',
     dest: 'dist/bundle.es6.js',
     format: 'es',
     moduleId: 'graph-curry',
     moduleName: 'graph-curry',
-    external: [ 'fenugreek-colllections' ],
+    external: [ 'fenugreek-collections' ],
     exports: 'named',
     sourceMap: true,
     plugins: [

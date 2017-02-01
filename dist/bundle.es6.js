@@ -1,364 +1,4 @@
-// **isIterable** `:: obj -> bool`  
-// checks if an object is iterable
-var isIterable = function isIterable(o) {
-  return !!o[Symbol.iterator];
-};
-
-// **iterify** `:: obj -> iterable`  
-// returns the object or an Iterable<a> containging the object
-var iterify = function iterify(o) {
-  return isIterable(o) ? o : [o];
-};
-
-// ** isRemovable **`:: obj -> bool`  
-// checks if an object has the delete method
-var isRemovable = function isRemovable(c) {
-  return !!c.delete;
-};
-
-// ** isHasable **`:: obj -> bool`
-// checks if an object has the 'has' method
-var isHasable = function isHasable(c) {
-  return !!c.has;
-};
-
-// ** removify **`:: obj -> [map|set] ` 
-// returns the object or an Iterable<a> containging the object
-var removify = function removify(c) {
-  return isRemovable(c) ? c : new Set(iterify(c));
-};
-
-// ** hasify ** `:: obj -> [map|set] ` 
-// returns the object or an Iterable<a> containging the object
-var hasify = function hasify(c) {
-  return isHasable(c) ? c : new Set(iterify(c));
-};
-
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
-
-
-
-
-
-
-
-
-
-
-
-
-
-var toConsumableArray = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
-
-// requires [iterify](iterable.html)
-// **spread** `:: Iterable<a> -> Iterable<a>`  
-// returns an Iterable<a> of the collections default iterator
-var spread = function spread() {
-  var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return [].concat(toConsumableArray(iterify(coll)));
-};
-
-// **spreadK** `:: Iterable<a> -> Iterable<a>`  
-// returns an Iterable<a> of the collections keys
-var spreadK = function spreadK() {
-  var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return spread(iterify(coll).keys());
-};
-
-// **spreadV** `:: Iterable<a> -> Iterable<a>`  
-// returns an Iterable<a> of the collections values
-var spreadV = function spreadV() {
-  var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return spread(iterify(coll).values());
-};
-
-// **spreadE** `:: Iterable<a> -> Iterable<a>`  
-// returns an Iterable<a> of the collections entries
-var spreadE = function spreadE() {
-  var coll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return spread(iterify(coll).entries());
-};
-
-// **spreadKV** `:: Iterable<a> -> Iterable<a>`  
-// returns an Iterable<a> of the collections entries
-var spreadKV = spreadE;
-
-// export default spread;
-
-// requires [iterify](iterable.html)
-// **tuple** `:: a -> a -> [a]`  
-// returns a [val, key] Iterable<a>
-var tuple = function tuple(val) {
-  return function (key) {
-    return [key, val];
-  };
-};
-
-// **triple** `:: a -> a -> a -> [a]`  
-// returns a [val, key0, key1] Iterable<a>
-var triple = function triple(val) {
-  return function (key0) {
-    return function (key1) {
-      return [key0, key1, val];
-    };
-  };
-};
-
-// **flatten** `:: Iterable<a> -> Iterable<a> -> [a]`  
-// returns an Iterable<a> of the contents of two iterables
-var flatten = function flatten(c0) {
-  return function (c1) {
-    return [].concat(toConsumableArray(iterify(c0)), toConsumableArray(iterify(c1)));
-  };
-};
-
-// **flattenBin** `:: (Iterable<a>, Iterable<a>) -> [a]`  
-// returns an Iterable<a> of the contents of two iterables
-var flattenBin = function flattenBin(c0, c1) {
-  return flatten(c0)(c1);
-};
-
-// **flatTuple** `:: a -> [a] -> [a]`  
-// concatenates an object and an iterable
-var flatTuple = function flatTuple(c0) {
-  return function (c1) {
-    return [c0].concat(toConsumableArray(iterify(c1)));
-  };
-};
-
-// **append** `:: Iterable<a> -> a -> [a]`  
-// concatenates an iterable and an object
-var append = function append(coll) {
-  return function (val) {
-    return [].concat(toConsumableArray(iterify(coll)), [val]);
-  };
-};
-
-// requires [spread](spread.html), and [iterable](iterable.html)
-// **has** `:: Iterable<a> -> a -> bool`  
-// checks if an iterable contains an element
-var has = function has(coll) {
-  return function (el) {
-    return hasify(coll).has(el);
-  };
-};
-
-// **hasK** `:: Iterable<a> -> a -> bool`  
-// checks if an iterables keys contains an element
-var hasK = function hasK(coll) {
-  return function (k) {
-    return has(spreadK(coll))(k);
-  };
-};
-
-// **xhasK** `:: Iterable<a> -> a -> bool`  
-// checks if an iterables keys does not contain an element
-var xhasK = function xhasK(coll) {
-  return function (k) {
-    return !hasK(coll)(k);
-  };
-};
-
-// **hasKV** `:: Iterable<a> -> [k,v] -> bool`  
-// checks if an iterables keys contain the key of a [k,v] pair
-var hasKV = function hasKV(coll) {
-  return function (_ref) {
-    var _ref2 = slicedToArray(_ref, 2),
-        k = _ref2[0],
-        v = _ref2[1];
-
-    return hasK(coll)(k);
-  };
-};
-
-// **xhasKV** `:: Iterable<a> -> [k,v] -> bool`  
-// checks if an iterables keys do not contain the key of a [k,v] pair
-var xhasKV = function xhasKV(coll) {
-  return function (_ref3) {
-    var _ref4 = slicedToArray(_ref3, 2),
-        k = _ref4[0],
-        v = _ref4[1];
-
-    return !hasKV(coll)([k, v]);
-  };
-};
-
-// **asSet** `:: Iterable<a> -> Set[a]`  
-// returns an Iterable<a> of the collections default iterator
-var asSet = function asSet(c) {
-  return new Set(spread(c));
-};
-
-// **asMap** `:: Iterable<a> -> Map[a]`  
-// returns an Iterable<a> of the collections default iterator
-var asMap = function asMap(c) {
-  return new Map(spreadKV(c));
-};
-
-// **addBinSet** `:: a -> a -> Set[a]`  
-// adds an element to a Set;
-var addBinSet = function addBinSet(c, el) {
-  return new Set(append(c)(el));
-};
-
-// **addBinMap** `:: a -> a -> Map[a]`  
-// adds an element to a Map;
-var addBinMap = function addBinMap(c, el) {
-  return new Map(append(c)(el));
-};
-
-// **removeBin** `:: Iterable<a> -> a -> Iterable<a>`  
-// removes an element from a collection;
-var removeBin = function removeBin(c, el) {
-  return removify(c).delete(el) ? c : c;
-};
-
-// **diff** `:: Iterable<a> -> Iterable<a> -> [a]`  
-// returns elements of the first iterable absent from the second iterable
-var diff = function diff(c0) {
-  return function (c1) {
-    return spread(c0).filter(xhasK(c1));
-  };
-};
-
-// **mapDiff** `:: Map[{k:v}] -> Map[{k:v}] -> Map[{k:v}]`  
-// returns elements of the first map absent from the second map
-var mapDiff = function mapDiff(c0) {
-  return function (c1) {
-    return spread(c0).filter(xhasKV(c1)).reduce(addBinMap, new Map());
-  };
-};
-
-// **mapUnion** `:: Map[{k:v}] -> Map[{k:v}] -> Map[{k:v}]`  
-// returns elements of both maps
-var uniteMap = function uniteMap(c0) {
-  return function (c1) {
-    return spread(mapDiff(c1)(c0)).reduce(addBinMap, c0);
-  };
-};
-
-// requires [spread](spread.html),[reducers](reducers.html), and [cast](cast.html)
-// **addMap** `:: Map[{k:v}] -> k -> v -> Map[{k:v}]`  
-// adds an element to a Map;
-var addMap = function addMap(c) {
-  return function (k) {
-    return function (v) {
-      return asMap(c).set(k, v);
-    };
-  };
-};
-
-// **addSet** `:: Set[a] -> (...a) -> Set[a]`  
-// adds multiple elements to a Set;
-var addSet = function addSet(c) {
-  return function () {
-    for (var _len2 = arguments.length, els = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      els[_key2] = arguments[_key2];
-    }
-
-    return els.reduce(addBinSet, c);
-  };
-};
-
-// **removeMap** `:: Map[{k:v}] -> (...k) -> Map[{k:v}]`  
-// removes multiple keys from a Map;
-var removeMap = function removeMap(c) {
-  return function () {
-    for (var _len4 = arguments.length, els = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      els[_key4] = arguments[_key4];
-    }
-
-    return els.reduce(removeBin, asMap(c));
-  };
-};
-
-// **popElem** `:: Iterable<a> -> a -> Iterable<a>`  
-// removes the last element from an iterable;
-var popElem = function popElem(c) {
-  return function (el) {
-    return removeBin(c, el) && el;
-  };
-};
-
-// **popFirst** `:: Iterable<a> -> a -> Iterable<a>`  
-// removes the first element from an iterable;
-var popFirst = function popFirst(c) {
-  return popElem(c)(spread(c).shift());
-};
-
-// requires [cast](cast.html), and [spread](spread.html)
-// **get** `:: Iterable<{k:v}> -> k -> v`  
-// retrieves a value stored at a key from a collection
-var get$1 = function get(c) {
-  return function (k) {
-    return asMap(c).get(k);
-  };
-};
-
-// **first** `:: Iterable<a> -> a`  
-// returns the first element of an iterable
-var first = function first() {
-  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return spread(c).shift();
-};
-
-// **last** `:: Iterable<a> -> a`  
-// returns the last element of an iterable
-var last = function last() {
-  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return spread(c).pop();
-};
-
-// **lastK** `:: Iterable<{k:v}>  -> k`  
-// returns the last key of an iterable
-var lastK = function lastK() {
-  var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  return last(spreadK(c));
-};
+import { addBinMap, addBinSet, addMap, addSet, append, asMap, asSet, diff, first, flatTuple, flatten, flattenBin, get, hasK, isIterable, last, lastK, mapDiff, popFirst, removeBin, removeMap, spread, spreadK, spreadKV, spreadV, triple, tuple, uniteMap } from 'fenugreek-collections';
 
 // **components** `::  Map<edge> -> Map<component>`
 // maps each node to a set of connected nodes
@@ -389,7 +29,7 @@ var components$1 = Object.freeze({
 	componentSet: componentSet
 });
 
-var slicedToArray$1 = function () {
+var slicedToArray = function () {
   function sliceIterator(arr, i) {
     var _arr = [];
     var _n = true;
@@ -436,37 +76,37 @@ var resetNodeBin = function resetNodeBin(edges, src) {
 // **addNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
 // adds a node:adjacency list pair to an edgelist
 var addNodeBin = function addNodeBin(edges, src) {
-  return addMap(edges)(src)(get$1(edges)(src));
+  return addMap(edges)(src)(get(edges)(src));
 };
 
 // **neighborPairs** `:: ( Map<edge>, node ) -> [ [node, node] ]`
 // returns an array of [node, neigbor] pairs from an edgelist
 var neighborPairs = function neighborPairs(edges) {
   return function (src) {
-    return spreadK(get$1(edges)(src)).map(append(src));
+    return spreadK(get(edges)(src)).map(append(src));
   };
 };
 
 // **addEdgeBin** `:: ( Map<edge>, [node, node, Number] ) -> Map<edge>`
 // add a node:Map<{node: Number}> entry to an edgelist
 var addEdgeBin = function addEdgeBin(edges, _ref) {
-  var _ref2 = slicedToArray$1(_ref, 3),
+  var _ref2 = slicedToArray(_ref, 3),
       src = _ref2[0],
       nb = _ref2[1],
       _ref2$ = _ref2[2],
       wt = _ref2$ === undefined ? 0 : _ref2$;
 
-  return [[src, addMap(get$1(edges)(src))(nb)(wt)], [nb, addMap(get$1(edges)(nb))(src)(wt)]].reduce(addBinMap, asMap(edges));
+  return [[src, addMap(get(edges)(src))(nb)(wt)], [nb, addMap(get(edges)(nb))(src)(wt)]].reduce(addBinMap, asMap(edges));
 };
 
 // **removeEdgeBin** `:: ( Map<edge>, [node, node] ) -> Map<edge>`
 // removes a {node:Map<{node: Number}>} entry from an edgelist
 var removeEdgeBin = function removeEdgeBin(edges, _ref3) {
-  var _ref4 = slicedToArray$1(_ref3, 2),
+  var _ref4 = slicedToArray(_ref3, 2),
       src = _ref4[0],
       nb = _ref4[1];
 
-  return [[src, removeMap(get$1(edges)(src))(nb)], [nb, removeMap(get$1(edges)(nb))(src)]].reduce(addBinMap, asMap(edges));
+  return [[src, removeMap(get(edges)(src))(nb)], [nb, removeMap(get(edges)(nb))(src)]].reduce(addBinMap, asMap(edges));
 };
 
 // **disconnectNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
@@ -482,11 +122,11 @@ var disconnectNodeBin = function disconnectNodeBin(edges, src) {
 // **importEdgeBin** `:: ( Map<edge>, [node, [node: Number]] ) -> Map<edge>`
 // appends a node and all of its neighbors to an edgelist
 var importEdgeBin = function importEdgeBin(edges, _ref5) {
-  var _ref6 = slicedToArray$1(_ref5, 2),
+  var _ref6 = slicedToArray(_ref5, 2),
       src = _ref6[0],
       nbs = _ref6[1];
 
-  return spread(mapDiff(nbs)(get$1(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
+  return spread(mapDiff(nbs)(get(edges)(src))).map(flatTuple(src)).reduce(addEdgeBin, addNodeBin(edges, src));
 };
 
 // **mergeEdgesBin** `:: ( Map<edge>, Map<edge>, ) -> Map<edge>`
@@ -529,7 +169,7 @@ var nodes = function nodes(edges) {
 // returns the nodes adjacency list
 var adj = function adj(edges) {
   return function (src) {
-    return asMap(get$1(edges)(src));
+    return asMap(get(edges)(src));
   };
 };
 
@@ -663,7 +303,7 @@ var addNeighbor = function addNeighbor(edges) {
 // resets the nodes adjacency list to an empty map
 var addEntry = function addEntry(nabes) {
   return function (_ref) {
-    var _ref2 = slicedToArray$1(_ref, 2),
+    var _ref2 = slicedToArray(_ref, 2),
         n = _ref2[0],
         _ref2$ = _ref2[1],
         w = _ref2$ === undefined ? 0 : _ref2$;
@@ -747,7 +387,7 @@ var contract = function contract(g) {
 };
 
 var contractBin = function contractBin(g, _ref) {
-  var _ref2 = slicedToArray$1(_ref, 2),
+  var _ref2 = slicedToArray(_ref, 2),
       src = _ref2[0],
       nb = _ref2[1];
 
@@ -878,7 +518,7 @@ var nextPath = function nextPath() {
   var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
   var _ref3 = arguments[1];
 
-  var _ref4 = slicedToArray$1(_ref3, 2),
+  var _ref4 = slicedToArray(_ref3, 2),
       n = _ref4[0],
       _ref4$ = _ref4[1],
       w = _ref4$ === undefined ? 0 : _ref4$;
@@ -912,7 +552,7 @@ var dfs = function dfs(edges) {
       var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initPath(src);
 
       var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [lastK(path), 0],
-          _ref2 = slicedToArray$1(_ref, 2),
+          _ref2 = slicedToArray(_ref, 2),
           n = _ref2[0],
           w = _ref2[1];
 
@@ -965,7 +605,7 @@ var dijkstra = function dijkstra(edges) {
       try {
 
         for (var _iterator = nextNabes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _step$value = slicedToArray$1(_step.value, 2),
+          var _step$value = slicedToArray(_step.value, 2),
               nabe = _step$value[0],
               nWeight = _step$value[1];
 
@@ -1005,7 +645,7 @@ var dijkstra = function dijkstra(edges) {
 var pathBetween = function pathBetween(e) {
   return function (n0) {
     return function (n1) {
-      return hasK(get$1(components(e))(n0))(n1);
+      return hasK(get(components(e))(n0))(n1);
     };
   };
 };
@@ -1043,7 +683,7 @@ var pathString = function pathString(path) {
   return ' { ' + spreadK(path).join(' => ') + ' }';
 };
 var edgeString = function edgeString(_ref) {
-  var _ref2 = slicedToArray$1(_ref, 2),
+  var _ref2 = slicedToArray(_ref, 2),
       src = _ref2[0],
       nbs = _ref2[1];
 
@@ -1051,7 +691,7 @@ var edgeString = function edgeString(_ref) {
 };
 
 var componentString = function componentString(_ref3) {
-  var _ref4 = slicedToArray$1(_ref3, 2),
+  var _ref4 = slicedToArray(_ref3, 2),
       node = _ref4[0],
       nbs = _ref4[1];
 
@@ -1060,7 +700,7 @@ var componentString = function componentString(_ref3) {
 
 var graphString = function graphString(edges) {
   return spreadKV(edges).reduce(function (str, _ref5, id) {
-    var _ref6 = slicedToArray$1(_ref5, 2),
+    var _ref6 = slicedToArray(_ref5, 2),
         node = _ref6[0],
         nabes = _ref6[1];
 
