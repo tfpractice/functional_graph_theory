@@ -1,4 +1,7 @@
-stats.*
+*.log
+.eslintcache
+dist
+coverage
+dist
 node_modules
-.nyc_output/
-coverage/*
+stats*
