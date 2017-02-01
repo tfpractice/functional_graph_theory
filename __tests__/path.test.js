@@ -2,7 +2,7 @@ import 'jasmine-expect';
 import { appendPath, getLength, getWeight, initPath, lastLength, lastVal,
 lastWeight, nextLength, nextPath, nextWeight, pathEntry, } from 'src/path';
 
-import { connGraph, n0, n2, n7, } from './shared';
+import { n0, n2, } from './shared';
 describe('paths', () => {
   describe('pathEntry', () => {
     it('returns an object with pred, weight, and length properties', () => {
@@ -14,6 +14,11 @@ describe('paths', () => {
   describe('appendPath', () => {
     it('appends a pathEntry to a path', () => {
       expect(appendPath()(n0) instanceof Map).toBeTrue();
+    });
+  });
+  describe('initPath', () => {
+    it('creates a path with an initial entry ', () => {
+      expect(initPath(n0) instanceof Map).toBeTrue();
     });
   });
   describe('getLength', () => {
@@ -36,6 +41,11 @@ describe('paths', () => {
       expect(lastWeight(appendPath()(n0))).toEqual(0);
     });
   });
+  describe('lastVal', () => {
+    it('returns the last path entry', () => {
+      expect(lastVal(appendPath()(n0)).pred).toBeNull();
+    });
+  });
   describe('nextLength', () => {
     it('returns the lenght of the path entry', () => {
       expect(nextLength(appendPath()(n0))).toEqual(2);
@@ -48,7 +58,7 @@ describe('paths', () => {
   });
   describe('nextPath', () => {
     it('augments a path by adding a node, increasing theweight and length', () => {
-      expect(nextWeight(nextPath(appendPath()(n0), [n2, 2]))(0)).toEqual(2);
+      expect(nextWeight(nextPath(appendPath()(n0), [ n2, 2 ]))(0)).toEqual(2);
     });
   });
 });
