@@ -1,15 +1,15 @@
 import 'jasmine-expect';
-import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
-contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
 import { bfs, dfs, } from 'src/search';
 import { addEdgeBin, mergeEdgesBin, } from 'src/reducers';
 import { addEdges, fromElements, neighbors, } from 'src/graph';
+import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
+contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
 
 import { eNodes, firstTen, myNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
 
-const myGraph = [ addEdges()(n0, 2)(n1, n2),
+const myGraph = [addEdges()(n0, 2)(n1, n2),
   addEdges()(n1, 4)(n4, n2),
   addEdges()(n1, 6)(n6),
   addEdges()(n2, 3)(n3),
@@ -17,15 +17,15 @@ const myGraph = [ addEdges()(n0, 2)(n1, n2),
   addEdges()(n3, 8)(n4),
   addEdges()(n5, 7)(n6),
   addEdges()(n7, 7)(n8),
-  addEdges()(n0, 11)(n1), ]
+  addEdges()(n0, 11)(n1),]
   .reduce(mergeEdgesBin, fromElements(...firstTen));
 
 const nabes0 = neighbors(myGraph)(n0);
 const nabes1 = neighbors(myGraph)(n1);
 
-const connGraph = [ myNodes.map((e, id, arr) =>
-    [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, new Map), myNodes.map((e, id, arr) =>
-        [ e, arr[((id + 18) % arr.length)], id, ]).reduce(addEdgeBin, new Map), ]
+const connGraph = [myNodes.map((e, id, arr) =>
+    [e, arr[((id + 1) % arr.length)], id,]).reduce(addEdgeBin, new Map), myNodes.map((e, id, arr) =>
+        [e, arr[((id + 18) % arr.length)], id,]).reduce(addEdgeBin, new Map),]
         .reduce(mergeEdgesBin, myGraph);
 
 const isomorphism = contractMin(connGraph, 2);
@@ -69,7 +69,7 @@ describe('contract', () => {
 });
 describe('contractBin', () => {
   it('contracts a graph based on a [k,v] pair', () => {
-    expect(contractBin(myGraph, [ n0, n1 ]).has(n0)).toBeFalse();
+    expect(contractBin(myGraph, [n0, n1]).has(n0)).toBeFalse();
   });
 });
 describe('contractSrc', () => {
