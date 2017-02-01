@@ -1,7 +1,8 @@
 import 'jasmine-expect';
 import { first, } from 'fenugreek-collections';
-import { collString, edgeString, fromElements,
-  kString, kvString, pathString, redStr, vString, } from 'graph-curry';
+import { fromElements, } from 'src/graph';
+import { collString, edgeString,
+  kString, kvString, pathString, redStr, vString, } from 'src/strings';
 
 import { myNodes, } from './shared';
 

@@ -8,14 +8,14 @@ export const vString = coll => spreadV(coll).reduce(redStr, '');
 export const kvString = coll => spreadKV(coll).reduce(redStr, '');
 
 export const pathString = path => ` { ${spreadK(path).join(' => ')} }`;
-export const edgeString = ([ src, nbs ]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
+export const edgeString = ([src, nbs]) => `{ Edge ${src} >> [ ${kString(nbs)} ] } `;
 
-export const componentString = ([ node, nbs ]) =>
+export const componentString = ([node, nbs]) =>
   `{ component ${node} >> [ ${kString(nbs)} ] } `;
 
 export const graphString = edges =>
-  spreadKV(edges).reduce((str, [ node, nabes ], id) =>
-    str + edgeString([ node, nabes ]),
+  spreadKV(edges).reduce((str, [node, nabes], id) =>
+    str + edgeString([node, nabes]),
     'Showing Edges\n');
 
 export const showGraph = ({ edges }) => (graphString(edges));
