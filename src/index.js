@@ -4,5 +4,5 @@ export * from './search';
 export * from './strings';
 export * from './components';
 export * from './path';
-import * as Operations from './contract';
-export { Operations, };
+import * as Contract from './contract';
+export { Contract, };

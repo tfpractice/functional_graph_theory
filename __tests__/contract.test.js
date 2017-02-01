@@ -1,10 +1,8 @@
 import 'jasmine-expect';
-import { first, last, spread, spreadK, } from 'fenugreek-collections';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
 contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
-import { addEdgeBin, addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements, graphString,
-mergeEdgesBin, neighbors, nodes, pathBetween, removeEdges, } from 'graph-curry';
-import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
+import { addEdgeBin, addEdges, fromElements, mergeEdgesBin, neighbors, } from 'graph-curry';
+import { eNodes, firstTen, myNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
 
