@@ -2,7 +2,7 @@ import 'jasmine-expect';
 import { first, } from 'fenugreek-collections';
 import { fromElements, } from 'src/graph';
 import { collString, edgeString,
-  kString, kvString, pathString, redStr, vString, } from 'src/strings';
+  kString, kvString, pathString, redStr, vString, } from 'src/show';
 
 import { myNodes, } from './shared';
 

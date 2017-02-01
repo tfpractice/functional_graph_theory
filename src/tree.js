@@ -3,7 +3,7 @@ import { lastK, mapDiff, spread, } from 'fenugreek-collections';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
   fromElements, isAdjacent, mergeEdges, mergeNeighbors, neighbors,
   nodes, removeEdges, removeNodes, resetNodes, spawn, } from './graph';
-import { graphString, } from './strings';
+import { graphString, } from './show';
 import * as reducers from './reducers';
 import { bfs, dfs, dijkstra, pathBetween, } from './search';
 import { disconnectNodes, } from './';
