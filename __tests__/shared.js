@@ -1,5 +1,5 @@
-import { addEdgeBin, addEdges, fromElements, nodes, } from 'graph-curry';
-
+import { addEdges, fromElements, nodes, } from 'src/graph';
+import { addEdgeBin, } from 'src/reducers';
 export const Node = (label = '', data = {}) =>
   ({ label, data, toString: () => label, });
 
