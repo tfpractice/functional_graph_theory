@@ -4,7 +4,7 @@ import { components, componentSet, } from 'src/components';
 import { bfs, dfs, } from 'src/search';
 import { mergeEdgesBin, } from 'src/reducers';
 import { addEdges, fromElements, } from 'src/graph';
-import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
+import { firstTen, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
 

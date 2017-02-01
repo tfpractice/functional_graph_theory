@@ -360,6 +360,35 @@ var lastK = function lastK() {
   return last(spreadK(c));
 };
 
+// **components** `::  Map<edge> -> Map<component>`
+// maps each node to a set of connected nodes
+var components = function components(edges) {
+   var trav = function trav() {
+      var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
+      var node = arguments[1];
+      return diff(spreadK(edges.get(node)))(comp).reduce(trav, addSet(comp)(node));
+   };
+
+   var visitMap = function visitMap() {
+      var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+      var node = arguments[1];
+      return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap, mMap);
+   };
+
+   return spreadK(edges).reduce(visitMap, new Map());
+};
+
+// **componentSet** `::  Map<edge> -> Set<component>`
+// partitions an edgelist into sets of connected nodes
+var componentSet = function componentSet(edges) {
+   return new Set(spreadV(components(edges)));
+};
+
+var components$1 = Object.freeze({
+	components: components,
+	componentSet: componentSet
+});
+
 var slicedToArray$1 = function () {
   function sliceIterator(arr, i) {
     var _arr = [];
@@ -448,9 +477,7 @@ var disconnectNodeBin = function disconnectNodeBin(edges, src) {
 
 // **removeNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
 // isolates a node and removes it from edgelist
-var removeNodeBin = function removeNodeBin(edges, src) {
-  return removeMap(disconnectNodeBin(edges, src))(src);
-};
+
 
 // **importEdgeBin** `:: ( Map<edge>, [node, [node: Number]] ) -> Map<edge>`
 // appends a node and all of its neighbors to an edgelist
@@ -645,6 +672,124 @@ var addEntry = function addEntry(nabes) {
   };
 };
 
+
+
+var graph = Object.freeze({
+	mergeNeighbors: mergeNeighbors,
+	spawn: spawn,
+	copy: copy,
+	fromElements: fromElements,
+	nodes: nodes,
+	adj: adj,
+	neighbors: neighbors,
+	contains: contains,
+	isAdjacent: isAdjacent,
+	addNodes: addNodes,
+	resetNodes: resetNodes,
+	addEdges: addEdges,
+	removeEdges: removeEdges,
+	disconnectNodes: disconnectNodes,
+	removeNodes: removeNodes,
+	mergeEdges: mergeEdges,
+	addNeighbor: addNeighbor,
+	addEntry: addEntry
+});
+
+var autoSpread = function autoSpread(el) {
+  return isIterable(el) ? spread(el).reduce(flattenBin, []).map(autoSpread) : el;
+};
+
+var superNode = function superNode(src) {
+  return function (nb) {
+    return asSet([src, nb]);
+  };
+};
+
+var combineNeighbors = function combineNeighbors(g) {
+  return function (src) {
+    return function (nb) {
+      return asSet(flatten(neighbors(g)(src))(neighbors(g)(nb)));
+    };
+  };
+};
+
+var combineAdj = function combineAdj(g) {
+  return function (src) {
+    return function (nb) {
+      return asMap(flatten(adj(g)(src))(adj(g)(nb)));
+    };
+  };
+};
+
+var superAdj = function superAdj(g) {
+  return function (src) {
+    return function (nb) {
+      return [src, nb].reduce(removeBin, combineAdj(g)(src)(nb));
+    };
+  };
+};
+
+var superEdge = function superEdge(g) {
+  return function (src) {
+    return function (nb) {
+      return addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));
+    };
+  };
+};
+
+var contract = function contract(g) {
+  return function (src) {
+    return function () {
+      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors(g)(src));
+      return nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
+    };
+  };
+};
+
+var contractBin = function contractBin(g, _ref) {
+  var _ref2 = slicedToArray$1(_ref, 2),
+      src = _ref2[0],
+      nb = _ref2[1];
+
+  return contract(g)(src)(nb);
+};
+
+var contractSrc = function contractSrc(g) {
+  return function (src) {
+    return neighborPairs(g)(src).reduce(contractBin, copy(g));
+  };
+};
+
+var contractNext = function contractNext(g) {
+  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : first(nodes(g));
+  return contract(copy(g))(n)();
+};
+
+var contractAuto = function contractAuto(g) {
+  return nodes(g).reduce(contractNext, g);
+};
+var contractMin = function contractMin(g) {
+  var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  return g.size > min ? contractMin(contractNext(g), min) : copy(g);
+};
+
+
+
+var contract$1 = Object.freeze({
+	autoSpread: autoSpread,
+	superNode: superNode,
+	combineNeighbors: combineNeighbors,
+	combineAdj: combineAdj,
+	superAdj: superAdj,
+	superEdge: superEdge,
+	contract: contract,
+	contractBin: contractBin,
+	contractSrc: contractSrc,
+	contractNext: contractNext,
+	contractAuto: contractAuto,
+	contractMin: contractMin
+});
+
 // **pathEntry** `:: ( node, Number, Number ) -> {pred, length, weight}`
 // returns an object with pred, weight, and length properties
 var pathEntry = function pathEntry() {
@@ -741,29 +886,21 @@ var nextPath = function nextPath() {
   return path.set(n, pathVal(lastK(path))(nextLength(path))(nextWeight(path)(w)));
 };
 
-// **components** `::  Map<edge> -> Map<component>`
-// maps each node to a set of connected nodes
-var components = function components(edges) {
-   var trav = function trav() {
-      var comp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Set();
-      var node = arguments[1];
-      return diff(spreadK(edges.get(node)))(comp).reduce(trav, addSet(comp)(node));
-   };
 
-   var visitMap = function visitMap() {
-      var mMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
-      var node = arguments[1];
-      return diff(trav(new Set(), node))(mMap).map(tuple(trav(new Set(), node))).reduce(addBinMap, mMap);
-   };
 
-   return spreadK(edges).reduce(visitMap, new Map());
-};
-
-// **componentSet** `::  Map<edge> -> Set<component>`
-// partitions an edgelist into sets of connected nodes
-var componentSet = function componentSet(edges) {
-   return new Set(spreadV(components(edges)));
-};
+var path = Object.freeze({
+	pathEntry: pathEntry,
+	appendPath: appendPath,
+	initPath: initPath,
+	getWeight: getWeight,
+	getLength: getLength,
+	lastVal: lastVal,
+	lastWeight: lastWeight,
+	lastLength: lastLength,
+	nextWeight: nextWeight,
+	nextLength: nextLength,
+	nextPath: nextPath
+});
 
 // **dfs** `:: Map<edge> -> node -> Map<pathEntry>`
 // depth first traversal
@@ -873,6 +1010,15 @@ var pathBetween = function pathBetween(e) {
   };
 };
 
+
+
+var search = Object.freeze({
+	dfs: dfs,
+	bfs: bfs,
+	dijkstra: dijkstra,
+	pathBetween: pathBetween
+});
+
 var redStr = function redStr() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ' ';
   var val = arguments[1];
@@ -927,100 +1073,20 @@ var showGraph = function showGraph(_ref7) {
   return graphString(edges);
 };
 
-var autoSpread = function autoSpread(el) {
-  return isIterable(el) ? spread(el).reduce(flattenBin, []).map(autoSpread) : el;
-};
-
-var superNode = function superNode(src) {
-  return function (nb) {
-    return asSet([src, nb]);
-  };
-};
-
-var combineNeighbors = function combineNeighbors(g) {
-  return function (src) {
-    return function (nb) {
-      return asSet(flatten(neighbors(g)(src))(neighbors(g)(nb)));
-    };
-  };
-};
-
-var combineAdj = function combineAdj(g) {
-  return function (src) {
-    return function (nb) {
-      return asMap(flatten(adj(g)(src))(adj(g)(nb)));
-    };
-  };
-};
-
-var superAdj = function superAdj(g) {
-  return function (src) {
-    return function (nb) {
-      return [src, nb].reduce(removeBin, combineAdj(g)(src)(nb));
-    };
-  };
-};
-
-var superEdge = function superEdge(g) {
-  return function (src) {
-    return function (nb) {
-      return addMap()(superNode(src)(nb))(superAdj(g)(src)(nb));
-    };
-  };
-};
-
-var contract = function contract(g) {
-  return function (src) {
-    return function () {
-      var nb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : first(neighbors(g)(src));
-      return nb ? mergeEdges(removeNodes(g)(src, nb))(superEdge(g)(src)(nb)) : g;
-    };
-  };
-};
-
-var contractBin = function contractBin(g, _ref) {
-  var _ref2 = slicedToArray$1(_ref, 2),
-      src = _ref2[0],
-      nb = _ref2[1];
-
-  return contract(g)(src)(nb);
-};
-
-var contractSrc = function contractSrc(g) {
-  return function (src) {
-    return neighborPairs(g)(src).reduce(contractBin, copy(g));
-  };
-};
-
-var contractNext = function contractNext(g) {
-  var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : first(nodes(g));
-  return contract(copy(g))(n)();
-};
-
-var contractAuto = function contractAuto(g) {
-  return nodes(g).reduce(contractNext, g);
-};
-var contractMin = function contractMin(g) {
-  var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-  return g.size > min ? contractMin(contractNext(g), min) : copy(g);
-};
 
 
-
-var contract$1 = Object.freeze({
-	autoSpread: autoSpread,
-	superNode: superNode,
-	combineNeighbors: combineNeighbors,
-	combineAdj: combineAdj,
-	superAdj: superAdj,
-	superEdge: superEdge,
-	contract: contract,
-	contractBin: contractBin,
-	contractSrc: contractSrc,
-	contractNext: contractNext,
-	contractAuto: contractAuto,
-	contractMin: contractMin
+var show = Object.freeze({
+	redStr: redStr,
+	collString: collString,
+	kString: kString,
+	vString: vString,
+	kvString: kvString,
+	pathString: pathString,
+	edgeString: edgeString,
+	componentString: componentString,
+	graphString: graphString,
+	showGraph: showGraph
 });
 
-export { contract$1 as Contract, resetNodeBin, addNodeBin, neighborPairs, addEdgeBin, removeEdgeBin, disconnectNodeBin, removeNodeBin, importEdgeBin, mergeEdgesBin, mergeNeighbors, spawn, copy, fromElements, nodes, adj, neighbors, contains, isAdjacent, addNodes, resetNodes, addEdges, removeEdges, disconnectNodes, removeNodes, mergeEdges, addNeighbor, addEntry, dfs, bfs, dijkstra, pathBetween, redStr, collString, kString, vString, kvString, pathString, edgeString, componentString, graphString, showGraph, components, componentSet, pathEntry, appendPath, initPath, getWeight, getLength, lastVal, lastWeight, lastLength, nextWeight, nextLength, nextPath };export default fromElements;
+export { components$1 as Components, contract$1 as Contract, graph as Graph, path as Path, search as Search, show as Show };
 //# sourceMappingURL=bundle.es6.js.map
