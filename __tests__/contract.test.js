@@ -1,7 +1,10 @@
 import 'jasmine-expect';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin, contractMin,
 contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
-import { addEdgeBin, addEdges, fromElements, mergeEdgesBin, neighbors, } from 'graph-curry';
+import { bfs, dfs, } from 'src/search';
+import { addEdgeBin, mergeEdgesBin, } from 'src/reducers';
+import { addEdges, fromElements, neighbors, } from 'src/graph';
+
 import { eNodes, firstTen, myNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
