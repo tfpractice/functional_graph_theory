@@ -1,8 +1,8 @@
 import 'jasmine-expect';
 import { spreadK, } from 'fenugreek-collections';
-import { addEdges, bfs, components, componentSet, dfs, dijkstra, fromElements,
-mergeEdgesBin, neighbors, pathBetween, } from 'graph-curry';
-
+import { bfs, dfs, dijkstra, pathBetween, } from 'src/search';
+import { mergeEdgesBin, } from 'src/reducers';
+import { addEdges, fromElements, neighbors, } from 'src/graph';
 import { eNodes, firstTen, myNodes, oFilter, oNodes, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
@@ -45,7 +45,7 @@ describe('bfs', () => {
 describe('dijkstra', () => {
   it('retuns the shortest path from a node to its neighbors', () => {
     const myDijk = dijkstra(myGraph)(n0);
-
+    
     expect(myDijk instanceof Map).toBeTrue();
   });
 });
