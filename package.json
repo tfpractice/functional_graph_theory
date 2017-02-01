@@ -89,7 +89,6 @@
     ]
   },
   "dependencies": {
-    "fenugreek-collections": "^1.1.0",
-    "turmeric-utils": "^2.0.0"
+    "fenugreek-collections": "^1.1.0"
   }
 }

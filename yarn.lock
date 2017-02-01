@@ -2203,8 +2203,8 @@ istanbul-reports@^1.0.0:
     handlebars "^4.0.3"
 
 jasmine-expect@^3.0.1:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.5.0.tgz#814ca9d3f111e796e8b6c085643ef28b09d8ee53"
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.6.0.tgz#61b7f65958154e2b93365e46b247795dab8a9097"
   dependencies:
     add-matchers "0.4.0"
 
@@ -2781,9 +2781,13 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
-mute-stream@0.0.5, mute-stream@~0.0.4:
+mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
+
+mute-stream@~0.0.4:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
 nan@^2.3.0:
   version "2.5.1"
@@ -3817,10 +3821,6 @@ tryit@^1.0.1:
 tunnel-agent@~0.4.0, tunnel-agent@~0.4.1:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.4.3.tgz#6373db76909fe570e08d73583365ed828a74eeeb"
-
-turmeric-utils@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/turmeric-utils/-/turmeric-utils-2.0.0.tgz#11488db20878de2f3b722db20f218d3c6d30a8df"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
