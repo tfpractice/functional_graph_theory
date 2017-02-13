@@ -28,8 +28,6 @@ const connGraph = [ myNodes.map((e, id, arr) =>
         [ e, arr[((id + 18) % arr.length)], id, ]).reduce(addEdgeBin, new Map), ]
         .reduce(mergeEdgesBin, myGraph);
 
-// const isomorphism = contractMin(connGraph, 2);
-
 describe('combineAdj', () => {
   it('returns a combined set of two nodes adjacency list', () => {
     expect(combineNeighbors(myGraph)(n0)(n1).size).toEqual(5);
@@ -97,6 +95,8 @@ describe('contractAuto', () => {
 });
 describe('contractMin', () => {
   it('contracts the graph down to a minimum of 2 elements', () => {
-    // expect(isomorphism.size).toEqual(2);
+    const isomorphism = contractMin(connGraph, 2);
+
+// expect(isomorphism.size).toEqual(2);
   });
 });
