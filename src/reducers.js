@@ -12,13 +12,13 @@ export const addNodeBin = (edges, src) => addMap(edges)(src)(get(edges)(src));
 // **neighborPairs** `:: ( Map<edge>, node ) -> [ [node, node] ]`
 // returns an array of [node, neigbor] pairs from an edgelist
 export const neighborPairs = edges => src =>
-spreadK(get(edges)(src)).map(append(src));
+  spreadK(get(edges)(src)).map(append(src));
 
 // **addEdgeBin** `:: ( Map<edge>, [node, node, Number] ) -> Map<edge>`
 // add a node:Map<{node: Number}> entry to an edgelist
 export const addEdgeBin = (edges, [ src, nb, wt = 0 ]) => [
   [ src, addMap(get(edges)(src))(nb)(wt) ],
-  [ nb, addMap(get(edges)(nb))(src)(wt) ]].reduce(addBinMap, asMap(edges));
+  [ nb, addMap(get(edges)(nb))(src)(wt) ],].reduce(addBinMap, asMap(edges));
 
 // **removeEdgeBin** `:: ( Map<edge>, [node, node] ) -> Map<edge>`
 // removes a {node:Map<{node: Number}>} entry from an edgelist
@@ -34,7 +34,7 @@ export const disconnectNodeBin = (edges, src) =>
 // **removeNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
 // isolates a node and removes it from edgelist
 export const removeNodeBin = (edges, src) =>
-removeMap(disconnectNodeBin(edges, src))(src);
+  removeMap(disconnectNodeBin(edges, src))(src);
 
 // **importEdgeBin** `:: ( Map<edge>, [node, [node: Number]] ) -> Map<edge>`
 // appends a node and all of its neighbors to an edgelist
