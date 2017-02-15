@@ -6,21 +6,18 @@ from './reducers';
 // resets the nodes adjacency list to an empty map
 export const mergeNeighbors = uniteMap;
 
-// **spawn** `::  Map<edge> -> Map<edge>`
-// returns a new Edgelist
-export const spawn = edges => asMap(edges);
-
-// **copy** `::  Map<edge> -> Map<edge>`
-// creates a copy of a Edgelist
-export const copy = spawn;
-
 // **fromElements** `::  Map<edge> -> ...node  -> Map<edge>`
 // adds  {node: adjacencyList} pairs ot an Edgelist
 export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
+export const graph = (...elems) => elems.reduce(addNodeBin, new Map);
 
 // **nodes** `::  Map<edge> ->  [node]
 // returns an array of the nodes
-export const nodes = edges => spreadK(copy(edges));
+export const nodes = edges => spreadK(asMap(edges));
+
+// **copy** `::  Map<edge> -> Map<edge>`
+// creates a copy of a Edgelist
+export const copy = edges => nodes(edges).reduce(addNodeBin, asMap(edges));
 
 // **adj** `::  Map<edge> ->  node  -> Map<{node: Number}>`
 // returns the nodes adjacency list

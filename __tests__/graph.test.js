@@ -1,8 +1,8 @@
 import 'jasmine-expect';
 import { addEdgeBin, mergeEdgesBin, } from 'src/reducers';
 import { addEdges, addEntry, addNeighbor, addNodes, adj, contains, copy,
-  fromElements, isAdjacent, mergeEdges, neighbors, nodes, removeEdges,
-    removeNodes, resetNodes, spawn, } from 'src/graph';
+  fromElements, graph, isAdjacent, mergeEdges, neighbors, nodes,
+    removeEdges, removeNodes, resetNodes, } from 'src/graph';
 import { eFilter, myNodes, oFilter, } from './shared';
 import { firstTen, n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 
@@ -23,9 +23,9 @@ export { n7, };
 export const eGraph = fromElements(...eFilter(myNodes));
 export const oGraph = fromElements(...oFilter(myNodes));
 
-describe('spawn(nabes)', () => {
+describe('graph(nabes)', () => {
   it('returns a new Map', () => {
-    expect(spawn() instanceof Map).toBeTrue();
+    expect(graph() instanceof Map).toBeTrue();
   });
 });
 describe('fromElements', () => {
@@ -79,7 +79,7 @@ describe('operators', () => {
   });
   describe('addEdges', () => {
     it('adds an neighbor entry for each node', () => {
-      expect((addEdges(spawn())(n0)(n1, n2, n3)).has(n2)).toBeTrue();
+      expect((addEdges(graph())(n0)(n1, n2, n3)).has(n2)).toBeTrue();
     });
   });
   describe('addEntry', () => {
