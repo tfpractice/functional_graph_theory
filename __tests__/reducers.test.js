@@ -12,6 +12,7 @@ const cArr = [ 0, 11, 22, 33, 44, ];
 
 describe('addNodeBin', () => {
   it('adds a [key, Map] pair to a map', () => {
+    console.log((addNodeBin(cMap, 'added')));
     expect((addNodeBin(cMap, 'added')).has('added')).toBeTrue();
   });
 });

@@ -7,7 +7,7 @@ export const resetNodeBin = (edges, src) => addMap(edges)(src)(asMap());
 
 // **addNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
 // adds a node:adjacency list pair to an edgelist
-export const addNodeBin = (edges, src) => addMap(edges)(src)(get(edges)(src));
+export const addNodeBin = (edges, src) => addMap(edges)(src)(asMap(get(edges)(src)));
 
 // **neighborPairs** `:: ( Map<edge>, node ) -> [ [node, node] ]`
 // returns an array of [node, neigbor] pairs from an edgelist
