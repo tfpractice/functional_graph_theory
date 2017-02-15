@@ -76,7 +76,7 @@ var resetNodeBin = function resetNodeBin(edges, src) {
 // **addNodeBin** `:: ( Map<edge>, node ) -> Map<edge>`
 // adds a node:adjacency list pair to an edgelist
 var addNodeBin = function addNodeBin(edges, src) {
-  return addMap(edges)(src)(get(edges)(src));
+  return addMap(edges)(src)(asMap(get(edges)(src)));
 };
 
 // **neighborPairs** `:: ( Map<edge>, node ) -> [ [node, node] ]`
@@ -139,30 +139,26 @@ var mergeEdgesBin = function mergeEdgesBin(edges, alts) {
 // resets the nodes adjacency list to an empty map
 var mergeNeighbors = uniteMap;
 
-// **spawn** `::  Map<edge> -> Map<edge>`
-// returns a new Edgelist
-var spawn = function spawn(edges) {
-  return asMap(edges);
-};
-
-// **copy** `::  Map<edge> -> Map<edge>`
-// creates a copy of a Edgelist
-var copy = spawn;
-
-// **fromElements** `::  Map<edge> -> ...node  -> Map<edge>`
+// **graph** `:: [Node] -> Map<edge>`
 // adds  {node: adjacencyList} pairs ot an Edgelist
-var fromElements = function fromElements() {
+var graph = function graph() {
   for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
     elems[_key] = arguments[_key];
   }
 
-  return elems.reduce(addNodeBin, copy());
+  return elems.reduce(addNodeBin, new Map());
 };
 
 // **nodes** `::  Map<edge> ->  [node]
 // returns an array of the nodes
 var nodes = function nodes(edges) {
-  return spreadK(copy(edges));
+  return spreadK(asMap(edges));
+};
+
+// **copy** `::  Map<edge> -> Map<edge>`
+// creates a copy of a Edgelist
+var copy = function copy(edges) {
+  return nodes(edges).reduce(addNodeBin, asMap(edges));
 };
 
 // **adj** `::  Map<edge> ->  node  -> Map<{node: Number}>`
@@ -314,12 +310,11 @@ var addEntry = function addEntry(nabes) {
 
 
 
-var graph = Object.freeze({
+var graph$1 = Object.freeze({
 	mergeNeighbors: mergeNeighbors,
-	spawn: spawn,
-	copy: copy,
-	fromElements: fromElements,
+	graph: graph,
 	nodes: nodes,
+	copy: copy,
 	adj: adj,
 	neighbors: neighbors,
 	contains: contains,
@@ -728,5 +723,5 @@ var show = Object.freeze({
 	showGraph: showGraph
 });
 
-export { components$1 as Components, contract$1 as Contract, graph as Graph, path as Path, search as Search, show as Show };
+export { components$1 as Components, contract$1 as Contract, graph$1 as Graph, path as Path, search as Search, show as Show };
 //# sourceMappingURL=bundle.es6.js.map
