@@ -6,7 +6,7 @@ from './reducers';
 // resets the nodes adjacency list to an empty map
 export const mergeNeighbors = uniteMap;
 
-// **fromElements** `::  Map<edge> -> ...node  -> Map<edge>`
+// **graph** `:: [Node] -> Map<edge>`
 // adds  {node: adjacencyList} pairs ot an Edgelist
 export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
 export const graph = (...elems) => elems.reduce(addNodeBin, new Map);
