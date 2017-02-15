@@ -60,8 +60,8 @@
                 </a>
               
                 
-                <a class="source" href="strings.html">
-                  strings.js
+                <a class="source" href="show.html">
+                  show.js
                 </a>
               
                 
@@ -122,12 +122,12 @@ resets the nodes adjacency list to an empty map</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p><strong>spawn</strong> <code>::  Map&lt;edge&gt; -&gt; Map&lt;edge&gt;</code>
-returns a new Edgelist</p>
+              <p><strong>graph</strong> <code>:: [Node] -&gt; Map&lt;edge&gt;</code>
+adds  {node: adjacencyList} pairs ot an Edgelist</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> spawn = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> asMap(edges);</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> graph = <span class="hljs-function">(<span class="hljs-params">...elems</span>) =&gt;</span> elems.reduce(addNodeBin, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>);</pre></div></div>
             
         </li>
         
@@ -138,12 +138,12 @@ returns a new Edgelist</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><strong>copy</strong> <code>::  Map&lt;edge&gt; -&gt; Map&lt;edge&gt;</code>
-creates a copy of a Edgelist</p>
+              <p><strong>nodes</strong> `::  Map<edge> -&gt;  [node]
+returns an array of the nodes</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> copy = spawn;</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> nodes = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> spreadK(asMap(edges));</pre></div></div>
             
         </li>
         
@@ -154,12 +154,12 @@ creates a copy of a Edgelist</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p><strong>graph</strong> <code>::  Map&lt;edge&gt; -&gt; ...node  -&gt; Map&lt;edge&gt;</code>
-adds  {node: adjacencyList} pairs ot an Edgelist</p>
+              <p><strong>copy</strong> <code>::  Map&lt;edge&gt; -&gt; Map&lt;edge&gt;</code>
+creates a copy of a Edgelist</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> graph = <span class="hljs-function">(<span class="hljs-params">...elems</span>) =&gt;</span> elems.reduce(addNodeBin, copy());</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> copy = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> nodes(edges).reduce(addNodeBin, asMap(edges));</pre></div></div>
             
         </li>
         
@@ -169,22 +169,6 @@ adds  {node: adjacencyList} pairs ot an Edgelist</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p><strong>nodes</strong> `::  Map<edge> -&gt;  [node]
-returns an array of the nodes</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> nodes = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> spreadK(copy(edges));</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p><strong>adj</strong> <code>::  Map&lt;edge&gt; -&gt;  node  -&gt; Map&lt;{node: Number}&gt;</code>
 returns the nodes adjacency list</p>
@@ -196,11 +180,11 @@ returns the nodes adjacency list</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p><strong>neighbors</strong> <code>::  Map&lt;edge&gt; -&gt;  node  -&gt; [node]</code>
 returns the nodes neighbors</p>
@@ -212,11 +196,11 @@ returns the nodes neighbors</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p><strong>contains</strong> <code>::  Map&lt;edge&gt; -&gt;  node  -&gt; Boolean</code>
 checks for the presence of a node in an edgelist</p>
@@ -228,11 +212,11 @@ checks for the presence of a node in an edgelist</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p><strong>isAdjacent</strong> <code>::  Map&lt;edge&gt; -&gt;  node  -&gt; Map&lt;edge&gt;</code>
 checks for the presence of a neighbor in a node’s adjacency list</p>
@@ -244,11 +228,11 @@ checks for the presence of a neighbor in a node’s adjacency list</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p><strong>addNodes</strong> <code>::  Map&lt;edge&gt; -&gt;  ...node  -&gt; Map&lt;edge&gt;</code>
 adds nodes to an Edgelist</p>
@@ -260,11 +244,11 @@ adds nodes to an Edgelist</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p><strong>resetNodes</strong> <code>::  Map&lt;edge&gt; -&gt;  ...node  -&gt; Map&lt;edge&gt;</code>
 resets the adjacency lists of given nodes to an empty map</p>
@@ -276,11 +260,11 @@ resets the adjacency lists of given nodes to an empty map</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p><strong>addEdges</strong> <code>::  Map&lt;edge&gt; -&gt;  (node, Number) -&gt; ...node  -&gt; Map&lt;edge&gt;</code>
 creates edges between a node and multiple other nodes</p>
@@ -293,11 +277,11 @@ nabes.map(triple(w)(src)).reduce(addEdgeBin, edges);</pre></div></div>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p><strong>removeEdges</strong> <code>::  Map&lt;edge&gt; -&gt;  node -&gt; ...node  -&gt; Map&lt;edge&gt;</code>
 removes edges between a node and select other nodes</p>
@@ -310,11 +294,11 @@ nabes.map(tuple(src)).reduce(removeEdgeBin, edges);</pre></div></div>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p><strong>disconnectNodes</strong> <code>:: Map&lt;edge&gt; -&gt;  ...node  -&gt; Map&lt;edge&gt;</code>
 resets the nodes adjacency list to an empty map</p>
@@ -327,11 +311,11 @@ resets the nodes adjacency list to an empty map</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p><strong>removeNodes</strong> <code>::  Map&lt;edge&gt; -&gt;  ...node  -&gt; Map&lt;edge&gt;</code>
 resets the nodes adjacency list to an empty map</p>
@@ -344,11 +328,11 @@ srcs.reduce(removeBin, disconnectNodes(edges)(...srcs));</pre></div></div>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p><strong>mergeEdges</strong> <code>::  Map&lt;edge&gt; -&gt; ...{node:adjacency} -&gt; Map&lt;edge&gt;</code>
 resets the nodes adjacency list to an empty map</p>
@@ -360,11 +344,11 @@ resets the nodes adjacency list to an empty map</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p><strong>addNeighbor</strong> <code>::  Map&lt;edge&gt; -&gt; ...{node:adjacency} -&gt; Map&lt;edge&gt;</code>
 resets the nodes adjacency list to an empty map</p>
@@ -377,11 +361,11 @@ addBinMap(adj(edges)(src), [ n, w ]);</pre></div></div>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p><strong>addEntry</strong> <code>::  Map&lt;{node:Number}&gt; -&gt;  [node, Number]  -&gt; Map&lt;edge&gt;</code>
 resets the nodes adjacency list to an empty map</p>

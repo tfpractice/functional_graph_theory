@@ -60,8 +60,8 @@
                 </a>
               
                 
-                <a class="source" href="strings.html">
-                  strings.js
+                <a class="source" href="show.html">
+                  show.js
                 </a>
               
                 
@@ -126,7 +126,7 @@ adds a node:adjacency list pair to an edgelist</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> addNodeBin = <span class="hljs-function">(<span class="hljs-params">edges, src</span>) =&gt;</span> addMap(edges)(src)(get(edges)(src));</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> addNodeBin = <span class="hljs-function">(<span class="hljs-params">edges, src</span>) =&gt;</span> addMap(edges)(src)(asMap(get(edges)(src)));</pre></div></div>
             
         </li>
         
@@ -143,7 +143,7 @@ returns an array of [node, neigbor] pairs from an edgelist</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> neighborPairs = <span class="hljs-function"><span class="hljs-params">edges</span> =&gt;</span> src =&gt;
-spreadK(get(edges)(src)).map(append(src));</pre></div></div>
+  spreadK(get(edges)(src)).map(append(src));</pre></div></div>
             
         </li>
         
@@ -161,7 +161,7 @@ add a node:Map&lt;{node: Number}&gt; entry to an edgelist</p>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> addEdgeBin = <span class="hljs-function">(<span class="hljs-params">edges, [ src, nb, wt = <span class="hljs-number">0</span> ]</span>) =&gt;</span> [
   [ src, addMap(get(edges)(src))(nb)(wt) ],
-  [ nb, addMap(get(edges)(nb))(src)(wt) ]].reduce(addBinMap, asMap(edges));</pre></div></div>
+  [ nb, addMap(get(edges)(nb))(src)(wt) ],].reduce(addBinMap, asMap(edges));</pre></div></div>
             
         </li>
         
@@ -213,7 +213,7 @@ isolates a node and removes it from edgelist</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> removeNodeBin = <span class="hljs-function">(<span class="hljs-params">edges, src</span>) =&gt;</span>
-removeMap(disconnectNodeBin(edges, src))(src);</pre></div></div>
+  removeMap(disconnectNodeBin(edges, src))(src);</pre></div></div>
             
         </li>
         
