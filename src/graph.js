@@ -8,7 +8,6 @@ export const mergeNeighbors = uniteMap;
 
 // **graph** `:: [Node] -> Map<edge>`
 // adds  {node: adjacencyList} pairs ot an Edgelist
-export const fromElements = (...elems) => elems.reduce(addNodeBin, copy());
 export const graph = (...elems) => elems.reduce(addNodeBin, new Map);
 
 // **nodes** `::  Map<edge> ->  [node]

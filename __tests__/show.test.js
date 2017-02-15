@@ -1,6 +1,6 @@
 import 'jasmine-expect';
 import { first, } from 'fenugreek-collections';
-import { fromElements, } from 'src/graph';
+import { graph, } from 'src/graph';
 import { collString, edgeString,
   kString, kvString, pathString, redStr, vString, } from 'src/show';
 
@@ -35,12 +35,12 @@ describe('strings', () => {
   });
   describe('pathString', () => {
     it('should behave...', () => {
-      expect(pathString(fromElements(...myNodes))).toBeString();
+      expect(pathString(graph(...myNodes))).toBeString();
     });
   });
   describe('edgeString', () => {
     it('should behave...', () => {
-      expect(edgeString(first(fromElements(...myNodes)))).toBeString();
+      expect(edgeString(first(graph(...myNodes)))).toBeString();
     });
   });
 });

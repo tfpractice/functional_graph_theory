@@ -1,7 +1,7 @@
 import 'jasmine-expect';
 import { bfs, dfs, } from 'src/search';
 import { addEdgeBin, mergeEdgesBin, } from 'src/reducers';
-import { addEdges, fromElements, neighbors, } from 'src/graph';
+import { addEdges, graph, neighbors, } from 'src/graph';
 import { autoSpread, combineAdj, combineNeighbors, contract, contractAuto, contractBin,
    contractMin, contractNext, contractSrc, superAdj, superEdge, superNode, } from 'src/contract';
 
@@ -18,7 +18,7 @@ const myGraph = [ addEdges()(n0, 2)(n1, n2),
   addEdges()(n5, 7)(n6),
   addEdges()(n7, 7)(n8),
   addEdges()(n0, 11)(n1), ]
-  .reduce(mergeEdgesBin, fromElements(...firstTen));
+  .reduce(mergeEdgesBin, graph(...firstTen));
 
 const nabes0 = neighbors(myGraph)(n0);
 const nabes1 = neighbors(myGraph)(n1);

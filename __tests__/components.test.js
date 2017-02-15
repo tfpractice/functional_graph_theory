@@ -3,7 +3,7 @@ import { spreadK, } from 'fenugreek-collections';
 import { components, componentSet, } from 'src/components';
 import { bfs, dfs, } from 'src/search';
 import { mergeEdgesBin, } from 'src/reducers';
-import { addEdges, fromElements, } from 'src/graph';
+import { addEdges, graph, } from 'src/graph';
 import { firstTen, myNodes, oFilter, } from './shared';
 import { n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, } from './shared';
 import { n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, } from './shared';
@@ -17,9 +17,9 @@ const myGraph = [ addEdges()(n0, 2)(n1, n2),
   addEdges()(n5, 7)(n6),
   addEdges()(n7, 7)(n8),
   addEdges()(n0, 11)(n1), ]
-  .reduce(mergeEdgesBin, fromElements(...firstTen));
+  .reduce(mergeEdgesBin, graph(...firstTen));
 
-let odds = fromElements(...oFilter(myNodes));
+let odds = graph(...oFilter(myNodes));
 
 odds = spreadK(odds).reduce((g, e, id, arr) =>
       addEdges(g)(e, id)(arr[((id + 1) % arr.length)]), new Map(odds));

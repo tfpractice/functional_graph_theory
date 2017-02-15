@@ -1,4 +1,4 @@
-import { addEdges, fromElements, nodes, } from 'src/graph';
+import { addEdges, graph, nodes, } from 'src/graph';
 import { addEdgeBin, } from 'src/reducers';
 export const Node = (label = '', data = {}) =>
   ({ label, data, toString: () => label, });
@@ -23,7 +23,7 @@ export const oEdgesR = edges => oFilter(nodes(edges))
 export const eNodes = eFilter(myNodes);
 export const oNodes = oFilter(myNodes);
 
-export const eGraph = fromElements(...eFilter(myNodes));
+export const eGraph = graph(...eFilter(myNodes));
 
 export const connGraph = nodes(eGraph).map((e, id, arr) =>
     [ e, arr[((id + 1) % arr.length)], id, ]).reduce(addEdgeBin, eGraph);
